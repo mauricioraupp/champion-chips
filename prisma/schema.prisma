@@ -32,6 +32,14 @@ model TeamsSoccerLeague {
   name           String
   abr            String        @db.VarChar(3)
   logo           String?
+  points         Int           @default(0)
+  playedMatches  Int           @default(0)
+  wins           Int           @default(0)
+  draws          Int           @default(0)
+  losses         Int           @default(0)
+  goalsScored    Int           @default(0)
+  goalsConceded  Int           @default(0)
+  goalsDiff      Int           @default(0)
   Players        Players[]
 }
 
@@ -39,5 +47,11 @@ model Players {
   id                Int                @id @default(autoincrement())
   TeamsSoccerLeague TeamsSoccerLeague? @relation(fields: [teamId], references: [id])
   teamId            Int?
-  name              Int
+  name              String
+  age               Int?
+  position          String?
+  picture           String?
+  goals             Int                @default(0)
+  assists           Int                @default(0)
+  cleanSheets       Int                @default(0)
 }
