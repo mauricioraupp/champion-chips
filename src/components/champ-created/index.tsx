@@ -55,8 +55,8 @@ export function ChampCreated(){
       <section className="mr-5">
         <table className="divide-y-2 divide-neutral-300 h-full">
           <thead>
-            <tr className="*:px-2 *:text-center">
-              <th className="text-left!">Equipe</th>
+            <tr className="*:min-w-8 *:text-center">
+              <th className="text-left! pr-8">Equipe</th>
               <th>Pts</th>
               <th>PJ</th>
               <th>V</th>
@@ -68,8 +68,8 @@ export function ChampCreated(){
             </tr>
           </thead>
           <tbody>
-            <tr className="*:px-2 *:text-center">
-              <td className="text-left!">1 Time1</td>
+            <tr className="*:min-w-8 *:text-center">
+              <td className="text-left! pr-8">1 Time1</td>
               <td>0</td>
               <td>0</td>
               <td>0</td>
@@ -79,8 +79,8 @@ export function ChampCreated(){
               <td>0</td>
               <td>0</td>
             </tr>
-            <tr className="*:px-2 *:text-center">
-              <td className="text-left!">2 Time2</td>
+            <tr className="*:min-w-8 *:text-center">
+              <td className="text-left! pr-8">2 Time2</td>
               <td>0</td>
               <td>0</td>
               <td>0</td>
@@ -90,8 +90,8 @@ export function ChampCreated(){
               <td>0</td>
               <td>0</td>
             </tr>
-            <tr className="*:px-2 *:text-center">
-              <td className="text-left!">3 Time3</td>
+            <tr className="*:min-w-8 *:text-center">
+              <td className="text-left! pr-8">3 Time3</td>
               <td>0</td>
               <td>0</td>
               <td>0</td>
