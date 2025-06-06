@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@geist-ui/icons": "^1.0.2",
-    "@prisma/client": "^6.8.2",
+    "@prisma/client": "^6.9.0",
     "@prisma/extension-accelerate": "^2.0.1",
     "next": "15.3.2",
     "next-auth": "^4.24.11",
@@ -22,9 +22,13 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "prisma": "^6.8.2",
+    "prisma": "^6.9.0",
     "tailwindcss": "^4",
+    "ts-node": "^10.9.2",
     "tsx": "^4.19.4",
     "typescript": "^5"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   }
 }
