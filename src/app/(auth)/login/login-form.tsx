@@ -2,6 +2,7 @@
 
 import { signIn } from "next-auth/react"
 import { useSearchParams } from "next/navigation";
+import GoogleLoginBtn from "./google-login-btn";
 
 export default function LoginForm() {
   const searchParams = useSearchParams()
@@ -30,7 +31,7 @@ export default function LoginForm() {
         <h1 className="text-4xl font-bold w-full text-left">Bem vindo de volta!</h1>
         <p className="text-neutral-700 w-full text-left pt-2">Insira seus dados</p>
       </div>
-      <button className="py-3 w-full border-2 rounded-sm border-neutral-300 text-lg">Sign in with Google</button>
+      <GoogleLoginBtn/>
       <div className="flex items-center justify-center w-full">
         <hr className="w-full border-1 rounded-xs border-neutral-300"/>
         <span className="absolute px-4 font-medium text-neutral-700 -translate-x-1/2 bg-neutral-50 left-1/2">or</span>
