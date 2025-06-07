@@ -1,7 +1,7 @@
 import { MoreHorizontal } from '@geist-ui/icons';
 import Image from 'next/image';
 
-export function ChampCreated(){
+export default function ChampCreated(){
 
   return(
     <div className="relative flex gap-4 border-2 rounded-md border-neutral-300 w-fit py-3 px-6 m-auto divide-x-2 divide-stone-300 cursor-pointer">

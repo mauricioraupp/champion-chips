@@ -1,6 +1,12 @@
-import { ChampCreated } from "@/components/champ-created";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+import ChampCreated from "@/components/champ-created";
 
 export default function Home() {
+  const session = getServerSession
+  if (!session) {
+    redirect("/login")
+  }
   return (
     <>
       <div className="w-full flex justify-center p-12">

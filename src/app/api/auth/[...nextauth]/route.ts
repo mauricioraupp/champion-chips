@@ -1,15 +1,32 @@
-// src/app/api/auth/[...nextauth]/route.ts
 import NextAuth from "next-auth"
-import GitHubProvider from "next-auth/providers/github"
+import CredentialsProvider from "next-auth/providers/credentials";
 
 const handler = NextAuth({
+  pages: {
+    signIn: "/login"
+  },
   providers: [
-    GitHubProvider({
-      clientId: process.env.GITHUB_ID!,
-      clientSecret: process.env.GITHUB_SECRET!,
-    }),
-  ],
-  secret: process.env.NEXTAUTH_SECRET,
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "password" }
+      },
+      async authorize(credentials, req) {
+        if (!credentials) {
+          return null
+        }
+        if (credentials.email === "admin@email.com" && credentials.password === "123") {
+          return {
+            id: "1",
+            name: "admin",
+            email: "admin@email.com"
+          }
+        }
+        return null
+      }
+    })
+  ]
 })
 
 export { handler as GET, handler as POST }

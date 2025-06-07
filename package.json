@@ -8,6 +8,9 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+  },
   "dependencies": {
     "@geist-ui/icons": "^1.0.2",
     "@prisma/client": "^6.9.0",
@@ -27,8 +30,5 @@
     "ts-node": "^10.9.2",
     "tsx": "^4.19.4",
     "typescript": "^5"
-  },
-  "prisma": {
-    "seed": "ts-node prisma/seed.ts"
   }
 }
