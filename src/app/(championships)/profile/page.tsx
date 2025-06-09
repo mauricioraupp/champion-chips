@@ -1,6 +1,6 @@
 import { Edit, Tool, UserX, LogOut } from '@geist-ui/icons';
 import ProfileCards from './profile-cards';
-import { NewTournament, NewTeam, UpdateTeamStats, newPlayer, UpdatePlayerStats } from './recent-activity';
+import ActivityItem from './recent-activity';
 import ChampCreated from '@/components/champ-created';
 
 export default function ProfilePage() {
@@ -38,6 +38,14 @@ export default function ProfilePage() {
       borderColor: 'border-red-400'
     },
   ];
+  const recentActivities = [
+    { type: 'champ', name: 'Copa 2024', date: '2 dias' },
+    { type: 'team', name: 'Time Azul', date: '1 dia' },
+    { type: 'team', name: 'Gremio', date: '3 dias' },
+    { type: 'champ', name: 'Copa 2024', date: '2 dias' },
+    { type: 'team', name: 'Time Azul', date: '1 dia' },
+    { type: 'player', name: 'Lucas Silva', date: '3 horas' },
+  ];
 
   return (
     <>
@@ -47,13 +55,11 @@ export default function ProfilePage() {
 
       <main className="lg:h-[calc(100vh-228px)] flex">
         <section className="max-w-4xl min-h-72 mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
-          <div className="border-2 border-neutral-300 rounded-md py-3 px-6 flex flex-col items-center justify-center mx-auto w-5/6 lg:w-full">
+          <div className="border-2 border-neutral-300 rounded-md py-10 px-4 flex flex-col items-center justify-center mx-auto w-5/6 lg:w-full">
             <div className="w-24 h-24 bg-gray-200 rounded-full mb-3" />
             <h2 className="text-xl font-semibold">João Silva</h2>
             <p className="text-neutral-700 mb-3">joao@email.com</p>
-            <button className="bg-zinc-950 rounded-md py-2 px-12 text-white cursor-pointer">
-              Editar perfil
-            </button>
+            <button className="bg-zinc-950 rounded-md py-2 px-12 text-white cursor-pointer">Editar perfil</button>
           </div>
 
           <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4 mx-auto w-5/6 lg:w-full">
@@ -86,36 +92,48 @@ export default function ProfilePage() {
         </section>
       </main>
 
-      <article className="bg-neutral-150">
-        <div className="w-full flex justify-center py-12">
-          <h1 className="font-medium text-xl">Torneios criados</h1>
-        </div>
-
-        <section className="flex flex-col gap-8 w-5/6 sm:w-fit mx-auto pb-12">
-          <ChampCreated/>
-          <ChampCreated/>
-        </section>
-      </article>
-
-      <section className="flex flex-col gap-12 py-12">
+      <section className="flex flex-col gap-12 pt-12 pb-20 bg-neutral-150">
         <div className="w-full flex justify-center">
           <h1 className="font-medium text-xl">Atividade recente</h1>
         </div>
-
-        <ul className="max-w-4xl border-2 border-neutral-300 rounded-md mx-auto py-6 px-8 divide-y-2 divide-neutral-300 *:pb-2 space-y-4 w-5/6">
-          <li className="flex flex-col sm:flex-row justify-between gap-1">
-            <p className="order-2 sm:order-1">✅ Você criou o torneio <strong>Campeonato A</strong></p>
-            <p className="order-1 sm:order-2 text-neutral-700">há 2 dias</p>
-          </li>
-          <li className="flex flex-col sm:flex-row justify-between gap-1">
-            <p className="order-2 sm:order-1">📝 Você atualizou o placar de <strong>Time1 x Time2</strong></p>
-            <p className="order-1 sm:order-2 text-neutral-700">há 2 dias</p>
-          </li>
-          <li className="flex flex-col sm:flex-row justify-between gap-1">
-            <p className="order-2 sm:order-1">👥 Novo time <strong>Os Invencíveis</strong> adicionado</p>
-            <p className="order-1 sm:order-2 text-neutral-700">há 2 dias</p>
-          </li>
-          <button className="bg-zinc-950 rounded-md py-2 px-12 text-white text-center w-full cursor-pointer">Ver mais</button>
+        <ul className="max-w-4xl border-2 border-neutral-300 rounded-md mx-auto py-6 px-8 divide-y-2 divide-neutral-300 space-y-4 w-5/6">
+          {recentActivities.map((item, index) => {
+            if (item.type === 'champ') {
+              return (
+                <ActivityItem
+                  key={index}
+                  icon="🏆"
+                  message="Novo torneio criado:"
+                  name={item.name}
+                  date={item.date}
+                />
+              );
+            } else if (item.type === 'team') {
+              return (
+                <ActivityItem
+                  key={index}
+                  icon="⚽"
+                  message="Novo time criado:"
+                  name={item.name}
+                  date={item.date}
+                />
+              );
+            } else if (item.type === 'player') {
+              return (
+                <ActivityItem
+                  key={index}
+                  icon="👦"
+                  message="Novo jogador criado:"
+                  name={item.name}
+                  date={item.date}
+                />
+              );
+            }
+          })}
+          <button 
+            className="border-2 border-neutral-300 font-semibold text-neutral-800 text-md text-center rounded-md py-3 px-12 w-full cursor-pointer 
+            hover:bg-neutral-300 transition">Ver mais
+          </button>
         </ul>
       </section>
     </>
