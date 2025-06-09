@@ -23,3 +23,7 @@ body {
   background: var(--background);
   color: var(--foreground);
 }
+
+.bg-neutral-150 {
+  background-color: oklch(95% 0 0)
+}
