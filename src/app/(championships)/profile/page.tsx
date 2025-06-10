@@ -79,9 +79,9 @@ export default function ProfilePage() {
           <div className="grid grid-cols-1 sm:grid-cols-3 lg:col-span-3 mb-12 border-2 border-neutral-300 rounded-md mx-auto w-5/6 lg:w-full
             divide-y-2 sm:divide-y-0 divide-x-0 sm:divide-x-2 divide-neutral-300">
             {[
-              { label: 'Torneios criados', value: 10 },
-              { label: 'Partidas registradas', value: 32 },
-              { label: 'Times criados', value: 21 }
+              { label: 'Torneios criados', value: 6 },
+              { label: 'Times criados', value: 22 },
+              { label: 'Jogadores criados', value: 32 }
             ].map((stat) => (
               <div key={stat.label} className="text-center p-4 flex flex-col justify-center items-center">
                 <h1 className="text-2xl font-bold">{stat.value}</h1>
