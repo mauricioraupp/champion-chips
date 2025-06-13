@@ -8,24 +8,31 @@ datasource db {
 }
 
 model User {
-  id            Int            @id @default(autoincrement())
-  email         String         @unique
-  name          String
-  password      String
-  soccerLeagues SoccerLeague[]
+  id                Int                 @id @default(autoincrement())
+  email             String              @unique
+  name              String
+  password          String
+  image             String              @default("default")
+  createdAt         DateTime            @default(now())
+  soccerLeagues     SoccerLeague[]
+  TeamsSoccerLeague TeamsSoccerLeague[]
+  Players           Players[]
 }
 
 model SoccerLeague {
-  id     Int                 @id @default(autoincrement())
-  User   User?               @relation(fields: [userId], references: [id])
-  userId Int?
-  name   String
-  stage  Int
-  Teams  TeamsSoccerLeague[]
+  id        Int                 @id @default(autoincrement())
+  User      User?               @relation(fields: [userId], references: [id])
+  userId    Int?
+  name      String
+  stage     Int
+  createdAt DateTime            @default(now())
+  Teams     TeamsSoccerLeague[]
 }
 
 model TeamsSoccerLeague {
   id             Int           @id @default(autoincrement())
+  User           User?         @relation(fields: [userId], references: [id])
+  userId         Int?
   SoccerLeague   SoccerLeague? @relation(fields: [soccerLeagueId], references: [id])
   soccerLeagueId Int?
   name           String
@@ -39,11 +46,14 @@ model TeamsSoccerLeague {
   goalsScored    Int           @default(0)
   goalsConceded  Int           @default(0)
   goalsDiff      Int           @default(0)
+  createdAt      DateTime      @default(now())
   Players        Players[]
 }
 
 model Players {
   id                Int                @id @default(autoincrement())
+  User              User?              @relation(fields: [userId], references: [id])
+  userId            Int?
   TeamsSoccerLeague TeamsSoccerLeague? @relation(fields: [teamId], references: [id])
   teamId            Int?
   name              String
@@ -53,4 +63,5 @@ model Players {
   goals             Int                @default(0)
   assists           Int                @default(0)
   cleanSheets       Int                @default(0)
+  createdAt         DateTime           @default(now())
 }
