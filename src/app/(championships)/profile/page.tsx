@@ -10,7 +10,8 @@ export default function ProfilePage() {
       icon: <Edit size={20} />,
       color: 'text-black',
       bgColor: 'bg-neutral-50',
-      borderColor: 'border-neutral-300'
+      borderColor: 'border-neutral-300',
+      hover: 'bg-neutral-200'
     },
     {
       title: 'Preferências',
@@ -18,7 +19,8 @@ export default function ProfilePage() {
       icon: <Tool size={20} />,
       color: 'text-black',
       bgColor: 'bg-neutral-50',
-      borderColor: 'border-neutral-300'
+      borderColor: 'border-neutral-300',
+      hover: 'bg-neutral-200'
     },
     {
       title: 'Excluir conta',
@@ -26,7 +28,8 @@ export default function ProfilePage() {
       icon: <UserX size={20} />,
       color: 'text-red-600',
       bgColor: 'bg-red-50',
-      borderColor: 'border-red-400'
+      borderColor: 'border-red-400',
+      hover: 'bg-red-200'
     },
     {
       title: 'Sair da conta',
@@ -34,7 +37,8 @@ export default function ProfilePage() {
       icon: <LogOut size={20} />,
       color: 'text-red-600',
       bgColor: 'bg-red-50',
-      borderColor: 'border-red-400'
+      borderColor: 'border-red-400',
+      hover: 'bg-red-200'
     },
   ];
   const recentActivities = [
@@ -47,7 +51,7 @@ export default function ProfilePage() {
   ];
 
   return (
-    <main className="ml-0 sm:ml-19 lg:ml-72 bg-neutral-150">
+    <main className="ml-0 sm:ml-25 lg:ml-68 bg-neutral-150">
       <section className="mx-auto max-w-5xl w-9/10 py-16 flex flex-col gap-8">
         <article className="w-full flex flex-col gap-8">
           <h1 className="font-semibold text-xl">Informações da conta</h1>
@@ -56,7 +60,7 @@ export default function ProfilePage() {
               <div className="w-24 h-24 bg-gray-200 rounded-full mb-3" />
               <h2 className="text-xl font-semibold">João Silva</h2>
               <p className="text-neutral-700 mb-3">joao@email.com</p>
-              <button className="bg-zinc-950 rounded-md py-2 px-12 text-white cursor-pointer">Editar perfil</button>
+              <button className="bg-zinc-950 rounded-md py-2 px-12 text-white cursor-pointer hover:bg-zinc-700 transition">Editar perfil</button>
             </div>
 
             <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4 mx-auto w-full">
@@ -69,6 +73,7 @@ export default function ProfilePage() {
                   color={item.color}
                   bgColor={item.bgColor}
                   borderColor={item.borderColor}
+                  hover={item.hover}
                 />
               ))}
             </div>
@@ -80,7 +85,7 @@ export default function ProfilePage() {
                 { label: 'Times criados', value: 22 },
                 { label: 'Jogadores criados', value: 32 }
               ].map((stat) => (
-                <div key={stat.label} className="bg-neutral-50 text-center p-4 flex flex-col justify-center items-center">
+                <div key={stat.label} className="bg-neutral-50 text-center p-4 flex flex-col justify-center items-center cursor-pointer hover:bg-neutral-200 transition">
                   <h1 className="text-2xl font-bold">{stat.value}</h1>
                   <p className="text-neutral-700">{stat.label}</p>
                 </div>

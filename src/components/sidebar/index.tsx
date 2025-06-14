@@ -1,37 +1,45 @@
-import { Menu, Folder, FolderPlus, User, Settings, LogOut } from '@geist-ui/icons'
+import { Home, Folder, FolderPlus, User, Settings, LogOut } from '@geist-ui/icons'
+import ListItems from './list-items';
 
 export default function SideBar() {
+    const listItem = [
+    { icon: <Folder/>, name: 'Meus torneios', color: 'text-black'},
+    { icon: <FolderPlus/>, name: 'Criar torneio', color: 'text-black'},
+    { icon: <User/>, name: 'Conta', color: 'text-black'},
+    { icon: <Settings/>, name: 'Configurações', color: 'text-black'},
+    { icon: <LogOut/>, name: 'Sair da conta', color: 'text-red-600'},
+  ];
+
   return(
-    <aside className="fixed left-0 h-screen w-19 lg:w-72 bg-neutral-50 border-r-2 border-neutral-300 hidden sm:flex flex-col justify-between py-4 lg:py-8 px-6 lg:px-10">
+    <aside className="fixed left-0 h-screen w-fit lg:w-68 bg-neutral-50 border-r-2 border-neutral-300 hidden sm:flex flex-col justify-between 
+      items-center lg:items-start py-6 px-2 lg:px-4">
       <ul className="absolute">
-        <li className="flex items-center gap-4">
-          <Menu className="flex"/>
+        <li className="flex flex-col lg:flex-row items-center cursor-pointer 
+          py-4 lg:py-2 px-2 lg:px-4 gap-1 lg:gap-4 rounded-md"
+        >
+          <Home className="flex"/>
           <p className="hidden lg:flex text-black font-bold text-xl">Champion Chips</p>
         </li>
       </ul>
-      <ul className="flex flex-col gap-12 mt-32">
-        <li className="flex items-center gap-4 cursor-pointer">
-          <Folder/>
-          <p className="hidden lg:flex text-black">Meus torneios</p>
-        </li>
-        <li className="flex items-center gap-4 text-black cursor-pointer">
-          <FolderPlus/>
-          <p className="hidden lg:flex text-black">Criar torneio</p>
-        </li>
-        <li className="flex items-center gap-4 text-black cursor-pointer">
-          <User/>
-          <p className="hidden lg:flex text-black">Conta</p>
-        </li>
+      <ul className="w-full flex flex-col gap-2 mt-18">
+        {listItem.slice(0, 3).map((item) => (
+          <ListItems
+            key={item.name}
+            icon={item.icon}
+            name={item.name}
+            color={item.color}
+          />
+        ))}
       </ul>
-      <ul className="flex flex-col gap-12">
-        <li className="flex items-center gap-4 text-black cursor-pointer">
-          <Settings/>
-          <p className="hidden lg:flex text-black">Configurações</p>
-        </li>
-        <li className="flex items-center gap-4 text-black cursor-pointer">
-          <LogOut/>
-          <p className="hidden lg:flex text-black">Sair da conta</p>
-        </li>
+      <ul className="w-full flex flex-col gap-2">
+        {listItem.slice(3, 5).map((item) => (
+          <ListItems
+            key={item.name}
+            icon={item.icon}
+            name={item.name}
+            color={item.color}
+          />
+        ))}
       </ul>
     </aside>
   )
