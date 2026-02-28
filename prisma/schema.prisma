@@ -4,14 +4,13 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
 }
 
 model User {
   id                Int                 @id @default(autoincrement())
   email             String              @unique
-  name              String
-  password          String
+  name              String?
+  password          String?
   image             String              @default("default")
   createdAt         DateTime            @default(now())
   soccerLeagues     SoccerLeague[]
