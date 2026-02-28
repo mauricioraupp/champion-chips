@@ -4,15 +4,17 @@ import Image from 'next/image';
 export default function ChampCreated(){
 
   return(
-    <div className="relative flex gap-4 bg-neutral-50 border-2 rounded-md border-neutral-300 w-full sm:w-fit py-3 px-6 m-auto divide-x-0 sm:divide-x-2 divide-stone-300 cursor-pointer">
-      <section className="pr-0 sm:pr-6 flex flex-col">
+    <div className="relative flex flex-col sm:flex-row gap-4 bg-neutral-50 border-2 rounded-md border-neutral-300 w-full w-fit 
+      py-3 px-6 m-auto divide-y-2 sm:divide-y-0 divide-x-0 sm:divide-x-2 divide-stone-300 cursor-pointer"
+    >
+      <section className="pr-0 sm:pr-6 pb-4 sm:pb-0 flex flex-col text-center sm:text-left">
         <h1 className="font-semibold">Título</h1>
         <p className="font-medium text-neutral-700">Esporte: Esporte</p>
         <p className="font-medium text-neutral-700">Formato: Formato</p>
         <p className="font-medium text-neutral-700">Fase: Fase</p>
       </section>
 
-      <section className="pr-0 sm:pr-6 hidden lg:flex flex-col justify-between items-center">
+      <section className="pr-0 sm:pr-6 pb-4 sm:pb-0 flex flex-col justify-between items-center">
         <h1 className="font-medium text-neutral-700">Última partida</h1>
         <article className="flex items-center">
           <Image
@@ -32,7 +34,7 @@ export default function ChampCreated(){
         <p className="font-medium text-neutral-700">01/01/2001</p>
       </section>
 
-      <section className="pr-0 sm:pr-6 hidden lg:flex flex-col justify-between items-center">
+      <section className="pr-0 xl:pr-6 flex flex-col justify-between items-center border-b-0 border-r-0 xl:border-r-2">
         <h1 className="font-medium text-neutral-700">Próxima partida</h1>
         <article className="flex items-center">
           <Image
@@ -52,7 +54,7 @@ export default function ChampCreated(){
         <p className="font-medium text-neutral-700">01/01/2001</p>
       </section>
 
-      <section className="hidden sm:block mr-5">
+      <section className="hidden xl:block mr-5">
         <table className="sm:divide-y-2 divide-neutral-300 h-full">
           <thead>
             <tr className="*:min-w-8 *:text-center">
