@@ -1,6 +1,6 @@
 import { Edit, Tool, UserX, LogOut } from '@geist-ui/icons';
-import ProfileCards from './profile-cards';
-import ActivityItem from './recent-activity';
+import ProfileCards from '@/components/features/profile/ProfileCards';
+import ActivityItem from '@/components/features/profile/RecentActivity';
 
 export default function ProfilePage() {
   const cards = [

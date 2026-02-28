@@ -1,7 +1,7 @@
 import { MoreHorizontal } from '@geist-ui/icons';
 import Image from 'next/image';
 
-export default function ChampCreated(){
+export default function ChampionshipCreated(){
 
   return(
     <div className="relative flex flex-col sm:flex-row gap-4 bg-neutral-50 border-2 rounded-md border-neutral-300 w-full w-fit 
