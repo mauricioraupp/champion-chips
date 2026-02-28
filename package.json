@@ -13,12 +13,14 @@
   },
   "dependencies": {
     "@geist-ui/icons": "^1.0.2",
+    "@prisma/adapter-pg": "^7.4.2",
     "@prisma/client": "^7.4.2",
     "@prisma/extension-accelerate": "^2.0.1",
     "bcryptjs": "^3.0.3",
     "dotenv": "^17.3.1",
     "next": "15.3.2",
     "next-auth": "^4.24.11",
+    "pg": "^8.19.0",
     "prisma": "^7.4.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
