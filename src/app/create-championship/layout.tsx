@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "../globals.css";
 import { Raleway } from 'next/font/google';
-import SideBar from "@/components/sidebar";
 
 const raleway = Raleway({
   subsets: ['latin'],
@@ -17,7 +16,6 @@ export default function RootLayout({children,}: Readonly<{children: React.ReactN
   return (
     <html lang="pt-br" className={raleway.className}>
       <body className={`antialiased min-h-screen`}>
-        <SideBar/>
         {children}
       </body>
     </html>
