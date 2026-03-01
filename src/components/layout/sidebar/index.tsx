@@ -1,13 +1,14 @@
+import Link from 'next/link';
 import { Menu, Folder, FolderPlus, User, Settings, LogOut } from '@geist-ui/icons'
 import ListItems from './list-items';
 
 export default function SideBar() {
     const listItem = [
-    { icon: <Folder/>, name: 'Meus torneios', color: 'text-black'},
-    { icon: <FolderPlus/>, name: 'Criar torneio', color: 'text-black'},
-    { icon: <User/>, name: 'Conta', color: 'text-black'},
-    { icon: <Settings/>, name: 'Configurações', color: 'text-black'},
-    { icon: <LogOut/>, name: 'Sair da conta', color: 'text-red-600'},
+    { icon: <Folder/>, name: 'Meus torneios', color: 'text-black', href: '/my-championships'},
+    { icon: <FolderPlus/>, name: 'Criar torneio', color: 'text-black', href: '/create-championship'},
+    { icon: <User/>, name: 'Conta', color: 'text-black', href: '/profile'},
+    { icon: <Settings/>, name: 'Configurações', color: 'text-black', href: '/my-championships'},
+    { icon: <LogOut/>, name: 'Sair da conta', color: 'text-red-600', href: '/my-championships'},
   ];
 
   return(
@@ -34,13 +35,19 @@ export default function SideBar() {
         </ul>
 
         <ul className="w-full flex flex-col gap-2 mt-18">
-          {listItem.slice(0, 5).map((item) => (
-            <ListItems
-              key={item.name}
-              icon={item.icon}
-              name={item.name}
-              color={item.color}
-            />
+          {listItem.map((item) => (
+            <Link 
+              key={item.name} 
+              href={item.href} 
+              className="w-full"
+            >
+              <ListItems
+                key={item.name}
+                icon={item.icon}
+                name={item.name}
+                color={item.color}
+              />
+            </Link>
           ))}
         </ul>
 
