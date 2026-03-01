@@ -70,16 +70,15 @@ const handler = NextAuth({
     },
     async jwt({ token, user }) {
       if (user) {
-        token.id = user.id
-
-        if ((user as any).remember) {
-          token.exp = Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 30)
-        } else {
-          token.exp = Math.floor(Date.now() / 1000) + (60 * 60 * 24)
-        }
+        token.id = user.id;
       }
-
-      return token
+      return token;
+    },
+    async session({ session, token }) {
+      if (session.user) {
+        (session.user as any).id = Number(token.id);
+      }
+      return session;
     }
   }
 })

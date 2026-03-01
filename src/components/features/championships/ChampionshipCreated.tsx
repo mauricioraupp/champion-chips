@@ -18,14 +18,14 @@ export default function ChampionshipCreated(){
         <h1 className="font-medium text-neutral-700">Última partida</h1>
         <article className="flex items-center">
           <Image
-            src="/escudo.png"
+            src="/default-team-logo.png"
             width={40}
             height={40}
             alt="Escudo do time"
           />
           <p className="font-medium text-neutral-700">0 x 0</p>
           <Image
-            src="/escudo.png"
+            src="/default-team-logo.png"
             width={40}
             height={40}
             alt="Escudo do time"
@@ -38,14 +38,14 @@ export default function ChampionshipCreated(){
         <h1 className="font-medium text-neutral-700">Próxima partida</h1>
         <article className="flex items-center">
           <Image
-            src="/escudo.png"
+            src="/default-team-logo.png"
             width={40}
             height={40}
             alt="Escudo do time"
           />
           <p className="font-medium text-neutral-700">0 x 0</p>
           <Image
-            src="/escudo.png"
+            src="/default-team-logo.png"
             width={40}
             height={40}
             alt="Escudo do time"

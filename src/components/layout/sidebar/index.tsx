@@ -34,18 +34,7 @@ export default function SideBar() {
         </ul>
 
         <ul className="w-full flex flex-col gap-2 mt-18">
-          {listItem.slice(0, 3).map((item) => (
-            <ListItems
-              key={item.name}
-              icon={item.icon}
-              name={item.name}
-              color={item.color}
-            />
-          ))}
-        </ul>
-
-        <ul className="w-full flex flex-col gap-2">
-          {listItem.slice(3, 5).map((item) => (
+          {listItem.slice(0, 5).map((item) => (
             <ListItems
               key={item.name}
               icon={item.icon}
