@@ -1,8 +1,7 @@
 import { getServerSession } from "next-auth/next";
 import { prisma } from "@/lib/prisma";
-import { redirect } from "next/navigation";
 
-import { Edit, Tool, UserX, LogOut } from '@geist-ui/icons';
+import { Edit, Tool, QuestionCircle, LogOut } from '@geist-ui/icons';
 import Image from "next/image";
 import ProfileCardsNeutral from '@/components/features/profile/ProfileCardsNeutral';
 import ProfileCardsRed from "@/components/features/profile/ProfileCardsRed";
@@ -12,26 +11,26 @@ import StatCard from "@/components/features/profile/StatCards";
 export default async function ProfilePage() {
   const cardsNeutral = [
     { 
-      title: 'Alterar senha', 
-      description: 'Altere a senha da sua conta', 
+      title: 'Editar perfil', 
+      description: 'Altere os dados exibidos em seu perfil', 
       icon: <Edit size={20}/> 
     },
     { 
       title: 'Preferências', 
       description: 'Altere as preferências da sua conta', 
       icon: <Tool size={20}/> 
+    },
+    { 
+      title: 'Ajuda', 
+      description: 'Dúvidas ou Sugestões? Fale conosco ou acesse nosso guia', 
+      icon: <QuestionCircle size={20}/> 
     }
   ];
   const cardsRed = [
     { 
-      title: 'Excluir conta', 
-      description: 'Delete todas as suas informações (essa ação não pode ser desfeita)', 
-      icon: <UserX size={20} /> 
-    },
-    { 
       title: 'Sair da conta', 
       description: 'Encerre sua sessão', 
-      icon: <LogOut size={20}/> 
+      icon: <LogOut size={20} color="red" /> 
     }
   ];
 
