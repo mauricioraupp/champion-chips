@@ -14,7 +14,7 @@ export default function Stepper({ currentStep }: StepperProps) {
             {currentStep > step ? "✓" : step}
           </div>
           {step < 3 && (
-            <div className={`w-8 sm:w-24 h-[2px] ${currentStep > step ? 'bg-zinc-800' : 'bg-gray-300'}`} />
+            <div className={`sm:w-16 md:w-24 w-8 h-[2px] ${currentStep > step ? 'bg-zinc-800' : 'bg-gray-300'}`} />
           )}
         </div>
       ))}

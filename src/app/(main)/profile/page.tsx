@@ -52,7 +52,7 @@ export default function ProfilePage() {
 
   return (
     <main className="ml-0 sm:ml-25 lg:ml-68 bg-neutral-150">
-      <section className="mx-auto max-w-5xl w-9/10 py-16 flex flex-col gap-8">
+      <section className="mx-auto max-w-5xl w-9/10 sm:py-16 py-24 flex flex-col gap-8">
         <article className="w-full flex flex-col gap-8">
           <h1 className="font-semibold text-xl">Informações da conta</h1>
           <section className="lg:h-[calc(100vh-128px)] mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12 w-full">

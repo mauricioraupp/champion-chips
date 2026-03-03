@@ -14,11 +14,11 @@ export default function CreateChampionship() {
 
   const [formData, setFormData] = useState({
     name: "",
-    sport: "soccer",
     leagueLogoUrl: "",
+    leagueLogoFile: null as File | null,
     format: "league",
     secondLegs: false,
-    teams: [] as { name: string; sigla: string; teamLogoUrl: string }[],
+    teams: [] as { name: string; sigla: string; teamLogoUrl?: string; teamLogoFile: File | null }[],
   });
 
   const nextStep = () => setStep((prev) => Math.min(prev + 1, 3));
@@ -28,19 +28,19 @@ export default function CreateChampionship() {
     setFormData((prev) => ({ ...prev, ...newData }));
   };
 
-  const handleFinish = async () => {
-    if (isLoading) return;
+const handleFinish = async (finalDataFromStepThree: any) => {
+  if (isLoading) return;
 
     try {
       setIsLoading(true);
-      const response = await fetch("/api/championships", {
+      const response = await fetch("/api/championship", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(finalDataFromStepThree),
       });
       
       if (response.ok) {
-        router.push("/");
+        router.push("/my-championships");
       } else {
         alert("Erro ao criar o campeonato. Tente novamente.");
       }
@@ -52,8 +52,10 @@ export default function CreateChampionship() {
   };
 
   return (
-    <main className="flex items-center justify-center bg-[url(/authbg.jpg)] bg-cover h-full w-full absolute bg-blur-sm">
-      <section className="bg-neutral-150 flex flex-col items-center gap-8 min-w-[450px] w-1/3 mx-auto py-12 px-12 rounded-md shadow-2xl">
+    <main className="flex bg-black items-center justify-center h-full w-full absolute">
+      <div className="bg-[url(/authbg.jpg)] bg-cover h-full w-full absolute blur-sm"/>
+      <section className="relative bg-neutral-150 flex flex-col items-center gap-8 mx-auto py-12 px-12 rounded-md shadow-2xl 
+        lg:min-w-132 min-w-72 w-2/3 sm:w-2/3 lg:w-1/3">
         
         <p className="font-semibold text-xl">
           {step === 1 && "Configurações"}
@@ -85,6 +87,7 @@ export default function CreateChampionship() {
             <ModalStepThree 
               prevStep={prevStep} 
               teams={formData.teams} 
+              data={formData}
               setTeams={(teams) => updateFormData({ teams })}
               onFinish={handleFinish}
             />

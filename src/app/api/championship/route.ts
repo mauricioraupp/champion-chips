@@ -6,41 +6,43 @@ export async function POST(req: Request) {
   try {
     const session = await getServerSession(); 
 
-    if (!session?.user) {
+    if (!session?.user?.email) {
       return new NextResponse("Não autorizado", { status: 401 });
     }
 
-    const userId = (session.user as any).id;
+    const dbUser = await prisma.user.findUnique({
+      where: { email: session.user.email }
+    });
 
-    const body = await req.json();
-    const { sport, name, leagueLogoUrl, format, secondLegs, teams } = body;
-
-    if (sport === "soccer") {
-      const result = await prisma.soccerLeague.create({
-        data: {
-          name,
-          logo: leagueLogoUrl || "",
-          format,
-          secondLegs,
-          stage: 1,
-          userId,
-          Teams: {
-            create: teams.map((team: any) => ({
-              name: team.name,
-              sigla: team.sigla.toUpperCase(),
-              logo: team.teamLogoUrl,
-              userId,
-            })),
-          },
-        },
-      });
-
-      return NextResponse.json(result);
+    if (!dbUser) {
+      return new NextResponse("Usuário não encontrado", { status: 404 });
     }
 
-    return new NextResponse("Esporte não suportado", { status: 400 });
-  } catch (error) {
-    console.error("Erro na criação:", error);
-    return new NextResponse("Erro interno", { status: 500 });
+    const body = await req.json();
+    const { name, leagueLogoUrl, secondLegs, teams } = body;
+
+    const result = await prisma.soccerLeague.create({
+      data: {
+        name,
+        logo: leagueLogoUrl || null,
+        secondLegs,
+        stage: 1,
+        userId: dbUser.id,
+        Teams: {
+          create: teams.map((team: any) => ({
+            name: team.name,
+            sigla: (team.sigla).substring(0, 3).toUpperCase(),
+            logo: team.teamLogoUrl || null,
+            userId: dbUser.id,
+          })),
+        },
+      },
+    });
+
+    return NextResponse.json(result);
+
+  } catch (error: any) {
+    console.error("ERRO PRISMA:", error.code, error.meta);
+    return new NextResponse("Erro ao salvar no banco", { status: 500 });
   }
 }

@@ -1,84 +1,96 @@
-import { UploadButton } from "@uploadthing/react";
-import { OurFileRouter } from "@/app/api/uploadthing/core";
+"use client"
+
+import { useState, ChangeEvent } from "react";
 import ReturnButton from "@/components/ui/ReturnButton"
 
 interface Props {
   nextStep: () => void;
   data: {
     name: string;
-    sport: string;
+    leagueLogoFile: File | null;
     leagueLogoUrl?: string;
   };
   updateData: (newData: Partial<Props["data"]>) => void;
 }
 
 export default function ModalStepOne({ nextStep, data, updateData }: Props){
+  const [preview, setPreview] = useState(data.leagueLogoFile ? URL.createObjectURL(data.leagueLogoFile) : "");
+  const [error, setError] = useState(false);
+
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      updateData({ leagueLogoFile: file });
+      setPreview(URL.createObjectURL(file));
+    }
+  };
+
+  const handleNext = () => {
+    if (!data.name.trim()) {
+      setError(true);
+      return;
+    }
+    
+    setError(false);
+    nextStep();
+  };
+
   return(
     <div className="flex flex-col gap-6 w-full">
+
+      <fieldset className="flex flex-col gap-1 w-full">
+        <label className={`font-medium ${error ? "text-red-500" : "text-neutral-700"}`}>
+          Nome do torneio
+        </label>
+        <input 
+          type="text"
+          value={data.name} 
+          onChange={(e) => {
+            updateData({ name: e.target.value });
+            if (error) setError(false);
+          }}
+          className={`py-2 px-3 w-full border-2 rounded-sm outline-none transition-colors ${
+            error ? "border-red-400 focus:border-red-500 bg-red-50" : "border-neutral-300 focus:border-zinc-800"
+          }`}
+        />
+        {error && (
+          <span className="text-red-500 text-xs font-medium animate-in fade-in slide-in-from-top-1">
+            O nome do torneio é obrigatório.
+          </span>
+        )}
+      </fieldset>
+
       <div className="flex flex-col items-center gap-2">
         <label className="font-medium text-neutral-700 self-start">Emblema do torneio</label>
-        {data.leagueLogoUrl ? (
+        {preview ? (
           <div className="relative">
-             <img src={data.leagueLogoUrl} className="w-24 h-24 object-cover" />
+             <img src={preview} className="w-24 h-24 object-cover rounded-md border" />
              <button 
-               onClick={() => updateData({ leagueLogoUrl: "" })}
-               className="absolute -top-1 -right-1 bg-red-500 text-white font-bold rounded-full w-6 h-6 text-sm cursor-pointer"
-             >
-               X
-             </button>
+               onClick={() => {
+                 updateData({ leagueLogoFile: null });
+                 setPreview("");
+                }
+              }
+               className="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-6 h-6 font-semibold cursor-pointer"
+             >X</button>
           </div>
         ) : (
-          <div className="flex flex-col items-center w-full">
-            <UploadButton<OurFileRouter, "leagueLogo">
-              endpoint="leagueLogo"
-              onClientUploadComplete={(res) => {
-                updateData({ leagueLogoUrl: res[0].url });
-              }}
-              content={{
-                button({ ready }) {
-                  if (ready) return " ";
-                  return "Carregando...";
-                },
-              }}
-              appearance={{
-                button: "w-full bg-zinc-100 text-zinc-800 border-2 border-dashed border-zinc-300 hover:bg-zinc-200 transition-all",
-                container: "w-full",
-                allowedContent: "hidden"
-              }}
-            />
-            <p className="text-xs text-neutral-500 mt-1">(Opcional)</p>
+          <div className="w-full">
+            <label className="flex flex-col items-center justify-center w-full h-12 bg-zinc-100 text-zinc-800 border-2 border-dashed border-zinc-300 rounded-md hover:bg-zinc-200 cursor-pointer transition-all">
+              <span className="text-sm font-medium">Selecionar Emblema</span>
+              <input type="file" className="hidden" accept="image/*" onChange={handleFileChange} />
+            </label>
+            <p className="text-center text-xs text-neutral-500 mt-1">(Opcional)</p>
           </div>
         )}
       </div>
 
-      <fieldset className="flex flex-col gap-1 w-full">
-        <label className="font-medium text-neutral-700">Nome do torneio</label>
-        <input 
-          name="championshipName"
-          type="text"
-          value={data.name} 
-          onChange={(e) => updateData({ name: e.target.value })}
-          className="py-2 px-3 w-full border-2 rounded-sm border-neutral-300"
-        />
-      </fieldset>
-
-      <fieldset className="flex flex-col gap-1 w-full">
-        <label className="font-medium text-neutral-700">Esporte</label>
-        <select 
-          name="sport"
-          value={data.sport} 
-          onChange={(e) => updateData({ sport: e.target.value })} 
-          className="py-2 px-3 w-full border-2 rounded-sm border-neutral-300 cursor-pointer">
-            <option value="soccer">Futebol</option>
-        </select>
-      </fieldset>
-
       <section className="flex justify-between mt-8">
         <ReturnButton/>
         <button 
-          onClick={nextStep}
-          className="bg-black py-1 sm:py-2 px-4 sm:px-8 rounded-md font-medium text-white cursor-pointer">Avançar
-        </button>
+          onClick={handleNext}
+          className={`bg-black py-1 sm:py-2 px-4 sm:px-8 rounded-md font-medium text-white cursor-pointer`}
+        >Avançar</button>
       </section>
     </div>
   )

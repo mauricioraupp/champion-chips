@@ -14,10 +14,9 @@ export default function SideBar() {
   return(
     <>
       <header className="sm:hidden fixed top-0 w-screen bg-neutral-50 z-1 border-b-2 border-neutral-300">
-        <li className="flex flex-col lg:flex-row items-center 
-          py-4 lg:py-2 px-2 lg:px-4 gap-1 lg:gap-4 rounded-md"
+        <li className="flex justify-between items-center py-4 px-6 gap-1 rounded-md"
         >
-          <p className="flex text-black font-bold text-xl">Champion Chips</p>
+          <p className="flex text-black font-bold text-2xl">Champion<span className="text-yellow-600">Chips</span></p>
           <Menu className="flex"/>
         </li>
       </header>
@@ -30,7 +29,7 @@ export default function SideBar() {
             py-2 lg:py-2 px-2 lg:px-4 gap-1 lg:gap-4 rounded-md"
           >
             <Menu className="flex lg:hidden"/>
-            <p className="hidden lg:flex text-black font-bold text-xl">Champion Chips</p>
+            <p className="hidden lg:flex text-black font-bold text-2xl">Champion<span className="text-yellow-600">Chips</span></p>
           </li>
         </ul>
 
