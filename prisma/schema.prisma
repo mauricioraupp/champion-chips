@@ -13,7 +13,7 @@ model User {
   password          String?
   image             String?
   createdAt         DateTime            @default(now())
-  soccerLeagues     SoccerLeague[]
+  SoccerLeagues     SoccerLeague[]
   TeamsSoccerLeague TeamsSoccerLeague[]
   Players           Players[]
 }
