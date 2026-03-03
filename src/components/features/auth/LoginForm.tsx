@@ -1,34 +1,55 @@
 "use client";
 
 import { signIn } from "next-auth/react"
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
+import { useState } from "react";
+import { toast, Toaster } from "sonner";
 import GoogleLoginBtn from "@/components/features/auth/GoogleAuthButton";
+import Link from "next/link";
 
 export default function LoginForm() {
   const searchParams = useSearchParams()
-  const error = searchParams.get("error")
+  const emailSent = searchParams.get("sent");
+  const router = useRouter()
+  const [loading, setLoading] = useState(false);
 
   async function login(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
+  e.preventDefault();
+  setLoading(true);
 
-    const data = {
-      email: formData.get("email"),
-      password: formData.get("password"),
-      remember: formData.get("remember") === "on",
-      redirect: false
-    };
+  const formData = new FormData(e.currentTarget);
+  const email = formData.get("email");
+  const password = formData.get("password");
 
-    signIn("credentials", {
-      ...data,
-      callbackUrl: "/"
-    })
+  try {
+    const result = await signIn("credentials", {
+      email,
+      password,
+      redirect: false,
+    });
+
+    if (result?.error) {
+      toast.error("E-mail ou senha incorretos.");
+    } else if (result?.ok) {
+      toast.success("Bem-vindo de volta!");
+      router.push("/profile");
+    }
+  } catch (error) {
+    toast.error("Ocorreu um erro inesperado.");
+  } finally {
+    setLoading(false);
   }
+}
   return(
     <form 
       onSubmit={login}
       className="flex flex-col gap-4 sm:gap-7 justify-center items-center h-3/5 w-5/6 sm:w-3/5 max-w-md"
     >
+      {emailSent && (
+        <div className="bg-emerald-100 border border-emerald-400 text-emerald-700 px-4 py-3 rounded mb-4 text-sm w-full">
+          Link enviado com sucesso! Verifique sua caixa de entrada.
+        </div>
+      )}
       <div className="w-full">
         <h1 className="text-4xl font-bold w-full text-left">Bem vindo de volta!</h1>
         <p className="text-neutral-700 w-full text-left pt-2">Insira seus dados</p>
@@ -66,12 +87,12 @@ export default function LoginForm() {
               after:bg-[length:40px] after:bg-center after:bg-no-repeat after:content-[''] checked:border-zinc-950 checked:bg-zinc-950 cursor-pointer"/>
           <span className="font-medium text-neutral-700">Lembrar de mim</span>
         </div>
-        <p className="text-sky-600 underline font-medium pt-4 sm:pt-0">Esqueci minha senha</p>
+        <Link href={"/forgot-password"} className="text-sky-600 underline font-medium pt-4 sm:pt-0">Esqueci minha senha</Link>
       </fieldset>
 
-      <button className="bg-zinc-950 py-3 w-full rounded-md text-neutral-50 cursor-pointer">Entrar</button>
-      {error === "CredentialsSignin" && <div className="font-medium text-red-500">Erro no login</div>}
-      <p className="font-medium text-neutral-700">Ainda não possui uma conta? <span className="text-sky-600 underline font-medium">Fazer cadastro</span></p>
+      <button className="bg-zinc-950 hover:bg-zinc-800 py-3 w-full rounded-md text-neutral-50 cursor-pointer">Entrar</button>
+      <p className="font-medium text-neutral-700">Ainda não possui uma conta? <Link href={"/register"} className="text-sky-600 underline font-medium">Fazer cadastro</Link></p>
+      <Toaster richColors position="top-center"/>
     </form>
   )
 }

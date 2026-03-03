@@ -74,7 +74,7 @@ export default async function ProfilePage() {
             <div className="bg-neutral-50 border-2 border-neutral-300 rounded-md py-10 px-4 flex flex-col items-center justify-center mx-auto w-full">
               <div className="w-24 h-24 bg-gray-200 rounded-full mb-3 relative">
                 <Image
-                  src={user.image || "default-team-logo.png"}
+                  src={user.image || "/default-user-pic.png"}
                   alt={"Foto de perfil"}
                   fill
                   className="rounded-full"
