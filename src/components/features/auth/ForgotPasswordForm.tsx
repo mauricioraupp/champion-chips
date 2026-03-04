@@ -31,7 +31,7 @@ export default function ForgotPasswordForm() {
         if (data.isSocial === true) {
           router.push("/login");
         } else if (data.isSocial === false) {
-          router.push("/login?sent-true")
+          router.push("/login?sent=true")
         }
       } else {
         toast.error(data.message || "Erro ao solicitar recuperação.");

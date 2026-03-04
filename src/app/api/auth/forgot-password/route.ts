@@ -49,7 +49,7 @@ export async function POST(req: Request) {
       html: `
         <h1>Olá, ${user.name}!</h1>
         <p>Você solicitou a alteração de senha. Clique no botão abaixo para prosseguir:</p>
-        <a href="${resetLink}" style="background: #000000; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; display: inline-block;">
+        <a href="${resetLink}" style="background: #000000; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; display: inline-block; hover: backgound: #242424">
           Alterar Senha
         </a>
         <p>Este link expira em 1 hora.</p>

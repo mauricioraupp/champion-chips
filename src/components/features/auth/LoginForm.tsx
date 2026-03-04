@@ -20,11 +20,13 @@ export default function LoginForm() {
   const formData = new FormData(e.currentTarget);
   const email = formData.get("email");
   const password = formData.get("password");
+  const remember = formData.get("remember");
 
   try {
     const result = await signIn("credentials", {
       email,
       password,
+      remember: formData.get("remember") === "on",
       redirect: false,
     });
 

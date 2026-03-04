@@ -1,3 +1,4 @@
+import { Providers } from "@/components/layout/providers";
 import { Raleway } from 'next/font/google';
 import "@/app/globals.css";
 
@@ -10,7 +11,9 @@ export default function RootLayout({children,}: Readonly<{children: React.ReactN
   return (
     <html lang="pt-br" className={raleway.className}>
       <body className={`antialiased min-h-screen`}>
-        {children}
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   );

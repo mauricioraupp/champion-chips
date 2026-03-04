@@ -10,6 +10,8 @@ const handler = NextAuth({
   },
   session: {
     strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60,
+    updateAge: 60 * 60
   },
   providers: [
     CredentialsProvider({
@@ -68,9 +70,14 @@ const handler = NextAuth({
 
       return true;
     },
-    async jwt({ token, user }) {
+    async jwt({ token, user}) {
       if (user) {
         token.id = user.id;
+        token.rememberMe = (user as any).remember === true || (user as any).remember === "on";
+      }
+      if (!token.rememberMe) {
+        const oneDay = 24 * 60 * 60;
+        token.exp = Math.floor(Date.now() / 1000) + oneDay;
       }
       return token;
     },
