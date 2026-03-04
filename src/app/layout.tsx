@@ -1,4 +1,4 @@
-import { Providers } from "@/components/layout/providers";
+import { Providers } from "@/components/layout/Providers";
 import { Raleway } from 'next/font/google';
 import "@/app/globals.css";
 

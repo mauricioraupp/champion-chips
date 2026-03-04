@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
+import { generateChampionshipMatches } from "@/app/actions/championships";
 
 export async function POST(req: Request) {
   try {
@@ -26,7 +27,6 @@ export async function POST(req: Request) {
         name,
         logo: leagueLogoUrl || null,
         secondLegs,
-        stage: 1,
         userId: dbUser.id,
         Teams: {
           create: teams.map((team: any) => ({
@@ -37,7 +37,12 @@ export async function POST(req: Request) {
           })),
         },
       },
+      include: {
+        Teams: true
+      }
     });
+
+    await generateChampionshipMatches(result.id)
 
     return NextResponse.json(result);
 
