@@ -7,19 +7,22 @@ datasource db {
 }
 
 model User {
-  id                Int                 @id @default(autoincrement())
-  email             String              @unique
-  name              String
-  password          String?
-  image             String?
-  createdAt         DateTime            @default(now())
+  id Int @id @default(autoincrement())
+
+  email     String   @unique
+  name      String
+  password  String?
+  image     String?
+  createdAt DateTime @default(now())
+
   SoccerLeagues     SoccerLeague[]
   TeamsSoccerLeague TeamsSoccerLeague[]
   Players           Players[]
 }
 
 model PasswordResetToken {
-  id        String   @id @default(cuid())
+  id String @id @default(cuid())
+
   email     String   @unique
   token     String   @unique
   expires   DateTime
@@ -27,15 +30,17 @@ model PasswordResetToken {
 }
 
 model SoccerLeague {
-  id         Int                 @id @default(autoincrement())
-  User       User?               @relation(fields: [userId], references: [id])
-  userId     Int?
+  id     Int   @id @default(autoincrement())
+  User   User? @relation(fields: [userId], references: [id])
+  userId Int?
+
   name       String
   logo       String?
-  secondLegs Boolean
-  stage      Int
-  createdAt  DateTime            @default(now())
-  Teams      TeamsSoccerLeague[]
+  secondLegs Boolean  @default(false)
+  createdAt  DateTime @default(now())
+
+  Teams   TeamsSoccerLeague[]
+  Matches Match[]
 }
 
 model TeamsSoccerLeague {
@@ -44,19 +49,25 @@ model TeamsSoccerLeague {
   userId         Int?
   SoccerLeague   SoccerLeague? @relation(fields: [soccerLeagueId], references: [id])
   soccerLeagueId Int?
-  name           String
-  sigla          String        @db.VarChar(3)
-  logo           String?
-  points         Int           @default(0)
-  playedMatches  Int           @default(0)
-  wins           Int           @default(0)
-  draws          Int           @default(0)
-  losses         Int           @default(0)
-  goalsScored    Int           @default(0)
-  goalsConceded  Int           @default(0)
-  goalsDiff      Int           @default(0)
-  createdAt      DateTime      @default(now())
-  Players        Players[]
+
+  name      String
+  sigla     String   @db.VarChar(3)
+  logo      String?
+  createdAt DateTime @default(now())
+
+  points        Int @default(0)
+  playedMatches Int @default(0)
+  wins          Int @default(0)
+  draws         Int @default(0)
+  losses        Int @default(0)
+  goalsScored   Int @default(0)
+  goalsConceded Int @default(0)
+  goalsDiff     Int @default(0)
+
+  Players     Players[]
+  Goals       Goal[]
+  HomeMatches Match[]   @relation("HomeMatches")
+  AwayMatches Match[]   @relation("AwayMatches")
 }
 
 model Players {
@@ -65,12 +76,40 @@ model Players {
   userId            Int?
   TeamsSoccerLeague TeamsSoccerLeague? @relation(fields: [teamId], references: [id])
   teamId            Int?
-  name              String
-  age               Int?
-  position          String?
-  picture           String?
-  goals             Int                @default(0)
-  assists           Int                @default(0)
-  cleanSheets       Int                @default(0)
-  createdAt         DateTime           @default(now())
+
+  name      String
+  position  String?
+  picture   String?
+  createdAt DateTime @default(now())
+
+  GoalsScored Goal[]
+}
+
+model Match {
+  id             Int               @id @default(autoincrement())
+  SoccerLeague   SoccerLeague      @relation(fields: [soccerLeagueId], references: [id])
+  soccerLeagueId Int
+  HomeTeam       TeamsSoccerLeague @relation("HomeMatches", fields: [homeTeamId], references: [id])
+  homeTeamId     Int
+  AwayTeam       TeamsSoccerLeague @relation("AwayMatches", fields: [awayTeamId], references: [id])
+  awayTeamId     Int
+
+  homeScore     Int      @default(0)
+  awayScore     Int      @default(0)
+  round         Int      @default(1)
+  isReturnMatch Boolean  @default(false)
+  status        String   @default("SCHEDULED") // Pode ser "SCHEDULED", "FINISHED", "LIVE"
+  createdAt     DateTime @default(now())
+
+  Goals Goal[]
+}
+
+model Goal {
+  id                Int               @id @default(autoincrement())
+  Match             Match             @relation(fields: [matchId], references: [id])
+  matchId           Int
+  Player            Players           @relation(fields: [playerId], references: [id])
+  playerId          Int
+  TeamsSoccerLeague TeamsSoccerLeague @relation(fields: [teamId], references: [id])
+  teamId            Int
 }
