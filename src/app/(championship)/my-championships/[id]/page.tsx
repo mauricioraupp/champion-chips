@@ -7,7 +7,7 @@ export default function SoccerLeagueDashboard() {
       <h1 className="font-semibold text-xl w-fit mx-auto sm:pt-16 pt-32 sm:pb-16 pb-16">
         Torneio 1
       </h1>
-      <Suspense fallback={<div>Carregando dashboard...</div>}>
+      <Suspense fallback={<div className="text-center">Carregando dashboard...</div>}>
         <ChampionshipDashboard/>
       </Suspense>
     </main>
