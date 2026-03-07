@@ -94,12 +94,14 @@ model Match {
   AwayTeam       TeamsSoccerLeague @relation("AwayMatches", fields: [awayTeamId], references: [id])
   awayTeamId     Int
 
-  homeScore     Int      @default(0)
-  awayScore     Int      @default(0)
-  round         Int      @default(1)
-  isReturnMatch Boolean  @default(false)
-  status        String   @default("SCHEDULED") // Pode ser "SCHEDULED" ou "FINISHED"
-  createdAt     DateTime @default(now())
+  homeScore     Int       @default(0)
+  awayScore     Int       @default(0)
+  round         Int       @default(1)
+  isReturnMatch Boolean   @default(false)
+  date          DateTime?
+  time          String?
+  status        String    @default("SCHEDULED") // Pode ser "SCHEDULED" ou "FINISHED"
+  createdAt     DateTime  @default(now())
 
   Goals Goal[]
 }
