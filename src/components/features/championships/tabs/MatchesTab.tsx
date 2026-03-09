@@ -8,14 +8,13 @@ export default function MatchesTab({ leagueId }: { leagueId: number }) {
   const [matches, setMatches] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    async function load() {
-      const data = await getMatches(leagueId)
-      setMatches(data)
-      setLoading(false)
-    }
-    load()
-  }, [leagueId])
+  const loadMatches = async () => {
+    const data = await getMatches(leagueId)
+    setMatches(data)
+    setLoading(false)
+  }
+
+  useEffect(() => { loadMatches() }, [leagueId])
 
   if (loading) return <div className="p-10 text-center">Carregando partidas...</div>
 
@@ -30,9 +29,10 @@ export default function MatchesTab({ leagueId }: { leagueId: number }) {
   return (
     <div className="flex flex-col w-full max-w-3xl mx-auto">
       {matches.map((match) => (
-        <MatchCard 
+        <MatchCard
           key={match.id} 
           match={match} 
+          onUpdate={loadMatches}
         />
       ))}
     </div>

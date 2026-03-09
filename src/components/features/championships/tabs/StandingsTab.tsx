@@ -64,7 +64,7 @@ export default function StandingsTab({ leagueId }: { leagueId: number }) {
               <td className="px-3 py-4 text-center text-neutral-600">{entry.losses}</td>
               <td className="px-3 py-4 text-center text-neutral-600">{entry.goalsScored}</td>
               <td className="px-3 py-4 text-center text-neutral-600">{entry.goalsConceded}</td>
-              <td className="px-3 py-4 text-center text-neutral-600">
+              <td className="px-3 py-4 text-center text-neutral-600 font-semibold">
                 <span className={entry.goalsDiff > 0 ? "text-green-600" : entry.goalsDiff < 0 ? "text-red-600" : ""}>
                   {entry.goalsDiff}
                 </span>
