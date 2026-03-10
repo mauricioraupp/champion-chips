@@ -1,12 +1,11 @@
 "use client"
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Clipboard, Calendar, Shield, Target } from '@geist-ui/icons'
+import { Clipboard, Calendar, Shield } from '@geist-ui/icons'
 import DashboardSelector from "@/components/features/championships/tabs/DashboardSelector";
 import StandingsTab from './tabs/StandingsTab';
 import MatchesTab from './tabs/MatchesTab';
 import TeamsTab from './tabs/TeamsTab';
-import ScorersTab from './tabs/ScorersTab';
 
 export default function ChampionshipDashboard() {
   const router = useRouter();
@@ -22,7 +21,7 @@ export default function ChampionshipDashboard() {
 
   return(
     <section className="w-full flex flex-col gap-16 items-center">
-      <div className="grid grid-rows-1 grid-cols-4 gap-8 w-fit">
+      <div className="grid grid-rows-1 grid-cols-3 gap-8 w-fit">
 
         <DashboardSelector 
           icon={<Clipboard size={20}/>} 
@@ -44,13 +43,6 @@ export default function ChampionshipDashboard() {
           isActive={activeTab === "times"}
           onClick={() => setTab("times")}
         />
-
-        <DashboardSelector 
-          icon={<Target size={20}/>} 
-          title="Artilharia" 
-          isActive={activeTab === "artilharia"}
-          onClick={() => setTab("artilharia")}
-        />
         
       </div>
       <div className="flex items-center justify-center w-full">
@@ -64,8 +56,7 @@ export default function ChampionshipDashboard() {
       <div className="w-full max-w-6xl animate-in fade-in slide-in-from-bottom-4 duration-500">
         {activeTab === "tabela" && <StandingsTab leagueId={3}/>}
         {activeTab === "partidas" && <MatchesTab leagueId={3}/>}
-        {activeTab === "times" && <TeamsTab/>}
-        {activeTab === "artilharia" && <ScorersTab/>}
+        {activeTab === "times" && <TeamsTab leagueId={3}/>}
       </div>
     </section>
   )

@@ -45,7 +45,7 @@ export default function StandingsTab({ leagueId }: { leagueId: number }) {
                     <img 
                       src={entry.logo} 
                       alt={entry.name} 
-                      className="w-full h-full object-contain"
+                      className="w-full h-full object-cover rounded-full"
                     />
                   ) : (
                     <span className="text-[10px] font-bold text-neutral-400">{entry.sigla}</span>

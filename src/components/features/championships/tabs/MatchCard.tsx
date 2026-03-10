@@ -89,7 +89,7 @@ export default function MatchCard({ match, onUpdate }: { match: any, onUpdate: (
   }
 
   return(
-    <div className={`relative flex items-center justify-between p-4 sm:p-8 border first:rounded-t-sm last:rounded-b-sm transition-all ${
+    <div className={`relative flex items-center justify-between px-4 py-6 sm:p-10 border rounded-xs transition-all ${
       isFinished ? 'bg-neutral-200 border-neutral-200' : 'bg-neutral-50 border-neutral-300'
     }`}>
       
@@ -101,7 +101,7 @@ export default function MatchCard({ match, onUpdate }: { match: any, onUpdate: (
           {match.HomeTeam.sigla}
         </span>
         <figure className={`w-6 sm:w-8 h-6 sm:h-8 ${isFinished ? 'grayscale opacity-70' : ''}`}>
-          <img src={match.HomeTeam.logo} className="w-full h-full object-contain"/>
+          <img src={match.HomeTeam.logo} className="w-full h-full object-cover rounded-full"/>
         </figure>
       </div>
 
@@ -128,7 +128,7 @@ export default function MatchCard({ match, onUpdate }: { match: any, onUpdate: (
 
       <div className="flex items-center gap-1 sm:gap-2 flex-1">
         <figure className={`w-6 sm:w-8 h-6 sm:h-8 ${isFinished ? 'grayscale opacity-70' : ''}`}>
-          <img src={match.AwayTeam.logo} className="w-full h-full object-contain"/>
+          <img src={match.AwayTeam.logo} className="w-full h-full object-cover rounded-full"/>
         </figure>
         <span className={`font-semibold ${isFinished ? 'text-neutral-600' : 'text-neutral-900'} hidden sm:block`}>
           {match.AwayTeam.name}
