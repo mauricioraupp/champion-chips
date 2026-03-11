@@ -64,7 +64,7 @@ export default function ModalStepOne({ nextStep, data, updateData }: Props){
         <label className="font-medium text-neutral-700 self-start">Emblema do torneio</label>
         {preview ? (
           <div className="relative">
-             <img src={preview} className="w-24 h-24 object-cover rounded-md border" />
+             <img src={preview} className="w-24 h-24 object-cover rounded-full border" />
              <button 
                onClick={() => {
                  updateData({ leagueLogoFile: null });

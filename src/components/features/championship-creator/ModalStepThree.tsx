@@ -107,7 +107,7 @@ export default function ModalStepThree({ prevStep, teams, setTeams, data, onFini
                       <img 
                         src={(team.teamLogoFile ? URL.createObjectURL(team.teamLogoFile) : "")} 
                         alt={team.name} 
-                        className="w-8 h-8 rounded-xs object-cover" 
+                        className="w-8 h-8 rounded-full object-cover" 
                       />
                     ) : (
                       <img className="w-8 h-8 flex items-center justify-center"

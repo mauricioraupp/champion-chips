@@ -36,8 +36,8 @@ export default function TeamsTab({ leagueId }: { leagueId: number }) {
         />
       ))}
       <div 
-        className={`flex items-center justify-center w-30 sm:w-60 h-30 sm:h-52 rounded-xs bg-black
-          hover:scale-105 hover:shadow-lg cursor-pointer transition-all`
+        className={`flex items-center justify-center w-30 sm:w-60 h-30 sm:h-52 rounded-md bg-black
+          hover:bg-zinc-800 cursor-pointer transition-colors`
         }>
         <span className={`font-medium text-white sm:text-md`}>
           + Criar time

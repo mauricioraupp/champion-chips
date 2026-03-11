@@ -34,7 +34,7 @@ export default function AddTeamForm({ onClose, onSave }: AddTeamFormProps) {
       <div className="flex flex-col items-center gap-2">
         {previewUrl ? (
           <div className="relative">
-            <img src={previewUrl} className="w-24 h-24 object-cover rounded-md" />
+            <img src={previewUrl} className="w-24 h-24 object-cover rounded-full" />
             <button 
               onClick={() => { setPreviewUrl(""); setTeamLogoFile(null); }} 
               className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 cursor-pointer"

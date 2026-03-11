@@ -17,7 +17,7 @@ export default function StandingsTab({ leagueId }: { leagueId: number }) {
   if (loading) return <div className="p-8 text-center">Carregando classificação...</div>
 
   return (
-    <div className="w-full overflow-x-auto border-neutral-300 border-1 rounded-sm">
+    <div className="w-full overflow-x-auto border-neutral-300 border-1 rounded-md">
       <table className="w-full text-sm text-left">
         <thead className="bg-neutral-50 text-xs text-neutral-500 uppercase border-b border-neutral-300">
           <tr>

@@ -89,7 +89,7 @@ export default function MatchCard({ match, onUpdate }: { match: any, onUpdate: (
   }
 
   return(
-    <div className={`relative flex items-center justify-between px-4 py-6 sm:p-10 border rounded-xs transition-all ${
+    <div className={`relative flex items-center justify-between px-4 py-6 sm:p-10 border rounded-md hover:border-neutral-400 ${
       isFinished ? 'bg-neutral-200 border-neutral-200' : 'bg-neutral-50 border-neutral-300'
     }`}>
       
@@ -137,7 +137,9 @@ export default function MatchCard({ match, onUpdate }: { match: any, onUpdate: (
           {match.AwayTeam.sigla}
         </span>
       </div>
-      <Edit onClick={() => setIsEditing(true)} size="20" className="sm:absolute sm:right-8 cursor-pointer"/>
+      <button className={`sm:absolute sm:right-8 p-2 ${isFinished ? 'hover:bg-neutral-300' : 'hover:bg-neutral-200' } rounded-full transition-colors cursor-pointer`}>
+        <Edit onClick={() => setIsEditing(true)} size="20"/>
+      </button>
     </div>
   )
 }

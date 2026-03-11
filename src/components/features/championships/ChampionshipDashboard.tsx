@@ -45,7 +45,7 @@ export default function ChampionshipDashboard() {
         />
         
       </div>
-      <div className="flex items-center justify-center w-full">
+      <div className="flex items-center justify-center w-full px-4">
         <hr className="w-full border-1 rounded-xs border-neutral-300"/>
         <span className="absolute px-4 font-medium text-neutral-700 bg-neutral-150">
           {activeTab === "tabela" && "Tabela de clasificação"}
@@ -53,7 +53,7 @@ export default function ChampionshipDashboard() {
           {activeTab === "times" && "Times"}
         </span>
       </div>
-      <div className="w-full max-w-6xl animate-in fade-in slide-in-from-bottom-4 duration-500">
+      <div className="w-full max-w-6xl px-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
         {activeTab === "tabela" && <StandingsTab leagueId={3}/>}
         {activeTab === "partidas" && <MatchesTab leagueId={3}/>}
         {activeTab === "times" && <TeamsTab leagueId={3}/>}
