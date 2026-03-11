@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { getMatches } from "@/app/actions/matches"
-import MatchCard from "./MatchCard"
+import MatchCard from "./cards/MatchCard"
 
 export default function MatchesTab({ leagueId }: { leagueId: number }) {
   const [matches, setMatches] = useState<any[]>([])

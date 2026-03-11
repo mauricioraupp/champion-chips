@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { getTeams } from "@/app/actions/teams"
-import TeamCard from "./TeamCard"
+import TeamCard from "./cards/TeamCard"
 
 export default function TeamsTab({ leagueId }: { leagueId: number }) {
   const [teams, setTeams] = useState<any[]>([])
@@ -32,6 +32,7 @@ export default function TeamsTab({ leagueId }: { leagueId: number }) {
         <TeamCard
           key={teams.id} 
           team={teams} 
+          league={leagueId}
           onUpdate={loadTeams}
         />
       ))}

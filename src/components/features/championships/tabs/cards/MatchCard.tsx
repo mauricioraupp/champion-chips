@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { updateMatch } from "@/app/actions/matches";
 import { Edit } from '@geist-ui/icons'
+import { toast } from "sonner";
 
 export default function MatchCard({ match, onUpdate }: { match: any, onUpdate: () => void }) {
   const [isEditing, setIsEditing] = useState(false)
@@ -14,11 +15,12 @@ export default function MatchCard({ match, onUpdate }: { match: any, onUpdate: (
 
   const handleSave = async () => {
     const result = await updateMatch(match.id, formData)
-    if (result.success) {
+    if (result.error) {
+      toast.error("Não foi possível editar a partida")
+    } else if (result.success) {
+      toast.success("Partida editada com sucesso")
       setIsEditing(false)
       onUpdate()
-    } else {
-      alert("Erro ao salvar")
     }
   }
 

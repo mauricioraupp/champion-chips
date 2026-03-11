@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import SideBar from "@/components/layout/sidebar";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -11,6 +12,7 @@ export default function ChampionshipsLayout({children,}: Readonly<{children: Rea
     <div>
       <SideBar/>
       {children}
+      <Toaster richColors position="top-center"/>
     </div>
   );
 }
