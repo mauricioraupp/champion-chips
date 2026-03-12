@@ -54,9 +54,9 @@ export default function ChampionshipDashboard() {
         </span>
       </div>
       <div className="w-full max-w-6xl px-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
-        {activeTab === "tabela" && <StandingsTab leagueId={3}/>}
-        {activeTab === "partidas" && <MatchesTab leagueId={3}/>}
-        {activeTab === "times" && <TeamsTab leagueId={3}/>}
+        {activeTab === "tabela" && <StandingsTab leagueId={1}/>}
+        {activeTab === "partidas" && <MatchesTab leagueId={1}/>}
+        {activeTab === "times" && <TeamsTab leagueId={1}/>}
       </div>
     </section>
   )

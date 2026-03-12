@@ -1,47 +1,32 @@
-import { useState, useEffect, ChangeEvent } from "react";
+import { useState, ChangeEvent } from "react";
 import { X, Camera, Plus, Trash } from '@geist-ui/icons';
 import { useUploadThing } from "@/utils/uploadthing";
-import { updateTeam } from "@/app/actions/teams";
-import { getPlayers } from "@/app/actions/players"
+import { createTeam } from "@/app/actions/teams";
 import { toast } from "sonner";
 
-interface EditModalProps {
-  team: any;
+interface CreateModalProps {
+  leagueId: number;
   onClose: () => void;
   onUpdate: () => void;
 }
 
 interface PlayerData {
-  id?: number;
   name: string;
   position: string | null;
 }
 
-interface FormData {
-  name: string;
-  sigla: string;
-  players: PlayerData[];
-}
-
-export function EditTeamModal({ team, onClose, onUpdate }: EditModalProps) {
+export function CreateTeamModal({ leagueId, onClose, onUpdate }: CreateModalProps) {
   const [isUploading, setIsUploading] = useState(false);
   const [logoFile, setLogoFile] = useState<File | null>(null);
-  const [preview, setPreview] = useState(team.logo || "");
+  const [preview, setPreview] = useState("/default-team-logo.png");
   const [newPlayerName, setNewPlayerName] = useState("");
   const [newPosition, setNewPosition] = useState("");
-  const [formData, setFormData] = useState<FormData>({
-    name: team.name,
-    sigla: team.sigla,
-    players: []
+  
+  const [formData, setFormData] = useState({
+    name: "",
+    sigla: "",
+    players: [] as PlayerData[]
   });
-
-  useEffect(() => {
-    async function load() {
-      const data = await getPlayers(team.id);
-      setFormData(prev => ({ ...prev, players: data }));
-    }
-    load();
-  }, [team.id]);
 
   const { startUpload } = useUploadThing("teamLogo");
 
@@ -54,22 +39,28 @@ export function EditTeamModal({ team, onClose, onUpdate }: EditModalProps) {
   };
 
   const handleSave = async () => {
-    if (!formData.name || !formData.sigla) return alert("Campos obrigatórios!");
+    if (!formData.name || !formData.sigla) return toast.error("Nome e Sigla são obrigatórios!");
+    
     setIsUploading(true);
     try {
-      let finalLogoUrl = team.logo;
+      let finalLogoUrl = "/default-team-logo.png";
+      
       if (logoFile) {
         const res = await startUpload([logoFile]);
         if (res?.[0]) finalLogoUrl = res[0].url;
       }
-      const result = await updateTeam(team.id, team.soccerLeagueId, { ...formData, logo: finalLogoUrl }, team.logo);
-      if (result.error) {
-        toast.error("Não foi possível editar o time")
-      } if (result.success) {
-        toast.success("Time editado com sucesso")
+
+      const result = await createTeam(leagueId, { ...formData, logo: finalLogoUrl });
+
+      if (result.success) {
+        toast.success("Time criado com sucesso!");
         onUpdate();
         onClose();
+      } else {
+        toast.error(result.error || "Erro ao criar time");
       }
+    } catch (error) {
+      toast.error("Erro inesperado");
     } finally {
       setIsUploading(false);
     }
@@ -79,34 +70,27 @@ export function EditTeamModal({ team, onClose, onUpdate }: EditModalProps) {
     if (!newPlayerName.trim()) return;
     setFormData(prev => ({
       ...prev,
-      players: [
-        ...prev.players, 
-        { 
-          id: undefined, 
-          name: newPlayerName, 
-          position: newPosition 
-        }
-      ]
+      players: [...prev.players, { name: newPlayerName, position: newPosition || null }]
     }));
     setNewPlayerName("");
     setNewPosition("");
   };
 
-  const removePlayer = (idToRemove: number | undefined, index: number) => {
-    const updated = formData.players.filter((p: any, i: number) => {
-      if (idToRemove) return p.id !== idToRemove;
-      return i !== index;
-    });
-    setFormData({ ...formData, players: updated });
+  const removePlayer = (index: number) => {
+    setFormData(prev => ({
+      ...prev,
+      players: prev.players.filter((_, i) => i !== index)
+    }));
   };
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/60 z-50 p-4 backdrop-blur-sm">
       <div className="bg-white rounded-md shadow-2xl w-full max-w-md overflow-y-auto">
         <header className="flex items-center justify-between p-4 bg-neutral-100">
-          <h3 className="font-bold text-neutral-900">Editar Time</h3>
-          <button onClick={() => onClose()} className="text-neutral-400 hover:text-neutral-600 cursor-pointer"><X size="20" /></button>
+          <h3 className="font-bold text-neutral-900">Novo Time</h3>
+          <button onClick={onClose} className="text-neutral-400 hover:text-neutral-600 cursor-pointer"><X size="20" /></button>
         </header>
+
         <section className="p-6 flex flex-col gap-6">
           <article className="flex flex-col items-center gap-2">
             <div className="relative group">
@@ -118,20 +102,35 @@ export function EditTeamModal({ team, onClose, onUpdate }: EditModalProps) {
                 <input type="file" className="hidden" accept="image/*" onChange={handleFileChange} />
               </label>
             </div>
-            <span className="text-[10px] text-neutral-400 uppercase font-bold">Clique para alterar</span>
+            <span className="text-[10px] text-neutral-400 uppercase font-bold">Escudo do Time</span>
           </article>
+
           <article className="grid grid-cols-4 gap-4">
             <div className="col-span-3 flex flex-col gap-1">
               <label className="text-xs font-bold text-neutral-500 uppercase">Nome</label>
-              <input type="text" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} className="w-full border border-neutral-300 rounded-sm p-2 text-sm outline-none focus:border-black" />
+              <input 
+                type="text" 
+                placeholder="Nome do time"
+                value={formData.name} 
+                onChange={(e) => setFormData({...formData, name: e.target.value})} 
+                className="w-full border border-neutral-300 rounded-sm p-2 text-sm outline-none focus:border-black" 
+              />
             </div>
             <div className="col-span-1 flex flex-col gap-1">
               <label className="text-xs font-bold text-neutral-500 uppercase">Sigla</label>
-              <input type="text" value={formData.sigla} maxLength={3} onChange={(e) => setFormData({...formData, sigla: e.target.value})} className="w-full border border-neutral-300 rounded-sm p-2 text-sm outline-none focus:border-black uppercase text-center" />
+              <input 
+                type="text" 
+                maxLength={3} 
+                placeholder="AAA"
+                value={formData.sigla} 
+                onChange={(e) => setFormData({...formData, sigla: e.target.value.toUpperCase()})} 
+                className="w-full border border-neutral-300 rounded-sm p-2 text-sm outline-none focus:border-black text-center" 
+              />
             </div>
           </article>
+
           <article className="flex flex-col gap-3">
-            <label className="text-xs font-bold text-neutral-500 uppercase border-b border-neutral-300 pb-1">Gerenciar Jogadores</label>
+            <label className="text-xs font-bold text-neutral-500 uppercase border-b border-neutral-300 pb-1">Elenco Inicial</label>
             <div className="flex flex-col sm:flex-row gap-2">
               <input 
                 type="text" 
@@ -146,60 +145,41 @@ export function EditTeamModal({ team, onClose, onUpdate }: EditModalProps) {
                   onChange={(e) => setNewPosition(e.target.value)}
                   className="flex-1 border border-neutral-300 rounded-sm p-2 text-sm outline-none focus:border-black cursor-pointer"
                 >
-                  <option value={""}>Posição</option>
-                  <option value={"Atacante"}>Atacante</option>
-                  <option value={"Meio-campo"}>Meio-campo</option>
-                  <option value={"Defensor"}>Defensor</option>
-                  <option value={"Goleiro"}>Goleiro</option>
+                  <option value="">Posição</option>
+                  <option value="Atacante">Atacante</option>
+                  <option value="Meio-campo">Meio-campo</option>
+                  <option value="Defensor">Defensor</option>
+                  <option value="Goleiro">Goleiro</option>
                 </select>
                 <button onClick={addPlayer} className="bg-neutral-100 p-2 border border-neutral-300 rounded-sm hover:bg-neutral-200 cursor-pointer">
                   <Plus size={18}/>
                 </button>
               </div>
             </div>
+
             <div className="max-h-40 overflow-y-auto flex flex-col gap-1 bg-neutral-50 p-2 rounded-sm border border-neutral-300">
-              {formData.players.map((player: any, index: number) => {
-                const itemKey = player.id ? `db-${player.id}` : `new-${index}`;
-                return (
-                  <div key={itemKey} className="flex items-center bg-white border border-neutral-200 rounded-xs">
-                    <span className="flex-1 text-xs font-medium p-2 text-neutral-700">
-                      {player.name}
-                    </span>
-                    
-                    {player.position && (
-                      <span className="flex-1 text-xs font-medium p-2 text-neutral-700 border-l border-neutral-300">
-                        {player.position}
-                      </span>
-                    )}
-
-                    <button 
-                      type="button"
-                      onClick={() => removePlayer(player.id, index)} 
-                      className="p-2 text-neutral-400 hover:text-red-500 cursor-pointer"
-                    >
-                      <Trash size={14}/>
-                    </button>
-                  </div>
-                );
-              })}
-
-              {formData.players.length === 0 && <p className="text-[10px] text-center text-neutral-400 py-2 italic">Sem jogadores</p>}
+              {formData.players.map((player, index) => (
+                <div key={`new-${index}`} className="flex items-center bg-white border border-neutral-200 rounded-xs">
+                  <span className="flex-1 text-xs font-medium p-2 text-neutral-700">{player.name}</span>
+                  {player.position && (
+                    <span className="flex-1 text-xs font-medium p-2 text-neutral-700 border-l border-neutral-300">{player.position}</span>
+                  )}
+                  <button onClick={() => removePlayer(index)} className="p-2 text-neutral-400 hover:text-red-500 cursor-pointer"><Trash size={14}/></button>
+                </div>
+              ))}
+              {formData.players.length === 0 && <p className="text-[10px] text-center text-neutral-400 py-2 italic">Nenhum jogador adicionado</p>}
             </div>
           </article>
         </section>
+
         <footer className="p-4 bg-neutral-100 flex justify-end gap-3">
-          <button 
-            onClick={() => onClose()} 
-            className="px-4 py-2 text-sm text-neutral-800 font-medium rounded-sm hover:bg-neutral-200 cursor-pointer"
-          >
-            Cancelar
-          </button>
+          <button onClick={onClose} className="px-4 py-2 text-sm text-neutral-800 font-medium rounded-sm hover:bg-neutral-200 cursor-pointer">Cancelar</button>
           <button 
             onClick={handleSave} 
             disabled={isUploading}
             className="px-6 py-2 bg-black text-white text-sm font-semibold rounded-sm disabled:bg-neutral-400 flex items-center hover:bg-zinc-800 cursor-pointer"
           >
-            {isUploading ? "Salvando..." : "Salvar Alterações"}
+            {isUploading ? "Criando..." : "Criar Time"}
           </button>
         </footer>
       </div>

@@ -6,6 +6,7 @@ import Image from "next/image";
 export default function GoogleLoginBtn() {
   return(
     <button 
+      type="button"
       onClick={() => signIn("google", {callbackUrl: "/profile"})}
       className="flex items-center justify-center py-3 w-full border-2 rounded-sm border-neutral-300 text-lg cursor-pointer"
     >

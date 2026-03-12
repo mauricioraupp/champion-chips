@@ -14,7 +14,7 @@ export default function MatchCard({ match, onUpdate }: { match: any, onUpdate: (
   })
 
   const handleSave = async () => {
-    const result = await updateMatch(match.id, formData)
+    const result = await updateMatch(match.id, match.soccerLeagueId, formData)
     if (result.error) {
       toast.error("Não foi possível editar a partida")
     } else if (result.success) {

@@ -10,8 +10,17 @@ export async function generateChampionshipMatches(leagueId: number) {
     throw new Error("A liga precisa de pelo menos 2 times para gerar jogos.")
   }
 
+  await prisma.match.deleteMany({
+    where: { soccerLeagueId: leagueId, status: "SCHEDULED" }
+  })
+
   const teams = league.Teams
   let teamIds = teams.map((t) => t.id)
+  
+  for (let i = teamIds.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [teamIds[i], teamIds[j]] = [teamIds[j], teamIds[i]];
+  }
   
   if (teamIds.length % 2 !== 0) {
     teamIds.push(-1)

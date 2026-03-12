@@ -18,7 +18,7 @@ export async function getMatches(leagueId: number) {
   return matches
 }
 
-export async function updateMatch(matchId: number, data: any) {
+export async function updateMatch(matchId: number, leagueId: number, data: any) {
   try {
     const updateData: any = {
       homeScore: parseInt(data.homeScore) || 0,
@@ -41,7 +41,7 @@ export async function updateMatch(matchId: number, data: any) {
 
     await updateLeagueTable(updatedMatch.soccerLeagueId);
 
-    revalidatePath(`/championships/3`, 'page') 
+    revalidatePath(`/championships/${leagueId}`, 'page') 
     return { success: true, updatedMatch }
   } catch (error) {
     console.error("Erro ao atualizar:", error)

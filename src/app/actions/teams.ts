@@ -17,7 +17,97 @@ export async function getTeams(leagueId: number) {
   return teams
 }
 
-export async function updateTeam(teamId: number, data: any, oldLogoUrl?: string) {
+export async function createTeam(leagueId: number, data: any) {
+  try {
+    return await prisma.$transaction(async (tx) => {
+      const newTeam = await tx.teamsSoccerLeague.create({
+        data: {
+          name: data.name,
+          sigla: data.sigla.toUpperCase(),
+          logo: data.logo || null,
+          soccerLeagueId: leagueId,
+          Players: {
+            create: data.players.map((p: any) => ({
+              name: p.name,
+              position: p.position
+            }))
+          }
+        }
+      });
+
+      const league = await tx.soccerLeague.findUnique({
+        where: { id: leagueId },
+        select: { secondLegs: true }
+      });
+
+      const allTeams = await tx.teamsSoccerLeague.findMany({
+        where: { soccerLeagueId: leagueId }
+      });
+
+      const matchups: { homeTeamId: number; awayTeamId: number }[] = [];
+      const teams = allTeams;
+      
+      for (let i = 0; i < teams.length; i++) {
+        for (let j = i + 1; j < teams.length; j++) {
+          matchups.push({
+            homeTeamId: teams[i].id,
+            awayTeamId: teams[j].id
+          });
+        }
+      }
+
+      const shuffle = (array: any[]) => {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+      };
+      shuffle(matchups);
+
+      const firstLeg = matchups.map(m => ({
+        homeTeamId: m.homeTeamId,
+        awayTeamId: m.awayTeamId,
+        soccerLeagueId: leagueId,
+        status: "SCHEDULED",
+        isReturnMatch: false
+      }));
+
+      const secondLeg = league?.secondLegs 
+        ? matchups.map(m => ({
+            homeTeamId: m.awayTeamId,
+            awayTeamId: m.homeTeamId,
+            soccerLeagueId: leagueId,
+            status: "SCHEDULED",
+            isReturnMatch: true
+          }))
+        : [];
+
+      const matchesPerRound = Math.floor(allTeams.length / 2) || 1;
+      const combinedMatches = [...firstLeg, ...secondLeg];
+
+      const finalSchedule = combinedMatches.map((match, index) => ({
+        ...match,
+        round: Math.floor(index / matchesPerRound) + 1
+      }));
+
+      await tx.match.deleteMany({
+        where: { soccerLeagueId: leagueId, status: "SCHEDULED" }
+      });
+
+      await tx.match.createMany({
+        data: finalSchedule
+      });
+
+      revalidatePath(`/championships/${leagueId}`);
+      return { success: true, error: null };
+    });
+  } catch (error) {
+    console.error("Erro ao criar time e partidas:", error);
+    return { success: false, error: "Erro ao gerar calendário de jogos." };
+  }
+}
+
+export async function updateTeam(teamId: number, leagueId: number, data: any, oldLogoUrl?: string) {
   try {
     if (data.logo && oldLogoUrl && data.logo !== oldLogoUrl) {
       const fileKey = oldLogoUrl.split("/f/")[1];
@@ -60,7 +150,7 @@ export async function updateTeam(teamId: number, data: any, oldLogoUrl?: string)
         },
       });
 
-      revalidatePath(`/championships/3`, 'page');
+      revalidatePath(`/championships/${leagueId}`, 'page');
       return { success: true, error: null };
     });
   } catch (error) {
@@ -145,7 +235,7 @@ export async function deleteTeam(teamId: number, leagueId: number) {
       where: { id: teamId },
     });
 
-    revalidatePath(`/championships/3`, 'page');
+    revalidatePath(`/championships/${leagueId}`, 'page');
     return { success: true };
   } catch (error) {
     console.error(error);
