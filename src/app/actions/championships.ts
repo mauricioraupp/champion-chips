@@ -1,9 +1,50 @@
+"use server"
+
 import { prisma } from "@/lib/prisma"
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+
+export async function getChampionshipsList() {
+  const session = await getServerSession(authOptions);
+
+  if (!session?.user?.email) {
+    return []; 
+  }
+
+  const userLeagues = await prisma.soccerLeague.findMany({
+    where: { 
+      User: {
+        email: session.user.email 
+      }
+    }
+  });
+
+  return userLeagues;
+}
+
+export async function getChampionshipInfo(leagueId: number) {
+  const league = await prisma.soccerLeague.findUnique({
+    where: { id: leagueId },
+    include: { 
+      Matches: {
+        include: {
+          HomeTeam: true,
+          AwayTeam: true
+        }
+      }
+    }
+  })
+
+  return league
+}
 
 export async function generateChampionshipMatches(leagueId: number) {
   const league = await prisma.soccerLeague.findUnique({
     where: { id: leagueId },
-    include: { Teams: true },
+    include: { 
+      Teams: true,
+      Matches: true
+    }
   })
 
   if (!league || league.Teams.length < 2) {

@@ -41,6 +41,7 @@ const handleFinish = async (finalDataFromStepThree: any) => {
       
       if (response.ok) {
         router.push("/my-championships");
+        router.refresh();
       } else {
         alert("Erro ao criar o campeonato. Tente novamente.");
       }

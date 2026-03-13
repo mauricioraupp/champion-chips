@@ -7,7 +7,7 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
+  id String @id @default(cuid())
 
   email     String   @unique
   name      String
@@ -30,9 +30,9 @@ model PasswordResetToken {
 }
 
 model SoccerLeague {
-  id     Int   @id @default(autoincrement())
-  User   User? @relation(fields: [userId], references: [id])
-  userId Int?
+  id     Int    @id @default(autoincrement())
+  User   User?  @relation(fields: [userId], references: [id])
+  userId String
 
   name       String
   logo       String?
@@ -45,8 +45,8 @@ model SoccerLeague {
 
 model TeamsSoccerLeague {
   id             Int           @id @default(autoincrement())
-  User           User?         @relation(fields: [userId], references: [id])
-  userId         Int?
+  User           User          @relation(fields: [userId], references: [id])
+  userId         String
   SoccerLeague   SoccerLeague? @relation(fields: [soccerLeagueId], references: [id])
   soccerLeagueId Int?
 
@@ -72,8 +72,8 @@ model TeamsSoccerLeague {
 
 model Players {
   id                Int                @id @default(autoincrement())
-  User              User?              @relation(fields: [userId], references: [id])
-  userId            Int?
+  User              User               @relation(fields: [userId], references: [id])
+  userId            String
   TeamsSoccerLeague TeamsSoccerLeague? @relation(fields: [teamId], references: [id])
   teamId            Int?
 

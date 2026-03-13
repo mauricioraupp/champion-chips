@@ -1,11 +1,12 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
+import { authOptions } from "../auth/[...nextauth]/route";
 import { generateChampionshipMatches } from "@/app/actions/championships";
 
 export async function POST(req: Request) {
   try {
-    const session = await getServerSession(); 
+    const session = await getServerSession(authOptions); 
 
     if (!session?.user?.email) {
       return new NextResponse("Não autorizado", { status: 401 });

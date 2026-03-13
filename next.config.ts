@@ -15,6 +15,12 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**'
       },
+      {
+        protocol: 'https',
+        hostname: 'g51uhtpht1.ufs.sh',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
 };
