@@ -30,49 +30,47 @@ export default function ChampionshipCreated({ leagueId }: { leagueId: number }) 
   const nextMatch = championship.Matches?.find((m: any) => m.status === "SCHEDULED");
 
   return (
-    <div className="relative flex flex-col lg:flex-row gap-6 bg-neutral-50 border border-neutral-200 rounded-md w-full max-w-6xl 
-      p-4 md:p-6 mx-auto shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+    <div className="relative flex gap-2 sm:gap-6 bg-neutral-50 border border-neutral-200 rounded-md w-full max-w-6xl 
+      px-4 sm:px-6 py-3 mx-auto shadow-sm hover:shadow-md transition-shadow cursor-pointer"
     >
-      <section className="flex flex-col justify-center text-center lg:text-left lg:min-w-[180px] border-b lg:border-b-0 lg:border-r-2 border-neutral-200 pb-4 lg:pb-0 lg:pr-6">
-        <h1 className="font-bold text-xl text-neutral-900 truncate">{championship.name}</h1>
-        <div className="mt-1 space-y-0.5">
-          <p className="text-sm font-medium text-neutral-500">Futebol • Liga</p>
-          <p className="text-sm font-bold">
+      <section className="flex flex-col justify-center text-left border-r-2 border-neutral-200 pb-4 pr-2 sm:pr-6">
+        <h1 className="font-bold text-xl text-neutral-900">{championship.name}</h1>
+          <p className="font-medium text-neutral-500 pt-1">Futebol • Liga</p>
+          <p className="font-medium text-neutral-500">
             {nextMatch ? `Rodada ${nextMatch.round}` : "Finalizado"}
           </p>
-        </div>
       </section>
 
-      <section className="flex flex-col justify-center items-center py-2 lg:py-0 lg:px-6 min-w-fit">
-        <h2 className="text-[10px] uppercase tracking-widest font-bold text-neutral-400 mb-3">Próxima partida</h2>
+      <section className="hidden md:flex flex-col justify-center items-center border-r-2 border-neutral-200 pr-6 min-w-fit">
+        <h2 className="text-[10px] uppercase tracking-widest font-bold text-neutral-400 mb-2">Próxima partida</h2>
         {nextMatch ? (
           <div className="flex flex-col items-center gap-2">
-            <article className="flex items-center gap-4">
+            <article className="flex items-center gap-3">
               <div className="flex flex-col items-center gap-1">
                 <Image
                   src={nextMatch.HomeTeam?.logo || "/placeholder.png"}
-                  width={44}
-                  height={44}
+                  width={40}
+                  height={40}
                   alt="Escudo Home"
-                  className="rounded-full shadow-sm object-contain bg-white p-1"
+                  className="rounded-full shadow-sm bg-white"
                 />
                 <span className="text-[10px] font-bold uppercase md:hidden">{nextMatch.HomeTeam?.sigla}</span>
               </div>
               
-              <p className="font-black text-neutral-300 text-xl italic">X</p>
+              <p className="font-black text-neutral-400 text-xl">X</p>
               
               <div className="flex flex-col items-center gap-1">
                 <Image
                   src={nextMatch.AwayTeam?.logo || "/placeholder.png"}
-                  width={44}
-                  height={44}
+                  width={40}
+                  height={40}
                   alt="Escudo Away"
-                  className="rounded-full shadow-sm object-contain bg-white p-1"
+                  className="rounded-full shadow-sm bg-white"
                 />
                 <span className="text-[10px] font-bold uppercase md:hidden">{nextMatch.AwayTeam?.sigla}</span>
               </div>
             </article>
-            <p className="text-xs font-semibold text-neutral-500 mt-1">
+            <p className="text-xs font-semibold text-neutral-500">
               {nextMatch.date ? new Date(nextMatch.date).toLocaleDateString() : "Data a definir"}
             </p>
           </div>
@@ -81,30 +79,29 @@ export default function ChampionshipCreated({ leagueId }: { leagueId: number }) 
         )}
       </section>
 
-      <section className="flex-1 min-w-0">
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse">
+      <section className="flex-1 mr-5">
+          <table className="w-full h-full">
             <thead>
-              <tr className="text-[10px] uppercase text-neutral-400 border-b border-neutral-100">
-                <th className="text-left py-2 font-bold">Equipe</th>
-                <th className="px-2 py-2">Pts</th>
-                <th className="px-2 py-2">PJ</th>
-                <th className="px-2 py-2 hidden sm:table-cell">V</th>
-                <th className="px-2 py-2 hidden sm:table-cell">E</th>
-                <th className="px-2 py-2 hidden sm:table-cell">D</th>
-                <th className="px-2 py-2 hidden md:table-cell">GM</th>
-                <th className="px-2 py-2 hidden md:table-cell">GC</th>
-                <th className="px-2 py-2">SG</th>
+              <tr className="text-[10px] uppercase text-neutral-400 border-b border-neutral-400">
+                <th className="text-left font-bold pb-1">Equipe</th>
+                <th className="w-10 pb-1 ">Pts</th>
+                <th className="w-10 pb-1 ">PJ</th>
+                <th className="w-10 pb-1 hidden sm:table-cell">V</th>
+                <th className="w-10 pb-1 hidden sm:table-cell">E</th>
+                <th className="w-10 pb-1 hidden sm:table-cell">D</th>
+                <th className="w-10 pb-1 hidden md:table-cell">GM</th>
+                <th className="w-10 pb-1 hidden md:table-cell">GC</th>
+                <th className="w-6 pb-1 text-right">SG</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-neutral-50">
+            <tbody>
               {teams.slice(0, 3).map((entry, index) => (
-                <tr key={entry.id} className="text-sm text-center hover:bg-neutral-100/50 transition-colors">
-                  <td className="text-left py-3 flex items-center gap-3">
-                    <span className={`text-[10px] font-bold w-4 ${index === 0 ? 'text-yellow-500' : 'text-neutral-300'}`}>
-                      {index + 1}º
+                <tr key={entry.id} className="text-sm text-center transition-colors">
+                  <td className="text-left flex items-center gap-3 p-1">
+                    <span className={`text-xs`}>
+                      {index + 1}
                     </span>
-                    <span className="truncate font-semibold text-neutral-800 max-w-[80px] md:max-w-[120px]">
+                    <span className="font-semibold text-neutral-800">
                       {entry.name}
                     </span>
                   </td>
@@ -115,7 +112,7 @@ export default function ChampionshipCreated({ leagueId }: { leagueId: number }) 
                   <td className="hidden sm:table-cell text-neutral-500">{entry.losses}</td>
                   <td className="hidden md:table-cell text-neutral-500">{entry.goalsScored}</td>
                   <td className="hidden md:table-cell text-neutral-500">{entry.goalsConceded}</td>
-                  <td>
+                  <td className="text-right pr-[2px]">
                     <span className={`font-bold ${entry.goalsDiff > 0 ? "text-green-500" : entry.goalsDiff < 0 ? "text-red-500" : "text-neutral-400"}`}>
                       {entry.goalsDiff > 0 ? `+${entry.goalsDiff}` : entry.goalsDiff}
                     </span>
@@ -124,12 +121,23 @@ export default function ChampionshipCreated({ leagueId }: { leagueId: number }) 
               ))}
             </tbody>
           </table>
-        </div>
       </section>
 
-      <button className="absolute top-4 right-4 p-1 text-neutral-400 hover:text-neutral-900 transition-colors">
-        <MoreHorizontal size={20} />
-      </button>
+      <div className="absolute top-1 right-2">
+                <button className="p-1 hover:bg-neutral-200 text-neutral-600 hover:text-neutral-900 rounded-full cursor-pointer transition-colors">
+                  <MoreHorizontal size="20" />
+                </button>
+                {/* {showOptions && (
+                  <div className="absolute right-0 w-32 bg-white border border-neutral-300 shadow-xl rounded-md z-10 overflow-hidden">
+                    <button onClick={() => { setActiveModal("edit"); setShowOptions(false); }} className="flex items-center gap-2 w-full px-3 py-2 text-sm hover:bg-neutral-100 cursor-pointer">
+                      <Edit2 size="14" /> Editar
+                    </button>
+                    <button onClick={() => { setActiveModal("delete"); setShowOptions(false); }} className="flex items-center gap-2 w-full px-3 py-2 text-sm text-red-600 hover:bg-red-50 cursor-pointer">
+                      <Trash size="14" /> Excluir
+                    </button>
+                  </div>
+                )} */}
+              </div>
     </div>
   )
 }
