@@ -7,7 +7,7 @@ import StandingsTab from './tabs/StandingsTab';
 import MatchesTab from './tabs/MatchesTab';
 import TeamsTab from './tabs/TeamsTab';
 
-export default function ChampionshipDashboard() {
+export default function ChampionshipDashboard({ leagueId }: { leagueId: number }) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -54,9 +54,9 @@ export default function ChampionshipDashboard() {
         </span>
       </div>
       <div className="w-full max-w-6xl px-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
-        {activeTab === "tabela" && <StandingsTab leagueId={2}/>}
-        {activeTab === "partidas" && <MatchesTab leagueId={2}/>}
-        {activeTab === "times" && <TeamsTab leagueId={2}/>}
+        {activeTab === "tabela" && <StandingsTab leagueId={leagueId}/>}
+        {activeTab === "partidas" && <MatchesTab leagueId={leagueId}/>}
+        {activeTab === "times" && <TeamsTab leagueId={leagueId}/>}
       </div>
     </section>
   )

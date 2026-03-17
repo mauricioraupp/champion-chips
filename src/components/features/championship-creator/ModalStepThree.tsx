@@ -8,6 +8,7 @@ interface Team {
   sigla: string;
   teamLogoFile: File | null;
   teamLogoUrl?: string;
+  teamLogoKey?: string;
 }
 
 interface ModalStepThreeProps {
@@ -25,21 +26,27 @@ interface ModalStepThreeProps {
 }
 
 export default function ModalStepThree({ prevStep, teams, setTeams, data, onFinish }: ModalStepThreeProps) {
-
   const [isAddingTeam, setIsAddingTeam] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
+
   const { startUpload: uploadLeagueLogo } = useUploadThing("leagueLogo");
   const { startUpload: uploadTeamLogo } = useUploadThing("teamLogo");
   
   const handleFinishWithUpload = async () => {
+    if (isUploading) return;
     setIsUploading(true);
+
     try {
       const updatedTeams = [...teams];
       let finalLeagueLogoUrl = data.leagueLogoUrl;
+      let finalLeagueLogoKey = ""
 
       if (data.leagueLogoFile) {
         const resLeague = await uploadLeagueLogo([data.leagueLogoFile]);
-        if (resLeague && resLeague[0]) {finalLeagueLogoUrl = resLeague[0].ufsUrl}
+        if (resLeague?.[0]) {
+          finalLeagueLogoUrl = resLeague[0].ufsUrl;
+          finalLeagueLogoKey = resLeague[0].key;
+        }
       }
 
       for (let i = 0; i < updatedTeams.length; i++) {
@@ -47,26 +54,30 @@ export default function ModalStepThree({ prevStep, teams, setTeams, data, onFini
           const res = await uploadTeamLogo([updatedTeams[i].teamLogoFile!]);
           if (res && res[0]) {
             updatedTeams[i].teamLogoUrl = res[0].ufsUrl;
+            (updatedTeams[i] as any).teamLogoKey = res[0].key;
           }
         }
       }
 
       const finalData = {
         ...data,
-        leagueLogoUrl: finalLeagueLogoUrl,
+        leagueLogoUrl: finalLeagueLogoUrl || "/default-league-logo.png",
+        leagueLogoKey: finalLeagueLogoKey,
         teams: updatedTeams.map(t => ({
           name: t.name,
           sigla: t.sigla,
-          teamLogoUrl: t.teamLogoUrl || "/default-team-logo.png"
+          teamLogoUrl: t.teamLogoUrl || "/default-team-logo.png",
+          teamLogoKey: t.teamLogoKey
         }))
       };
 
       setTeams(updatedTeams);
       
-      onFinish(finalData); 
+      await onFinish(finalData);
 
-    } catch (err) {
-      alert("Erro ao fazer upload das imagens.");
+    } catch (err: any) {
+      console.error("Erro no processo de criação:", err);
+      alert(err.message || "Erro ao processar o campeonato. Tente novamente.");
     } finally {
       setIsUploading(false);
     }

@@ -10,11 +10,20 @@ export async function middleware(req: NextRequest) {
 
   const { pathname } = req.nextUrl
 
-  if (token && pathname === "/login" || token && pathname === "/register") {
+  const isAuthPage = 
+    pathname.startsWith("/auth")
+  
+  const isProtectedRoute = 
+    pathname === "/profile" || 
+    pathname.startsWith("/profile") ||
+    pathname === "/create-championship" ||
+    pathname.startsWith("/my-championships")
+
+  if (token && isAuthPage) {
     return NextResponse.redirect(new URL("/profile", req.url))
   }
 
-  if (!token && pathname === "/profile" || !token && pathname === "/") {
+  if (!token && isProtectedRoute) {
     return NextResponse.redirect(new URL("/login", req.url))
   }
 
@@ -22,5 +31,10 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/login", "/register", "/profile/:path*"],
+  matcher: [
+    "/auth/:path*",
+    "/profile/:path*",
+    "/create-championship",
+    "/my-championships/:path*",
+  ],
 }

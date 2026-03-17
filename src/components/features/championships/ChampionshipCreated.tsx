@@ -5,6 +5,7 @@ import { getChampionshipInfo } from "@/app/actions/championships";
 import { getStandings } from "@/app/actions/standings"
 import { MoreHorizontal } from '@geist-ui/icons';
 import Image from 'next/image';
+import Link from "next/link";
 
 export default function ChampionshipCreated({ leagueId }: { leagueId: number }) {
   const [championship, setChampionship] = useState<any>(null)
@@ -30,15 +31,19 @@ export default function ChampionshipCreated({ leagueId }: { leagueId: number }) 
   const nextMatch = championship.Matches?.find((m: any) => m.status === "SCHEDULED");
 
   return (
-    <div className="relative flex gap-2 sm:gap-6 bg-neutral-50 border border-neutral-200 rounded-md w-full max-w-6xl 
+    <Link href={`/my-championships/${leagueId}`} className="relative flex gap-2 sm:gap-6 bg-neutral-50 border border-neutral-200 rounded-md w-full max-w-6xl 
       px-4 sm:px-6 py-3 mx-auto shadow-sm hover:shadow-md transition-shadow cursor-pointer"
     >
       <section className="flex flex-col justify-center text-left border-r-2 border-neutral-200 pb-4 pr-2 sm:pr-6">
+        <Image
+          src={championship.logo}
+          alt={"Logo da liga"}
+        />
         <h1 className="font-bold text-xl text-neutral-900">{championship.name}</h1>
-          <p className="font-medium text-neutral-500 pt-1">Futebol • Liga</p>
-          <p className="font-medium text-neutral-500">
-            {nextMatch ? `Rodada ${nextMatch.round}` : "Finalizado"}
-          </p>
+        <p className="font-medium text-neutral-500 pt-1">Futebol • Liga</p>
+        <p className="font-medium text-neutral-500">
+          {nextMatch ? `Rodada ${nextMatch.round}` : "Finalizado"}
+        </p>
       </section>
 
       <section className="hidden md:flex flex-col justify-center items-center border-r-2 border-neutral-200 pr-6 min-w-fit">
@@ -48,7 +53,7 @@ export default function ChampionshipCreated({ leagueId }: { leagueId: number }) 
             <article className="flex items-center gap-3">
               <div className="flex flex-col items-center gap-1">
                 <Image
-                  src={nextMatch.HomeTeam?.logo || "/placeholder.png"}
+                  src={nextMatch.HomeTeam?.logo}
                   width={40}
                   height={40}
                   alt="Escudo Home"
@@ -61,7 +66,7 @@ export default function ChampionshipCreated({ leagueId }: { leagueId: number }) 
               
               <div className="flex flex-col items-center gap-1">
                 <Image
-                  src={nextMatch.AwayTeam?.logo || "/placeholder.png"}
+                  src={nextMatch.AwayTeam?.logo}
                   width={40}
                   height={40}
                   alt="Escudo Away"
@@ -138,6 +143,6 @@ export default function ChampionshipCreated({ leagueId }: { leagueId: number }) 
                   </div>
                 )} */}
               </div>
-    </div>
+    </Link>
   )
 }

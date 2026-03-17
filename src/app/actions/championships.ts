@@ -38,6 +38,15 @@ export async function getChampionshipInfo(leagueId: number) {
   return league
 }
 
+export async function getChampionshipName(leagueId: number) {
+  const league = await prisma.soccerLeague.findUnique({
+    where: { id: leagueId },
+    
+  })
+
+  return league
+}
+
 export async function generateChampionshipMatches(leagueId: number) {
   const league = await prisma.soccerLeague.findUnique({
     where: { id: leagueId },

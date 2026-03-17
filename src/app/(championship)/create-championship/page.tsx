@@ -43,10 +43,12 @@ const handleFinish = async (finalDataFromStepThree: any) => {
         router.push("/my-championships");
         router.refresh();
       } else {
-        alert("Erro ao criar o campeonato. Tente novamente.");
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || "Erro ao salvar no banco");
       }
     } catch (error) {
       console.error("Erro ao criar:", error);
+      throw error;
     } finally {
       setIsLoading(false);
     }
