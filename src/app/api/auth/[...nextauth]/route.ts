@@ -70,20 +70,23 @@ export const authOptions: NextAuthOptions = ({
 
       return true;
     },
-    async jwt({ token, user}) {
+    async jwt({ token, user }) {
       if (user) {
-        token.id = user.id;
+        const dbUser = await prisma.user.findUnique({
+          where: { email: user.email! }
+        });
+
+        if (dbUser) {
+          token.id = dbUser.id;
+        }
+        
         token.rememberMe = (user as any).remember === true || (user as any).remember === "on";
-      }
-      if (!token.rememberMe) {
-        const oneDay = 24 * 60 * 60;
-        token.exp = Math.floor(Date.now() / 1000) + oneDay;
       }
       return token;
     },
     async session({ session, token }) {
-      if (session.user) {
-        (session.user as any).id = String(token.id);
+      if (session.user && token.id) {
+        session.user.id = token.id;
       }
       return session;
     }

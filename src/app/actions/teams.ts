@@ -2,6 +2,8 @@
 
 import { prisma } from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { UTApi } from "uploadthing/server"
 
 const utapi = new UTApi();
@@ -18,6 +20,12 @@ export async function getTeams(leagueId: number) {
 }
 
 export async function createTeam(leagueId: number, data: any) {
+  const session = await getServerSession(authOptions);
+  
+  if (!session?.user?.id) return { success: false, error: "Não autorizado" };
+
+  const userId = session.user.id;
+
   try {
     return await prisma.$transaction(async (tx) => {
       const newTeam = await tx.teamsSoccerLeague.create({
@@ -26,10 +34,12 @@ export async function createTeam(leagueId: number, data: any) {
           sigla: data.sigla.toUpperCase(),
           logo: data.logo || null,
           soccerLeagueId: leagueId,
+          userId: userId,
           Players: {
             create: data.players.map((p: any) => ({
               name: p.name,
-              position: p.position
+              position: p.position,
+              userId: userId
             }))
           }
         }
@@ -135,7 +145,8 @@ export async function updateTeam(teamId: number, leagueId: number, data: any, ol
             data: { 
               name: p.name, 
               position: p.position, 
-              teamId: teamId 
+              teamId: teamId,
+              userId: data.userId
             }
           });
         }

@@ -51,7 +51,7 @@ export default function StandingsTab({ leagueId }: { leagueId: number }) {
                     <span className="text-[10px] font-bold text-neutral-400">{entry.sigla}</span>
                   )}
                 </div>
-                <span className="font-semibold text-neutral-800 uppercase">
+                <span className="font-semibold text-neutral-800 whitespace-nowrap uppercase">
                   {entry.name}
                 </span>
               </td>

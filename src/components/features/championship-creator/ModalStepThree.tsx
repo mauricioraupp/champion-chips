@@ -1,7 +1,9 @@
 "use client"
+
 import { useState } from "react";
 import { useUploadThing } from "@/utils/uploadthing";
 import AddTeamForm from "./AddTeamForm";
+import { Trash } from '@geist-ui/icons'
 
 interface Team {
   name: string;
@@ -128,9 +130,9 @@ export default function ModalStepThree({ prevStep, teams, setTeams, data, onFini
                   </div>
                   <button 
                     onClick={() => setTeams(teams.filter((_, i) => i !== index))}
-                    className="text-neutral-400 hover:text-red-500 text-xs px-2 cursor-pointer"
+                    className="p-2 rounded-full text-neutral-400 hover:text-red-500 text-xs px-2 hover:bg-neutral-200 cursor-pointer transition-colors"
                   >
-                    Remover
+                    <Trash size="14"/>
                   </button>
                 </div>
               ))
@@ -138,7 +140,7 @@ export default function ModalStepThree({ prevStep, teams, setTeams, data, onFini
           </div>
 
           <section className="flex justify-between mt-8">
-            <button onClick={prevStep} className="font-medium cursor-pointer">Voltar</button>
+            <button onClick={prevStep} className="px-4 sm:px-6 rounded-md font-medium hover:bg-neutral-300 cursor-pointer transition-colors">Voltar</button>
             <button 
               onClick={handleFinishWithUpload}
               className={`py-2 px-8 rounded-md font-medium text-white transition-all 

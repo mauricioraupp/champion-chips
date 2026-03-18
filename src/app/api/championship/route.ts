@@ -11,6 +11,20 @@ export async function POST(req: Request) {
   const keysToDelete: string[] = [];
 
   try {
+    const session = await getServerSession(authOptions); 
+
+    if (!session?.user?.email) {
+      throw new Error("AUTH_REQUIRED");
+    }
+
+    const dbUser = await prisma.user.findUnique({
+      where: { email: session.user.email }
+    });
+
+    if (!dbUser) {
+      throw new Error("USER_NOT_FOUND");
+    }
+    
     const body = await req.json();
     const { name, leagueLogoUrl, secondLegs, teams, leagueLogoKey } = body;
 
@@ -23,22 +37,8 @@ export async function POST(req: Request) {
       });
     }
 
-    const session = await getServerSession(authOptions); 
-
-    if (!session?.user?.email) {
-      throw new Error("AUTH_REQUIRED");
-    }
-
-    const dbUser = await prisma.user.findUnique({
-      where: { email: session.user.email }
-    });
-
-    if (!dbUser) {
-      return new NextResponse("Usuário não encontrado", { status: 404 });
-    }
-
-    const result = await prisma.$transaction(async (tx) => {
-      const league = await tx.soccerLeague.create({
+    const newLeague = await prisma.$transaction(async (tx) => {
+      return await tx.soccerLeague.create({
         data: {
           name,
           logo: leagueLogoUrl || null,
@@ -47,23 +47,22 @@ export async function POST(req: Request) {
           Teams: {
             create: teams.map((team: any) => ({
               name: team.name,
-              sigla: (team.sigla).substring(0, 3).toUpperCase(),
+              sigla: team.sigla.substring(0, 3).toUpperCase(),
               logo: team.teamLogoUrl || null,
               userId: dbUser.id,
             })),
           },
         },
-        include: {
-          Teams: true
-        }
       });
-
-      await generateChampionshipMatches(league.id);
-
-      return league;
     });
 
-    return NextResponse.json(result);
+    try {
+      await generateChampionshipMatches(newLeague.id);
+    } catch (matchError) {
+      console.error("Erro ao gerar partidas, mas a liga foi salva:", matchError);
+    }
+
+    return NextResponse.json(newLeague);
 
   } catch (error: any) {
     console.error("ERRO NO BACKEND:", error.message);

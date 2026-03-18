@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react";
+import { X } from '@geist-ui/icons'
 
 interface AddTeamFormProps {
   onClose: () => void;
@@ -37,8 +38,11 @@ export default function AddTeamForm({ onClose, onSave }: AddTeamFormProps) {
             <img src={previewUrl} className="w-24 h-24 object-cover rounded-full" />
             <button 
               onClick={() => { setPreviewUrl(""); setTeamLogoFile(null); }} 
-              className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 cursor-pointer"
-            >X</button>
+              className="absolute -top-0 -right-0 flex items-center justify-center bg-red-600 text-white rounded-full w-6 h-6 
+                hover:bg-red-800 cursor-pointer transition-colors"
+              >
+                <X size={20}/>
+              </button>
           </div>
         ) : (
           <div className="flex flex-col items-center">
@@ -53,7 +57,7 @@ export default function AddTeamForm({ onClose, onSave }: AddTeamFormProps) {
 
       <fieldset className="flex flex-col gap-1 w-full">
         <label className="font-medium text-neutral-700 text-sm">Nome do Time</label>
-        <input value={name} onChange={(e) => setName(e.target.value)} className="py-2 px-3 border-2 rounded-sm border-neutral-300 outline-none" />
+        <input value={name} onChange={(e) => setName(e.target.value)} className="py-2 px-3 border-2 rounded-sm border-neutral-300" />
       </fieldset>
 
       <fieldset className="flex flex-col gap-1 w-full">
@@ -62,8 +66,8 @@ export default function AddTeamForm({ onClose, onSave }: AddTeamFormProps) {
       </fieldset>
 
       <div className="flex justify-between mt-6">
-        <button onClick={onClose} className="text-neutral-500 hover:underline cursor-pointer">Cancelar</button>
-        <button onClick={handleConfirm} className="bg-zinc-950 text-white px-6 py-2 rounded-md font-medium cursor-pointer">Confirmar Time</button>
+        <button onClick={onClose} className="px-4 rounded-md font-medium hover:bg-neutral-300 cursor-pointer transition-colors">Cancelar</button>
+        <button onClick={handleConfirm} className="bg-black text-white px-6 py-2 rounded-md font-medium hover:bg-zinc-800 cursor-pointer">Adicionar</button>
       </div>
     </div>
   );

@@ -41,11 +41,11 @@ export default function ModalStepTwo({ nextStep, prevStep, data, updateData }: P
       <section className="flex justify-between mt-8">
         <button 
           onClick={prevStep}
-          className="font-medium cursor-pointer">Voltar
+          className="px-4 sm:px-6 rounded-md font-medium hover:bg-neutral-300 cursor-pointer transition-colors">Voltar
         </button>
         <button 
           onClick={nextStep}
-          className="bg-black py-1 sm:py-2 px-4 sm:px-8 rounded-md font-medium text-white cursor-pointer">Avançar
+          className="bg-black py-1 sm:py-2 px-4 sm:px-8 rounded-md font-medium text-white hover:bg-zinc-800 cursor-pointer transition-colors">Avançar
         </button>
       </section>
     </div>

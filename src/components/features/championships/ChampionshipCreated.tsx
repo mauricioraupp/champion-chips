@@ -32,14 +32,10 @@ export default function ChampionshipCreated({ leagueId }: { leagueId: number }) 
 
   return (
     <Link href={`/my-championships/${leagueId}`} className="relative flex gap-2 sm:gap-6 bg-neutral-50 border border-neutral-200 rounded-md w-full max-w-6xl 
-      px-4 sm:px-6 py-3 mx-auto shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+      px-4 sm:px-6 py-3 mx-auto shadow-sm hover:shadow-md hover:bg-neutral-100 transition-shadow cursor-pointer overflow-x-auto"
     >
       <section className="flex flex-col justify-center text-left border-r-2 border-neutral-200 pb-4 pr-2 sm:pr-6">
-        <Image
-          src={championship.logo}
-          alt={"Logo da liga"}
-        />
-        <h1 className="font-bold text-xl text-neutral-900">{championship.name}</h1>
+        <h1 className="font-bold text-xl text-neutral-900 sm:max-w-48 max-w-24 truncate">{championship.name}</h1>
         <p className="font-medium text-neutral-500 pt-1">Futebol • Liga</p>
         <p className="font-medium text-neutral-500">
           {nextMatch ? `Rodada ${nextMatch.round}` : "Finalizado"}
@@ -94,8 +90,8 @@ export default function ChampionshipCreated({ leagueId }: { leagueId: number }) 
                 <th className="w-10 pb-1 hidden sm:table-cell">V</th>
                 <th className="w-10 pb-1 hidden sm:table-cell">E</th>
                 <th className="w-10 pb-1 hidden sm:table-cell">D</th>
-                <th className="w-10 pb-1 hidden md:table-cell">GM</th>
-                <th className="w-10 pb-1 hidden md:table-cell">GC</th>
+                <th className="w-10 pb-1 hidden xl:table-cell">GM</th>
+                <th className="w-10 pb-1 hidden xl:table-cell">GC</th>
                 <th className="w-6 pb-1 text-right">SG</th>
               </tr>
             </thead>
@@ -106,7 +102,7 @@ export default function ChampionshipCreated({ leagueId }: { leagueId: number }) 
                     <span className={`text-xs`}>
                       {index + 1}
                     </span>
-                    <span className="font-semibold text-neutral-800">
+                    <span className="font-semibold text-neutral-800 truncate sm:max-w-24 max-w-13 whitespace-nowrap">
                       {entry.name}
                     </span>
                   </td>
@@ -115,8 +111,8 @@ export default function ChampionshipCreated({ leagueId }: { leagueId: number }) 
                   <td className="hidden sm:table-cell text-neutral-500">{entry.wins}</td>
                   <td className="hidden sm:table-cell text-neutral-500">{entry.draws}</td>
                   <td className="hidden sm:table-cell text-neutral-500">{entry.losses}</td>
-                  <td className="hidden md:table-cell text-neutral-500">{entry.goalsScored}</td>
-                  <td className="hidden md:table-cell text-neutral-500">{entry.goalsConceded}</td>
+                  <td className="hidden xl:table-cell text-neutral-500">{entry.goalsScored}</td>
+                  <td className="hidden xl:table-cell text-neutral-500">{entry.goalsConceded}</td>
                   <td className="text-right pr-[2px]">
                     <span className={`font-bold ${entry.goalsDiff > 0 ? "text-green-500" : entry.goalsDiff < 0 ? "text-red-500" : "text-neutral-400"}`}>
                       {entry.goalsDiff > 0 ? `+${entry.goalsDiff}` : entry.goalsDiff}

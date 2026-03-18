@@ -2,6 +2,7 @@
 
 import { useState, ChangeEvent } from "react";
 import ReturnButton from "@/components/ui/ReturnButton"
+import { X } from '@geist-ui/icons'
 
 interface Props {
   nextStep: () => void;
@@ -71,8 +72,11 @@ export default function ModalStepOne({ nextStep, data, updateData }: Props){
                  setPreview("");
                 }
               }
-               className="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-6 h-6 font-semibold cursor-pointer"
-             >X</button>
+               className="absolute -top-0 -right-0 flex items-center justify-center bg-red-600 text-white rounded-full w-6 h-6 
+                hover:bg-red-800 cursor-pointer transition-colors"
+             >
+              <X size={20}/>
+            </button>
           </div>
         ) : (
           <div className="w-full">
@@ -89,7 +93,7 @@ export default function ModalStepOne({ nextStep, data, updateData }: Props){
         <ReturnButton/>
         <button 
           onClick={handleNext}
-          className={`bg-black py-1 sm:py-2 px-4 sm:px-8 rounded-md font-medium text-white cursor-pointer`}
+          className={`bg-black py-1 sm:py-2 px-4 sm:px-8 rounded-md font-medium text-white hover:bg-zinc-800 cursor-pointer transition-colors`}
         >Avançar</button>
       </section>
     </div>
