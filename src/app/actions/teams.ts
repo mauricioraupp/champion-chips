@@ -118,6 +118,12 @@ export async function createTeam(leagueId: number, data: any) {
 }
 
 export async function updateTeam(teamId: number, leagueId: number, data: any, oldLogoUrl?: string) {
+  const session = await getServerSession(authOptions);
+  
+  if (!session?.user?.id) return { success: false, error: "Não autorizado" };
+
+  const userId = session.user.id;
+
   try {
     if (data.logo && oldLogoUrl && data.logo !== oldLogoUrl) {
       const fileKey = oldLogoUrl.split("/f/")[1];
@@ -146,7 +152,7 @@ export async function updateTeam(teamId: number, leagueId: number, data: any, ol
               name: p.name, 
               position: p.position, 
               teamId: teamId,
-              userId: data.userId
+              userId: userId
             }
           });
         }

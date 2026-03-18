@@ -105,7 +105,9 @@ export function EditTeamModal({ team, onClose, onUpdate }: EditModalProps) {
       <div className="bg-white rounded-md shadow-2xl w-full max-w-md overflow-y-auto">
         <header className="flex items-center justify-between p-4 bg-neutral-100">
           <h3 className="font-bold text-neutral-900">Editar Time</h3>
-          <button onClick={() => onClose()} className="text-neutral-400 hover:text-neutral-600 cursor-pointer"><X size="20" /></button>
+          <button onClick={() => onClose()} className="p-1 rounded-full text-neutral-400 hover:text-neutral-600 hover:bg-neutral-200 cursor-pointer transition-colors">
+            <X size="20" />
+          </button>
         </header>
         <section className="p-6 flex flex-col gap-6">
           <article className="flex flex-col items-center gap-2">
