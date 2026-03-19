@@ -16,7 +16,7 @@ export default function MatchesTab({ leagueId }: { leagueId: number }) {
 
   useEffect(() => { loadMatches() }, [leagueId])
 
-  if (loading) return <div className="p-10 text-center">Carregando partidas...</div>
+  if (loading) return <div className="p-8 text-center text-neutral-500 italic">Carregando partidas...</div>
 
   if (matches.length === 0) {
     return (

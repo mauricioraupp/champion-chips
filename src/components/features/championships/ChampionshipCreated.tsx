@@ -84,7 +84,7 @@ export default function ChampionshipCreated({ leagueId }: { leagueId: number }) 
           <table className="w-full h-full">
             <thead>
               <tr className="text-[10px] uppercase text-neutral-400 border-b border-neutral-400">
-                <th className="text-left font-bold pb-1">Equipe</th>
+                <th className="text-left font-bold pb-1">Clube</th>
                 <th className="w-10 pb-1 ">Pts</th>
                 <th className="w-10 pb-1 ">PJ</th>
                 <th className="w-10 pb-1 hidden sm:table-cell">V</th>

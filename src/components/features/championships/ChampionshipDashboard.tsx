@@ -40,9 +40,9 @@ export default function ChampionshipDashboard({ leagueId }: { leagueId: number }
 
         <DashboardSelector 
           icon={<Shield size={20}/>} 
-          title="Times" 
-          isActive={activeTab === "times"}
-          onClick={() => setTab("times")}
+          title="Clubes" 
+          isActive={activeTab === "clubes"}
+          onClick={() => setTab("clubes")}
         />
 
         <DashboardSelector 
@@ -58,14 +58,14 @@ export default function ChampionshipDashboard({ leagueId }: { leagueId: number }
         <span className="absolute px-4 font-medium text-neutral-700 bg-neutral-150">
           {activeTab === "tabela" && "Tabela de clasificação"}
           {activeTab === "partidas" && "Partidas"}
-          {activeTab === "times" && "Times"}
+          {activeTab === "clubes" && "Clubes"}
           {activeTab === "artilharia" && "Artilharia"}
         </span>
       </div>
       <div className="w-full max-w-6xl px-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
         {activeTab === "tabela" && <StandingsTab leagueId={leagueId}/>}
         {activeTab === "partidas" && <MatchesTab leagueId={leagueId}/>}
-        {activeTab === "times" && <TeamsTab leagueId={leagueId}/>}
+        {activeTab === "clubes" && <TeamsTab leagueId={leagueId}/>}
         {activeTab === "artilharia" && <ScorersTab leagueId={leagueId}/>}
       </div>
     </section>

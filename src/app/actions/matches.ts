@@ -48,6 +48,7 @@ export async function updateMatch(matchId: number, leagueId: number, data: any) 
           matchId: matchId,
           playerId: parseInt(id),
           teamId: data.homeTeamId,
+          soccerLeagueId: leagueId
         }));
 
       const awayGoals = (data.awayScorers || [])
@@ -56,6 +57,7 @@ export async function updateMatch(matchId: number, leagueId: number, data: any) 
           matchId: matchId,
           playerId: parseInt(id),
           teamId: data.awayTeamId,
+          soccerLeagueId: leagueId
         }));
 
       const allGoals = [...homeGoals, ...awayGoals];

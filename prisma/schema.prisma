@@ -41,6 +41,7 @@ model SoccerLeague {
 
   Teams   TeamsSoccerLeague[]
   Matches Match[]
+  goals   Goal[]
 }
 
 model TeamsSoccerLeague {
@@ -114,4 +115,6 @@ model Goal {
   playerId          Int
   TeamsSoccerLeague TeamsSoccerLeague @relation(fields: [teamId], references: [id])
   teamId            Int
+  SoccerLeague      SoccerLeague      @relation(fields: [soccerLeagueId], references: [id])
+  soccerLeagueId    Int
 }

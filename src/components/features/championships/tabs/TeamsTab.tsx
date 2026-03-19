@@ -18,7 +18,7 @@ export default function TeamsTab({ leagueId }: { leagueId: number }) {
 
   useEffect(() => { loadTeams() }, [leagueId])
 
-  if (loading) return <div className="p-10 text-center">Carregando times...</div>
+  if (loading) return <div className="p-8 text-center text-neutral-500 italic">Carregando times...</div>
 
   return (
     <div className={`grid grid-cols-2 lg:grid-cols-3 place-items-center w-fit gap-4 sm:gap-6 mx-auto`}>

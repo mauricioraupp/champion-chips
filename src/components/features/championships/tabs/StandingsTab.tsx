@@ -14,17 +14,17 @@ export default function StandingsTab({ leagueId }: { leagueId: number }) {
     loadData()
   }, [leagueId])
 
-  if (loading) return <div className="p-8 text-center">Carregando classificação...</div>
+  if (loading) return <div className="p-8 text-center text-neutral-500 italic">Carregando classificação...</div>
 
   return (
-    <div className="w-full overflow-x-auto border-neutral-300 border-1 rounded-md">
-      <table className="w-full text-sm text-left">
-        <thead className="bg-neutral-50 text-xs text-neutral-500 uppercase border-b border-neutral-300">
+    <div className="w-full overflow-x-auto border-neutral-300 border rounded-md shadow-sm bg-white">
+      <table className="w-full text-sm text-left border-collapse">
+        <thead className="bg-neutral-50 text-[10px] text-neutral-500 uppercase border-b border-neutral-300 font-bold">
           <tr>
-            <th className="px-4 py-4 font-medium text-center">Pos</th>
-            <th className="px-4 py-4 font-medium">Clube</th>
-            <th className="px-3 py-4 text-center">P</th>
-            <th className="px-3 py-4 text-center">J</th>
+            <th className="px-4 py-4 text-center w-16">Pos</th>
+            <th className="px-4 py-4 ">Clube</th>
+            <th className="px-3 py-4 text-center">PTS</th>
+            <th className="px-3 py-4 text-center">PJ</th>
             <th className="px-3 py-4 text-center">V</th>
             <th className="px-3 py-4 text-center">E</th>
             <th className="px-3 py-4 text-center">D</th>
@@ -35,9 +35,9 @@ export default function StandingsTab({ leagueId }: { leagueId: number }) {
         </thead>
         <tbody className="bg-neutral-50 divide-y divide-neutral-200">
           {teams.map((entry, index) => (
-            <tr key={entry.id}>
-              <td className="px-4 py-4 text-center font-medium text-neutral-400">
-                {index + 1}
+            <tr key={entry.id} className="bg-white text-neutral-600 transition-colors">
+              <td className="px-4 py-4 text-center font-bold text-neutral-400">
+                {index + 1}º
               </td>
               <td className="px-4 py-4 flex items-center gap-3">
                 <div className="w-8 h-8 rounded-xs flex-shrink-0 overflow-hidden flex items-center justify-center">
@@ -51,20 +51,20 @@ export default function StandingsTab({ leagueId }: { leagueId: number }) {
                     <span className="text-[10px] font-bold text-neutral-400">{entry.sigla}</span>
                   )}
                 </div>
-                <span className="font-semibold text-neutral-800 whitespace-nowrap uppercase">
+                <span className="font-bold text-neutral-900 whitespace-nowrap">
                   {entry.name}
                 </span>
               </td>
-              <td className="px-3 py-4 text-center font-bold">
+              <td className="px-3 py-4 text-center text-black font-bold">
                 {entry.points}
               </td>
-              <td className="px-3 py-4 text-center text-neutral-600">{entry.playedMatches}</td>
-              <td className="px-3 py-4 text-center text-neutral-600">{entry.wins}</td>
-              <td className="px-3 py-4 text-center text-neutral-600">{entry.draws}</td>
-              <td className="px-3 py-4 text-center text-neutral-600">{entry.losses}</td>
-              <td className="px-3 py-4 text-center text-neutral-600">{entry.goalsScored}</td>
-              <td className="px-3 py-4 text-center text-neutral-600">{entry.goalsConceded}</td>
-              <td className="px-3 py-4 text-center text-neutral-600 font-semibold">
+              <td className="px-3 py-4 text-center">{entry.playedMatches}</td>
+              <td className="px-3 py-4 text-center">{entry.wins}</td>
+              <td className="px-3 py-4 text-center">{entry.draws}</td>
+              <td className="px-3 py-4 text-center">{entry.losses}</td>
+              <td className="px-3 py-4 text-center">{entry.goalsScored}</td>
+              <td className="px-3 py-4 text-center">{entry.goalsConceded}</td>
+              <td className="px-3 py-4 text-center text-black font-semibold">
                 <span className={entry.goalsDiff > 0 ? "text-green-600" : entry.goalsDiff < 0 ? "text-red-600" : ""}>
                   {entry.goalsDiff}
                 </span>
