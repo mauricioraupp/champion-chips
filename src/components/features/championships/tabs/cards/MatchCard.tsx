@@ -13,7 +13,6 @@ export default function MatchCard({ match, onUpdate }: { match: any, onUpdate: (
         isFinished ? 'bg-neutral-200 border-neutral-200' : 'bg-neutral-50 border-neutral-300'
       }`}>
         
-        {/* TIME CASA */}
         <div className="flex items-center gap-1 sm:gap-2 flex-1 justify-end">
           <span className={`font-semibold ${isFinished ? 'text-neutral-600' : 'text-neutral-900'} hidden sm:block`}>
             {match.HomeTeam.name}
@@ -26,7 +25,6 @@ export default function MatchCard({ match, onUpdate }: { match: any, onUpdate: (
           </figure>
         </div>
 
-        {/* CENTRO (PLACAR/HORA) */}
         <div className="flex flex-col items-center px-1 sm:px-4 min-w-[120px]">
           {isFinished ? (
             <div className="flex items-center gap-2">
@@ -44,7 +42,6 @@ export default function MatchCard({ match, onUpdate }: { match: any, onUpdate: (
           </span>
         </div>
 
-        {/* TIME FORA */}
         <div className="flex items-center gap-1 sm:gap-2 flex-1">
           <figure className={`w-6 sm:w-8 h-6 sm:h-8 ${isFinished ? 'grayscale opacity-70' : ''}`}>
             <img src={match.AwayTeam.logo} className="w-full h-full object-cover rounded-full"/>
@@ -57,7 +54,6 @@ export default function MatchCard({ match, onUpdate }: { match: any, onUpdate: (
           </span>
         </div>
 
-        {/* BOTAO EDITAR */}
         <button 
           onClick={() => setShowModal(true)}
           className={`sm:absolute sm:right-8 p-2 rounded-full transition-colors cursor-pointer ${

@@ -1,11 +1,12 @@
 "use client"
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Clipboard, Calendar, Shield } from '@geist-ui/icons'
+import { Clipboard, Calendar, Shield, Target } from '@geist-ui/icons'
 import DashboardSelector from "@/components/features/championships/tabs/DashboardSelector";
 import StandingsTab from './tabs/StandingsTab';
 import MatchesTab from './tabs/MatchesTab';
 import TeamsTab from './tabs/TeamsTab';
+import ScorersTab from './tabs/ScorersTab';
 
 export default function ChampionshipDashboard({ leagueId }: { leagueId: number }) {
   const router = useRouter();
@@ -20,8 +21,8 @@ export default function ChampionshipDashboard({ leagueId }: { leagueId: number }
   };
 
   return(
-    <section className="w-full flex flex-col gap-16 items-center">
-      <div className="grid grid-rows-1 grid-cols-3 gap-8 w-fit">
+    <section className="w-full flex flex-col gap-16 items-center pb-16">
+      <div className="grid grid-rows-1 grid-cols-4 gap-8 w-fit">
 
         <DashboardSelector 
           icon={<Clipboard size={20}/>} 
@@ -43,6 +44,13 @@ export default function ChampionshipDashboard({ leagueId }: { leagueId: number }
           isActive={activeTab === "times"}
           onClick={() => setTab("times")}
         />
+
+        <DashboardSelector 
+          icon={<Target size={20}/>} 
+          title="Artilharia" 
+          isActive={activeTab === "artilharia"}
+          onClick={() => setTab("artilharia")}
+        />
         
       </div>
       <div className="flex items-center justify-center w-full px-4">
@@ -51,12 +59,14 @@ export default function ChampionshipDashboard({ leagueId }: { leagueId: number }
           {activeTab === "tabela" && "Tabela de clasificação"}
           {activeTab === "partidas" && "Partidas"}
           {activeTab === "times" && "Times"}
+          {activeTab === "artilharia" && "Artilharia"}
         </span>
       </div>
       <div className="w-full max-w-6xl px-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
         {activeTab === "tabela" && <StandingsTab leagueId={leagueId}/>}
         {activeTab === "partidas" && <MatchesTab leagueId={leagueId}/>}
         {activeTab === "times" && <TeamsTab leagueId={leagueId}/>}
+        {activeTab === "artilharia" && <ScorersTab leagueId={leagueId}/>}
       </div>
     </section>
   )

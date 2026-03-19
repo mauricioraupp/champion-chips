@@ -17,7 +17,9 @@ export default function SideBar() {
         <li className="flex justify-between items-center py-4 px-6 gap-1 rounded-md"
         >
           <p className="flex text-black font-bold text-2xl">Champion<span className="text-yellow-600">Chips</span></p>
-          <Menu className="flex"/>
+          <button className="flex lg:hidden p-2 rounded-full hover:bg-neutral-200 cursor-pointer transition-colors">
+            <Menu/>
+          </button>
         </li>
       </header>
 
@@ -28,7 +30,9 @@ export default function SideBar() {
           <li className="flex flex-col lg:flex-row items-center 
             py-2 lg:py-2 px-2 lg:px-4 gap-1 lg:gap-4 rounded-md"
           >
-            <Menu className="flex lg:hidden"/>
+            <button className="flex lg:hidden p-2 rounded-full hover:bg-neutral-200 cursor-pointer transition-colors">
+              <Menu/>
+            </button>
             <p className="hidden lg:flex text-black font-bold text-2xl">Champion<span className="text-yellow-600">Chips</span></p>
           </li>
         </ul>

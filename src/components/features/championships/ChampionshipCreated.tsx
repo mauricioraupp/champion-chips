@@ -102,8 +102,11 @@ export default function ChampionshipCreated({ leagueId }: { leagueId: number }) 
                     <span className={`text-xs`}>
                       {index + 1}
                     </span>
-                    <span className="font-semibold text-neutral-800 truncate sm:max-w-24 max-w-13 whitespace-nowrap">
+                    <span className="hidden sm:block font-semibold text-neutral-800 truncate sm:max-w-24 max-w-13 whitespace-nowrap">
                       {entry.name}
+                    </span>
+                    <span className="block sm:hidden font-semibold text-neutral-800 truncate sm:max-w-24 max-w-13 whitespace-nowrap">
+                      {entry.sigla}
                     </span>
                   </td>
                   <td className="font-bold text-neutral-900">{entry.points}</td>

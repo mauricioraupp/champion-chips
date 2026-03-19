@@ -34,7 +34,7 @@ export default function TeamsTab({ leagueId }: { leagueId: number }) {
       <button 
         onClick={() => setIsCreateModalOpen(true)}
         className={`flex items-center justify-center w-30 sm:w-60 h-30 sm:h-52 rounded-md bg-black
-          hover:bg-zinc-800 cursor-pointer transition-colors`}
+          hover:bg-zinc-900 cursor-pointer transition-colors`}
       >
         <span className={`font-medium text-white sm:text-md`}>
           + Criar time

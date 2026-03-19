@@ -15,14 +15,30 @@ export function EditMatchModal({ match, onClose, onUpdate }: EditMatchModalProps
   const [homePlayers, setHomePlayers] = useState<any[]>([]);
   const [awayPlayers, setAwayPlayers] = useState<any[]>([]);
 
-  const [formData, setFormData] = useState({
-    homeScore: match.homeScore || 0,
-    awayScore: match.awayScore || 0,
-    date: match.date ? new Date(match.date).toISOString().split('T')[0] : "",
-    time: match.time || "",
-    status: match.status || "SCHEDULED",
-    homeScorers: match.Goals?.filter((g: any) => g.teamId === match.homeTeamId).map((g: any) => g.playerId) || [],
-    awayScorers: match.Goals?.filter((g: any) => g.teamId === match.awayTeamId).map((g: any) => g.playerId) || [],
+  const [formData, setFormData] = useState(() => {
+    const hScore = match.homeScore || 0;
+    const aScore = match.awayScore || 0;
+
+    const savedHomeScorers = match.Goals
+      ?.filter((g: any) => g.teamId === match.homeTeamId)
+      .map((g: any) => String(g.playerId)) || [];
+
+    const savedAwayScorers = match.Goals
+      ?.filter((g: any) => g.teamId === match.awayTeamId)
+      .map((g: any) => String(g.playerId)) || [];
+
+    const homeScorers = Array.from({ length: hScore }, (_, i) => savedHomeScorers[i] || "");
+    const awayScorers = Array.from({ length: aScore }, (_, i) => savedAwayScorers[i] || "");
+
+    return {
+      homeScore: hScore,
+      awayScore: aScore,
+      date: match.date ? new Date(match.date).toISOString().split('T')[0] : "",
+      time: match.time || "",
+      status: match.status || "SCHEDULED",
+      homeScorers,
+      awayScorers,
+    };
   });
 
   useEffect(() => {
@@ -74,8 +90,13 @@ export function EditMatchModal({ match, onClose, onUpdate }: EditMatchModalProps
 
   const handleSave = async () => {
     setLoading(true);
+    const payload = {
+      ...formData,
+      homeTeamId: match.homeTeamId,
+      awayTeamId: match.awayTeamId
+    };
     try {
-      const result = await updateMatch(match.id, match.soccerLeagueId, formData);
+      const result = await updateMatch(match.id, match.soccerLeagueId, payload);
       if (result.success) {
         toast.success("Partida atualizada!");
         onUpdate();

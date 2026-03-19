@@ -9,6 +9,7 @@ export async function getMatches(leagueId: number) {
     include: {
       HomeTeam: true,
       AwayTeam: true,
+      Goals: true
     },
     orderBy: [
       { id: 'asc' }
@@ -20,9 +21,11 @@ export async function getMatches(leagueId: number) {
 
 export async function updateMatch(matchId: number, leagueId: number, data: any) {
   try {
+    const homeScore = parseInt(data.homeScore) || 0;
+    const awayScore = parseInt(data.awayScore) || 0;
     const updateData: any = {
-      homeScore: parseInt(data.homeScore) || 0,
-      awayScore: parseInt(data.awayScore) || 0,
+      homeScore,
+      awayScore,
       status: data.status,
       time: data.time || null,
     };
@@ -34,18 +37,49 @@ export async function updateMatch(matchId: number, leagueId: number, data: any) 
       }
     }
 
-    const updatedMatch = await prisma.match.update({
-      where: { id: matchId },
-      data: updateData,
+    const result = await prisma.$transaction(async (tx) => {
+      await tx.goal.deleteMany({
+        where: { matchId: matchId }
+      });
+
+      const homeGoals = (data.homeScorers || [])
+        .filter((id: string) => id !== "")
+        .map((id: string) => ({
+          matchId: matchId,
+          playerId: parseInt(id),
+          teamId: data.homeTeamId,
+        }));
+
+      const awayGoals = (data.awayScorers || [])
+        .filter((id: string) => id !== "")
+        .map((id: string) => ({
+          matchId: matchId,
+          playerId: parseInt(id),
+          teamId: data.awayTeamId,
+        }));
+
+      const allGoals = [...homeGoals, ...awayGoals];
+
+      if (allGoals.length > 0) {
+        await tx.goal.createMany({
+          data: allGoals
+        });
+      }
+
+      return await tx.match.update({
+        where: { id: matchId },
+        data: updateData,
+      });
     });
 
-    await updateLeagueTable(updatedMatch.soccerLeagueId);
+    await updateLeagueTable(leagueId);
 
-    revalidatePath(`/championships/${leagueId}`, 'page') 
-    return { success: true, updatedMatch }
+    revalidatePath(`/championships/${leagueId}`, 'page');
+    return { success: true, updatedMatch: result };
+
   } catch (error) {
-    console.error("Erro ao atualizar:", error)
-    return { success: false, error: "Falha ao atualizar a partida no banco." }
+    console.error("Erro ao atualizar partida:", error);
+    return { success: false, error: "Erro ao salvar os dados no banco." };
   }
 }
 

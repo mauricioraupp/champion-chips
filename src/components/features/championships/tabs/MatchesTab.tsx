@@ -27,7 +27,7 @@ export default function MatchesTab({ leagueId }: { leagueId: number }) {
   }
 
   return (
-    <div className="flex flex-col gap-4 w-full max-w-3xl mx-auto mb-16">
+    <div className="flex flex-col gap-4 w-full max-w-3xl mx-auto">
       {matches.map((match) => (
         <MatchCard
           key={match.id} 

@@ -22,7 +22,7 @@ export default function TeamCard({ team, league, onUpdate }: { team: any, league
     <>
       <div className="relative flex flex-col items-center justify-center w-32 sm:w-60 h-32 sm:h-52 border border-neutral-300 rounded-md bg-neutral-100 hover:border-neutral-400 transition-all p-2">
         <div className="absolute top-2 right-2" ref={menuRef}>
-          <button onClick={() => setShowOptions(!showOptions)} className="p-1 hover:bg-neutral-200 rounded-full cursor-pointer">
+          <button onClick={() => setShowOptions(!showOptions)} className="p-1 hover:bg-neutral-200 rounded-full cursor-pointer transition-colors">
             <MoreHorizontal size="20" />
           </button>
           {showOptions && (
