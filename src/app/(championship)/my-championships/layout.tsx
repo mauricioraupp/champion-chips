@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import SideBar from "@/components/layout/sidebar";
+import Header from "@/components/layout/header";
 import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
@@ -9,9 +10,12 @@ export const metadata: Metadata = {
 
 export default function ChampionshipsLayout({children,}: Readonly<{children: React.ReactNode;}>) {
   return (
-    <div>
-      <SideBar/>
-      {children}
+    <div className="flex min-h-full w-full flex-col">
+      <Header/>
+      <div className="mx-auto flex min-w-0 max-w-7xl grow flex-col sm:flex-row sm:py-6">
+        <SideBar/>
+        {children}
+      </div>
       <Toaster richColors position="top-center"/>
     </div>
   );

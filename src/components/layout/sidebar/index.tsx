@@ -1,60 +1,47 @@
 import Link from 'next/link';
-import { Menu, Folder, FolderPlus, User, Settings, LogOut } from '@geist-ui/icons'
-import ListItems from './list-items';
+import { Folder, FolderPlus, User, Settings, Bookmark } from '@geist-ui/icons'
 
 export default function SideBar() {
-    const listItem = [
-    { icon: <Folder/>, name: 'Meus torneios', color: 'text-black', href: '/my-championships'},
-    { icon: <FolderPlus/>, name: 'Criar torneio', color: 'text-black', href: '/create-championship'},
-    { icon: <User/>, name: 'Conta', color: 'text-black', href: '/profile'},
-    { icon: <Settings/>, name: 'Configurações', color: 'text-black', href: '/my-championships'},
-    { icon: <LogOut/>, name: 'Sair da conta', color: 'text-red-600', href: '/my-championships'},
-  ];
-
   return(
-    <>
-      <header className="sm:hidden fixed top-0 w-screen bg-neutral-50 z-1 border-b-2 border-neutral-300">
-        <li className="flex justify-between items-center py-4 px-6 gap-1 rounded-md"
-        >
-          <p className="flex text-black font-bold text-2xl">Champion<span className="text-yellow-600">Chips</span></p>
-          <button className="flex lg:hidden p-2 rounded-full hover:bg-neutral-200 cursor-pointer transition-colors">
-            <Menu/>
-          </button>
-        </li>
-      </header>
+    <aside className="flex w-screen sm:w-fit flex-col justify-between">
+      <ul className="flex w-full sm:flex-col gap-2 p-6 justify-between">
 
-      <aside className="fixed left-0 h-screen w-fit lg:w-68 bg-neutral-50 border-r-2 border-neutral-300 hidden sm:flex flex-col justify-between 
-        items-center lg:items-start py-2 lg:py-6 px-2 lg:px-4">
-
-        <ul className="absolute">
-          <li className="flex flex-col lg:flex-row items-center 
-            py-2 lg:py-2 px-2 lg:px-4 gap-1 lg:gap-4 rounded-md"
-          >
-            <button className="flex lg:hidden p-2 rounded-full hover:bg-neutral-200 cursor-pointer transition-colors">
-              <Menu/>
-            </button>
-            <p className="hidden lg:flex text-black font-bold text-2xl">Champion<span className="text-yellow-600">Chips</span></p>
+        <Link href='/my-championships' className="w-fit">
+          <li className={`w-fit flex flex-row items-center py-2 px-2 sm:px-4 sm:gap-4 rounded-md cursor-pointer opacity-60 hover:opacity-100 hover:bg-neutral-200 transition-all`}>
+            <Folder size={22}/>
+            <p className="hidden sm:block text-base font-semibold truncate text-neutral-800">Meus torneios</p>
           </li>
-        </ul>
+        </Link>
 
-        <ul className="w-full flex flex-col gap-2 mt-18">
-          {listItem.map((item) => (
-            <Link 
-              key={item.name} 
-              href={item.href} 
-              className="w-full"
-            >
-              <ListItems
-                key={item.name}
-                icon={item.icon}
-                name={item.name}
-                color={item.color}
-              />
-            </Link>
-          ))}
-        </ul>
+        <Link href='/my-championships' className="w-fit">
+          <li className={`w-fit flex flex-row items-center py-2 px-2 sm:px-4 sm:gap-4 rounded-md cursor-pointer opacity-60 hover:opacity-100 hover:bg-neutral-200 transition-all`}>
+            <Bookmark size={22}/>
+            <p className="hidden sm:block text-base font-semibold truncate text-neutral-800">Torneios salvos</p>
+          </li>
+        </Link>
 
-      </aside>
-    </>
+        <Link href='/create-championship' className="w-fit">
+          <li className={`w-fit flex flex-row items-center py-2 px-2 sm:px-4 sm:gap-4 rounded-md cursor-pointer opacity-60 hover:opacity-100 hover:bg-neutral-200 transition-all`}>
+            <FolderPlus size={22}/>
+            <p className="hidden sm:block text-base font-semibold truncate text-neutral-800">Criar torneio</p>
+          </li>
+        </Link>
+
+        <Link href='/profile' className="w-fit">
+          <li className={`w-fit flex flex-row items-center py-2 px-2 sm:px-4 sm:gap-4 rounded-md cursor-pointer opacity-60 hover:opacity-100 hover:bg-neutral-200 transition-all`}>
+            <User size={22}/>
+            <p className="hidden sm:block text-base font-semibold truncate text-neutral-800">Conta</p>
+          </li>
+        </Link>
+
+        <Link href='/profile' className="w-fit">
+          <li className={`w-fit flex flex-row items-center py-2 px-2 sm:px-4 sm:gap-4 rounded-md cursor-pointer opacity-60 hover:opacity-100 hover:bg-neutral-200 transition-all`}>
+            <Settings size={22}/>
+            <p className="hidden sm:block text-base font-semibold truncate text-neutral-800">Configurações</p>
+          </li>
+        </Link>
+
+      </ul>
+    </aside>
   )
 }
