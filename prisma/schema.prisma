@@ -7,22 +7,19 @@ datasource db {
 }
 
 model User {
-  id String @id @default(cuid())
-
-  email     String   @unique
-  name      String
-  password  String?
-  image     String?
-  createdAt DateTime @default(now())
-
+  id                String              @id @default(cuid())
+  email             String              @unique
+  name              String
+  password          String?
+  image             String?
+  createdAt         DateTime            @default(now())
   SoccerLeagues     SoccerLeague[]
   TeamsSoccerLeague TeamsSoccerLeague[]
   Players           Players[]
 }
 
 model PasswordResetToken {
-  id String @id @default(cuid())
-
+  id        String   @id @default(cuid())
   email     String   @unique
   token     String   @unique
   expires   DateTime
@@ -30,18 +27,16 @@ model PasswordResetToken {
 }
 
 model SoccerLeague {
-  id     Int    @id @default(autoincrement())
-  User   User?  @relation(fields: [userId], references: [id])
-  userId String
-
+  id         String              @id @default(cuid())
+  User       User?               @relation(fields: [userId], references: [id])
+  userId     String
   name       String
   logo       String?
-  secondLegs Boolean  @default(false)
-  createdAt  DateTime @default(now())
-
-  Teams   TeamsSoccerLeague[]
-  Matches Match[]
-  goals   Goal[]
+  secondLegs Boolean             @default(false)
+  createdAt  DateTime            @default(now())
+  Teams      TeamsSoccerLeague[]
+  Matches    Match[]
+  goals      Goal[]
 }
 
 model TeamsSoccerLeague {
@@ -49,26 +44,23 @@ model TeamsSoccerLeague {
   User           User          @relation(fields: [userId], references: [id])
   userId         String
   SoccerLeague   SoccerLeague? @relation(fields: [soccerLeagueId], references: [id])
-  soccerLeagueId Int?
-
-  name      String
-  sigla     String   @db.VarChar(3)
-  logo      String?
-  createdAt DateTime @default(now())
-
-  points        Int @default(0)
-  playedMatches Int @default(0)
-  wins          Int @default(0)
-  draws         Int @default(0)
-  losses        Int @default(0)
-  goalsScored   Int @default(0)
-  goalsConceded Int @default(0)
-  goalsDiff     Int @default(0)
-
-  Players     Players[]
-  Goals       Goal[]
-  HomeMatches Match[]   @relation("HomeMatches")
-  AwayMatches Match[]   @relation("AwayMatches")
+  soccerLeagueId String?
+  name           String
+  sigla          String        @db.VarChar(3)
+  logo           String?
+  createdAt      DateTime      @default(now())
+  points         Int           @default(0)
+  playedMatches  Int           @default(0)
+  wins           Int           @default(0)
+  draws          Int           @default(0)
+  losses         Int           @default(0)
+  goalsScored    Int           @default(0)
+  goalsConceded  Int           @default(0)
+  goalsDiff      Int           @default(0)
+  Players        Players[]
+  Goals          Goal[]
+  HomeMatches    Match[]       @relation("HomeMatches")
+  AwayMatches    Match[]       @relation("AwayMatches")
 }
 
 model Players {
@@ -77,34 +69,30 @@ model Players {
   userId            String
   TeamsSoccerLeague TeamsSoccerLeague? @relation(fields: [teamId], references: [id])
   teamId            Int?
-
-  name      String
-  position  String?
-  picture   String?
-  createdAt DateTime @default(now())
-
-  GoalsScored Goal[]
+  name              String
+  position          String?
+  picture           String?
+  createdAt         DateTime           @default(now())
+  GoalsScored       Goal[]
 }
 
 model Match {
   id             Int               @id @default(autoincrement())
   SoccerLeague   SoccerLeague      @relation(fields: [soccerLeagueId], references: [id])
-  soccerLeagueId Int
+  soccerLeagueId String
   HomeTeam       TeamsSoccerLeague @relation("HomeMatches", fields: [homeTeamId], references: [id])
   homeTeamId     Int
   AwayTeam       TeamsSoccerLeague @relation("AwayMatches", fields: [awayTeamId], references: [id])
   awayTeamId     Int
-
-  homeScore     Int       @default(0)
-  awayScore     Int       @default(0)
-  round         Int       @default(1)
-  isReturnMatch Boolean   @default(false)
-  date          DateTime?
-  time          String?
-  status        String    @default("SCHEDULED") // Pode ser "SCHEDULED" ou "FINISHED"
-  createdAt     DateTime  @default(now())
-
-  Goals Goal[]
+  homeScore      Int               @default(0)
+  awayScore      Int               @default(0)
+  round          Int               @default(1)
+  isReturnMatch  Boolean           @default(false)
+  date           DateTime?
+  time           String?
+  status         String            @default("SCHEDULED") // Pode ser "SCHEDULED" ou "FINISHED"
+  createdAt      DateTime          @default(now())
+  Goals          Goal[]
 }
 
 model Goal {
@@ -116,5 +104,5 @@ model Goal {
   TeamsSoccerLeague TeamsSoccerLeague @relation(fields: [teamId], references: [id])
   teamId            Int
   SoccerLeague      SoccerLeague      @relation(fields: [soccerLeagueId], references: [id])
-  soccerLeagueId    Int
+  soccerLeagueId    String
 }

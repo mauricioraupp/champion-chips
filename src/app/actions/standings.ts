@@ -2,7 +2,7 @@
 
 import { prisma } from "@/lib/prisma"
 
-export async function getStandings(leagueId: number) {
+export async function getStandings(leagueId: string) {
   const standings = await prisma.teamsSoccerLeague.findMany({
     where: { soccerLeagueId: leagueId },
     orderBy: [

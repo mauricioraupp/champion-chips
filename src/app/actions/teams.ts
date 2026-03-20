@@ -8,7 +8,7 @@ import { UTApi } from "uploadthing/server"
 
 const utapi = new UTApi();
 
-export async function getTeams(leagueId: number) {
+export async function getTeams(leagueId: string) {
   const teams = await prisma.teamsSoccerLeague.findMany({
     where: { soccerLeagueId: leagueId },
     orderBy: [
@@ -19,7 +19,7 @@ export async function getTeams(leagueId: number) {
   return teams
 }
 
-export async function createTeam(leagueId: number, data: any) {
+export async function createTeam(leagueId: string, data: any) {
   const session = await getServerSession(authOptions);
   
   if (!session?.user?.id) return { success: false, error: "Não autorizado" };
@@ -117,7 +117,7 @@ export async function createTeam(leagueId: number, data: any) {
   }
 }
 
-export async function updateTeam(teamId: number, leagueId: number, data: any, oldLogoUrl?: string) {
+export async function updateTeam(teamId: number, leagueId: string, data: any, oldLogoUrl?: string) {
   const session = await getServerSession(authOptions);
   
   if (!session?.user?.id) return { success: false, error: "Não autorizado" };
@@ -176,7 +176,7 @@ export async function updateTeam(teamId: number, leagueId: number, data: any, ol
   }
 }
 
-export async function deleteTeam(teamId: number, leagueId: number) {
+export async function deleteTeam(teamId: number, leagueId: string) {
   try {
 
     const teamCount = await prisma.teamsSoccerLeague.count({

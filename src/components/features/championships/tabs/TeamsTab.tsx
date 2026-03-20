@@ -5,7 +5,7 @@ import { getTeams } from "@/app/actions/teams"
 import TeamCard from "./cards/TeamCard"
 import { CreateTeamModal } from "./cards/modals/CreateTeamModal"
 
-export default function TeamsTab({ leagueId }: { leagueId: number }) {
+export default function TeamsTab({ leagueId }: { leagueId: string }) {
   const [teams, setTeams] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
@@ -33,7 +33,7 @@ export default function TeamsTab({ leagueId }: { leagueId: number }) {
 
       <button 
         onClick={() => setIsCreateModalOpen(true)}
-        className={`flex items-center justify-center w-30 sm:w-60 h-30 sm:h-52 rounded-md bg-black
+        className={`flex items-center justify-center w-32 sm:w-60 h-32 sm:h-52 rounded-md bg-black
           hover:bg-zinc-900 cursor-pointer transition-colors`}
       >
         <span className={`font-medium text-white sm:text-md`}>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { getStandings } from "@/app/actions/standings"
 
-export default function StandingsTab({ leagueId }: { leagueId: number }) {
+export default function StandingsTab({ leagueId }: { leagueId: string }) {
   const [teams, setTeams] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
 

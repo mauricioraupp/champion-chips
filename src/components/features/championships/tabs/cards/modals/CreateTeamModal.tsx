@@ -5,7 +5,7 @@ import { createTeam } from "@/app/actions/teams";
 import { toast } from "sonner";
 
 interface CreateModalProps {
-  leagueId: number;
+  leagueId: string;
   onClose: () => void;
   onUpdate: () => void;
 }

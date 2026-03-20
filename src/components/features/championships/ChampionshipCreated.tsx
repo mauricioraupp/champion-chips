@@ -7,7 +7,7 @@ import { MoreHorizontal } from '@geist-ui/icons';
 import Image from 'next/image';
 import Link from "next/link";
 
-export default function ChampionshipCreated({ leagueId }: { leagueId: number }) {
+export default function ChampionshipCreated({ leagueId }: { leagueId: string }) {
   const [championship, setChampionship] = useState<any>(null)
   const [teams, setTeams] = useState<any[]>([])
   const [loading, setLoading] = useState(true)

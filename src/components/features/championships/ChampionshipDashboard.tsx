@@ -8,7 +8,7 @@ import MatchesTab from './tabs/MatchesTab';
 import TeamsTab from './tabs/TeamsTab';
 import ScorersTab from './tabs/ScorersTab';
 
-export default function ChampionshipDashboard({ leagueId }: { leagueId: number }) {
+export default function ChampionshipDashboard({ leagueId }: { leagueId: string }) {
   const router = useRouter();
   const searchParams = useSearchParams();
 

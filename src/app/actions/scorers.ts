@@ -2,7 +2,7 @@
 
 import { prisma } from "@/lib/prisma"
 
-export async function getScorers(leagueId: number) {
+export async function getScorers(leagueId: string) {
   const stats = await prisma.goal.groupBy({
     by: ['playerId'],
     where: {

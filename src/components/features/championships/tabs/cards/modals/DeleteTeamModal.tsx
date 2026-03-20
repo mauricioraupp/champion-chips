@@ -2,7 +2,7 @@ import { Trash } from '@geist-ui/icons';
 import { deleteTeam } from "@/app/actions/teams";
 import { toast } from "sonner";
 
-export function DeleteTeamModal({ team, league, onClose, onUpdate }: { team: any, league: number, onClose: () => void, onUpdate: () => void }) {
+export function DeleteTeamModal({ team, league, onClose, onUpdate }: { team: any, league: string, onClose: () => void, onUpdate: () => void }) {
   const handleDelete = async () => {
     const res = await deleteTeam(team.id, league);
     if (res.error) {

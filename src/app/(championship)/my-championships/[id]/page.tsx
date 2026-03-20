@@ -4,7 +4,7 @@ import ChampionshipDashboard from '@/components/features/championships/Champions
 
 export default async function SoccerLeagueDashboard({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const leagueId = Number(id);
+  const leagueId = id;
   const data = await getChampionshipName(leagueId);
 
   return (

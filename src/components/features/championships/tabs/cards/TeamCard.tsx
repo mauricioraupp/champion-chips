@@ -3,7 +3,7 @@ import { MoreHorizontal, Edit2, Trash } from '@geist-ui/icons';
 import { EditTeamModal } from "./modals/EditTeamModal";
 import { DeleteTeamModal } from "./modals/DeleteTeamModal";
 
-export default function TeamCard({ team, league, onUpdate }: { team: any, league: number, onUpdate: () => void }) {
+export default function TeamCard({ team, league, onUpdate }: { team: any, league: string, onUpdate: () => void }) {
   const [showOptions, setShowOptions] = useState(false);
   const [activeModal, setActiveModal] = useState<"edit" | "delete" | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);

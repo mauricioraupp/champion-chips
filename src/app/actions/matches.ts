@@ -3,7 +3,7 @@
 import { prisma } from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
 
-export async function getMatches(leagueId: number) {
+export async function getMatches(leagueId: string) {
   const matches = await prisma.match.findMany({
     where: { soccerLeagueId: leagueId },
     include: {
@@ -19,7 +19,7 @@ export async function getMatches(leagueId: number) {
   return matches
 }
 
-export async function updateMatch(matchId: number, leagueId: number, data: any) {
+export async function updateMatch(matchId: number, leagueId: string, data: any) {
   try {
     const homeScore = parseInt(data.homeScore) || 0;
     const awayScore = parseInt(data.awayScore) || 0;
@@ -85,7 +85,7 @@ export async function updateMatch(matchId: number, leagueId: number, data: any) 
   }
 }
 
-async function updateLeagueTable(leagueId: number) {
+async function updateLeagueTable(leagueId: string) {
   const teams = await prisma.teamsSoccerLeague.findMany({
     where: { soccerLeagueId: leagueId }
   });

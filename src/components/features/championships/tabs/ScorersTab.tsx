@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import { getScorers } from "@/app/actions/scorers"
 
-export default function ScorersTab({ leagueId }: { leagueId: number }) {
+export default function ScorersTab({ leagueId }: { leagueId: string }) {
   const [players, setPlayers] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
 
