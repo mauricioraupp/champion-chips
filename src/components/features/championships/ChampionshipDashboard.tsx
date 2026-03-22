@@ -11,58 +11,42 @@ import ScorersTab from './tabs/ScorersTab';
 export default function ChampionshipDashboard({ leagueId }: { leagueId: string }) {
   const router = useRouter();
   const searchParams = useSearchParams();
-
   const activeTab = searchParams.get('tab') || 'tabela';
 
   const setTab = (tabName: string) => {
-    if (activeTab !== tabName.toLowerCase()) {
-      router.push(`?tab=${tabName.toLowerCase()}`, { scroll: false });
-    }
+    router.push(`?tab=${tabName}`, { scroll: false });
   };
 
-  return(
-    <section className="w-full flex flex-col gap-16 items-center pb-16">
-      <div className="grid grid-rows-1 grid-cols-4 gap-8 w-fit">
-
+  return (
+    <section className="w-full flex flex-col overflow-y-auto max-h-150 my-4">
+      <div className="flex items-center border-b border-neutral-200 mb-8 overflow-x-auto no-scrollbar">
         <DashboardSelector 
-          icon={<Clipboard size={20}/>} 
+          icon={<Clipboard size={18}/>} 
           title="Tabela" 
           isActive={activeTab === "tabela"}
           onClick={() => setTab("tabela")}
         />
-      
         <DashboardSelector 
-          icon={<Calendar size={20}/>} 
+          icon={<Calendar size={18}/>} 
           title="Partidas" 
           isActive={activeTab === "partidas"}
           onClick={() => setTab("partidas")}
         />
-
         <DashboardSelector 
-          icon={<Shield size={20}/>} 
+          icon={<Shield size={18}/>} 
           title="Clubes" 
           isActive={activeTab === "clubes"}
           onClick={() => setTab("clubes")}
         />
-
         <DashboardSelector 
-          icon={<Target size={20}/>} 
+          icon={<Target size={18}/>} 
           title="Artilharia" 
           isActive={activeTab === "artilharia"}
           onClick={() => setTab("artilharia")}
         />
-        
       </div>
-      <div className="flex items-center justify-center w-full px-4">
-        <hr className="w-full border-1 rounded-xs border-neutral-300"/>
-        <span className="absolute px-4 font-medium text-neutral-700 bg-neutral-150">
-          {activeTab === "tabela" && "Tabela de clasificação"}
-          {activeTab === "partidas" && "Partidas"}
-          {activeTab === "clubes" && "Clubes"}
-          {activeTab === "artilharia" && "Artilharia"}
-        </span>
-      </div>
-      <div className="w-full max-w-6xl px-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
+
+      <div className="w-full max-w-6xl animate-in fade-in slide-in-from-bottom-2 duration-500">
         {activeTab === "tabela" && <StandingsTab leagueId={leagueId}/>}
         {activeTab === "partidas" && <MatchesTab leagueId={leagueId}/>}
         {activeTab === "clubes" && <TeamsTab leagueId={leagueId}/>}

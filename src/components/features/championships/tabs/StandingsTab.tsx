@@ -35,7 +35,7 @@ export default function StandingsTab({ leagueId }: { leagueId: string }) {
         </thead>
         <tbody className="bg-neutral-50 divide-y divide-neutral-200">
           {teams.map((entry, index) => (
-            <tr key={entry.id} className="bg-white text-neutral-600 transition-colors">
+            <tr key={entry.id} className="bg-white text-neutral-600 hover:bg-neutral-50 transition-colors">
               <td className="px-4 py-4 text-center font-bold text-neutral-400">
                 {index + 1}º
               </td>

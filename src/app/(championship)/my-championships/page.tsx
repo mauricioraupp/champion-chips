@@ -6,12 +6,14 @@ export default async function MyChampionships() {
   const leagues = await getChampionshipsList();
 
   return (
-    <main className="min-h-screen">
-      <h1 className="font-semibold text-xl text-center sm:pt-16 pt-32 sm:pb-16 pb-16">
+    <main className="flex w-screen flex-col gap-1 px-4 sm:w-full sm:p-6">
+      <h1 className="text-neutral-800 font-semibold text-xl">
         Torneios Criados
       </h1>
+      <p className="text-neutral-500 font-medium text-sm">Gerencie todos os seus torneios criados</p>
       
-      <section className="flex flex-col gap-8 w-full max-w-4xl pb-4 px-4 mx-auto">
+      <div className="overflow-y-auto max-h-150 my-4">
+      <section className="flex flex-col gap-8 w-full">
         {leagues.length > 0 ? (
           leagues.map((league) => (
             <ChampionshipsCreated 
@@ -31,6 +33,7 @@ export default async function MyChampionships() {
           </button>
         </Link>
       </section>
+      </div>
     </main>
   );
 }

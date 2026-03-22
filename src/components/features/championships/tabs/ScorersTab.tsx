@@ -1,5 +1,3 @@
-"use client"
-
 import { useEffect, useState } from "react"
 import { getScorers } from "@/app/actions/scorers"
 
@@ -82,7 +80,7 @@ export default function ScorersTab({ leagueId }: { leagueId: string }) {
                   </div>
                 </td>
                 <td className="px-6 py-4 text-center">
-                  <span className="text-neutral-900 font-black text-lg">
+                  <span className="text-neutral-700 font-semibold text-lg">
                     {entry.goals}
                   </span>
                 </td>

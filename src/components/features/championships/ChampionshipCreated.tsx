@@ -31,10 +31,10 @@ export default function ChampionshipCreated({ leagueId }: { leagueId: string }) 
   const nextMatch = championship.Matches?.find((m: any) => m.status === "SCHEDULED");
 
   return (
-    <Link href={`/my-championships/${leagueId}`} className="relative flex gap-2 sm:gap-6 bg-neutral-50 border border-neutral-200 rounded-md w-full max-w-6xl 
+    <Link href={`/my-championships/${leagueId}`} className="relative flex gap-2 lg:gap-12 bg-neutral-50 border border-neutral-200 rounded-md w-full 
       px-4 sm:px-6 py-3 mx-auto shadow-sm hover:shadow-md hover:bg-neutral-100 transition-shadow cursor-pointer overflow-x-auto"
     >
-      <section className="flex flex-col justify-center text-left border-r-2 border-neutral-200 pb-4 pr-2 sm:pr-6">
+      <section className="flex flex-col justify-center text-left border-r-2 border-neutral-200 pb-4 pr-2 lg:pr-12">
         <h1 className="font-bold text-xl text-neutral-900 sm:max-w-48 max-w-24 truncate">{championship.name}</h1>
         <p className="font-medium text-neutral-500 pt-1">Futebol • Liga</p>
         <p className="font-medium text-neutral-500">
@@ -42,7 +42,7 @@ export default function ChampionshipCreated({ leagueId }: { leagueId: string }) 
         </p>
       </section>
 
-      <section className="hidden md:flex flex-col justify-center items-center border-r-2 border-neutral-200 pr-6 min-w-fit">
+      <section className="hidden md:flex flex-col justify-center items-center border-r-2 border-neutral-200 pr-2 lg:pr-12 min-w-fit">
         <h2 className="text-[10px] uppercase tracking-widest font-bold text-neutral-400 mb-2">Próxima partida</h2>
         {nextMatch ? (
           <div className="flex flex-col items-center gap-2">

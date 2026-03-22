@@ -21,7 +21,7 @@ export default function TeamsTab({ leagueId }: { leagueId: string }) {
   if (loading) return <div className="p-8 text-center text-neutral-500 italic">Carregando times...</div>
 
   return (
-    <div className={`grid grid-cols-2 lg:grid-cols-3 place-items-center w-fit gap-4 sm:gap-6 mx-auto`}>
+    <div className={`grid grid-cols-2 lg:grid-cols-3 gap-4`}>
       {teams.map((team) => (
         <TeamCard
           key={team.id} 
@@ -33,7 +33,7 @@ export default function TeamsTab({ leagueId }: { leagueId: string }) {
 
       <button 
         onClick={() => setIsCreateModalOpen(true)}
-        className={`flex items-center justify-center w-32 sm:w-60 h-32 sm:h-52 rounded-md bg-black
+        className={`flex flex-1 items-center justify-center min-w-32 h-32 sm:h-52 rounded-md bg-black
           hover:bg-zinc-900 cursor-pointer transition-colors`}
       >
         <span className={`font-medium text-white sm:text-md`}>

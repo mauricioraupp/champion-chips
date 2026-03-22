@@ -66,11 +66,12 @@ export default async function ProfilePage() {
   }
 
   return (
-    <main className="ml-0 sm:ml-25 lg:ml-68 bg-neutral-150">
-      <section className="mx-auto max-w-5xl w-9/10 sm:py-16 py-24 flex flex-col gap-8">
-        <article className="w-full flex flex-col gap-8">
+    <main className="flex w-screen flex-col gap-1 px-4 sm:w-full sm:p-6">
+      <section className="flex flex-col gap-8">
+        <article className="w-full flex flex-col gap-1 ">
           <h1 className="font-semibold text-xl">Informações da conta</h1>
-          <section className="lg:h-[calc(100vh-128px)] mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12 w-full">
+          <p className="text-neutral-500 font-medium text-sm">Verifique as informações ou altere os dados da sua conta</p>
+          <section className="lg:h-[calc(100vh-128px)] mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6 w-full my-4">
             <div className="bg-neutral-50 border-2 border-neutral-300 rounded-md py-10 px-4 flex flex-col items-center justify-center mx-auto w-full">
               <div className="w-24 h-24 bg-gray-200 rounded-full mb-3 relative">
                 <Image

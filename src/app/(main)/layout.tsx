@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import SideBar from "@/components/layout/sidebar";
+import Header from "@/components/layout/header";
+
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -8,9 +10,12 @@ export const metadata: Metadata = {
 
 export default function MainLayout({children,}: Readonly<{children: React.ReactNode;}>) {
   return (
-    <div>
-      <SideBar/>
-      {children}
+    <div className="flex min-h-screen w-full flex-col">
+      <Header/>
+      <div className="mx-auto flex w-full max-w-7xl grow flex-col sm:flex-row sm:py-6">
+        <SideBar/>
+        {children}
+      </div>
     </div>
   );
 }

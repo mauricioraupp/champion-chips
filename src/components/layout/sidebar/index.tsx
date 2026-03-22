@@ -1,46 +1,42 @@
+"use client"
+
 import Link from 'next/link';
+import { usePathname } from "next/navigation"
 import { Folder, FolderPlus, User, Settings, Bookmark } from '@geist-ui/icons'
 
 export default function SideBar() {
-  return(
+  const pathname = usePathname()
+
+  const menuItems = [
+    { label: 'Meus torneios', href: '/my-championships', icon: <Folder size={22}/> },
+    { label: 'Torneios salvos', href: '/saved-championships', icon: <Bookmark size={22}/> },
+    { label: 'Criar torneio', href: '/create-championship', icon: <FolderPlus size={22}/> },
+    { label: 'Configurações', href: '/settings', icon: <Settings size={22}/> },
+  ]
+
+  return (
     <aside className="flex w-screen sm:w-fit flex-col justify-between">
-      <ul className="flex w-full sm:flex-col gap-2 p-6 justify-between">
+      <ul className="flex w-full sm:flex-col gap-2 p-4 sm:p-6 justify-between">
+        {menuItems.map((item) => {
+          const isActive = pathname === item.href || pathname === item.href
 
-        <Link href='/my-championships' className="w-fit">
-          <li className={`w-fit flex flex-row items-center py-2 px-2 sm:px-4 sm:gap-4 rounded-md cursor-pointer opacity-60 hover:opacity-100 hover:bg-neutral-200 transition-all`}>
-            <Folder size={22}/>
-            <p className="hidden sm:block text-base font-semibold truncate text-neutral-800">Meus torneios</p>
-          </li>
-        </Link>
-
-        <Link href='/my-championships' className="w-fit">
-          <li className={`w-fit flex flex-row items-center py-2 px-2 sm:px-4 sm:gap-4 rounded-md cursor-pointer opacity-60 hover:opacity-100 hover:bg-neutral-200 transition-all`}>
-            <Bookmark size={22}/>
-            <p className="hidden sm:block text-base font-semibold truncate text-neutral-800">Torneios salvos</p>
-          </li>
-        </Link>
-
-        <Link href='/create-championship' className="w-fit">
-          <li className={`w-fit flex flex-row items-center py-2 px-2 sm:px-4 sm:gap-4 rounded-md cursor-pointer opacity-60 hover:opacity-100 hover:bg-neutral-200 transition-all`}>
-            <FolderPlus size={22}/>
-            <p className="hidden sm:block text-base font-semibold truncate text-neutral-800">Criar torneio</p>
-          </li>
-        </Link>
-
-        <Link href='/profile' className="w-fit">
-          <li className={`w-fit flex flex-row items-center py-2 px-2 sm:px-4 sm:gap-4 rounded-md cursor-pointer opacity-60 hover:opacity-100 hover:bg-neutral-200 transition-all`}>
-            <User size={22}/>
-            <p className="hidden sm:block text-base font-semibold truncate text-neutral-800">Conta</p>
-          </li>
-        </Link>
-
-        <Link href='/profile' className="w-fit">
-          <li className={`w-fit flex flex-row items-center py-2 px-2 sm:px-4 sm:gap-4 rounded-md cursor-pointer opacity-60 hover:opacity-100 hover:bg-neutral-200 transition-all`}>
-            <Settings size={22}/>
-            <p className="hidden sm:block text-base font-semibold truncate text-neutral-800">Configurações</p>
-          </li>
-        </Link>
-
+          return (
+            <Link key={item.href} href={item.href}>
+              <li className={`
+                w-full flex py-2 px-2 sm:px-4 sm:gap-4 rounded-md cursor-pointer transition-all
+                ${isActive 
+                  ? "opacity-100 bg-neutral-200 text-black" 
+                  : "opacity-60 hover:opacity-80 hover:bg-neutral-200 text-neutral-800"
+                }
+              `}>
+                {item.icon}
+                <p className="hidden sm:block text-base font-semibold truncate">
+                  {item.label}
+                </p>
+              </li>
+            </Link>
+          )
+        })}
       </ul>
     </aside>
   )

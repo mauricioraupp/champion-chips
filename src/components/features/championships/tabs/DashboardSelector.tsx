@@ -7,16 +7,22 @@ interface DashboardSelectorProps {
 
 export default function DashboardSelector({ icon, title, isActive, onClick }: DashboardSelectorProps) {
   return (
-    <article 
+    <button 
       onClick={onClick}
-      className={`flex flex-col items-center gap-2 cursor-pointer transition-all ${isActive ? 'opacity-100' : 'opacity-60 hover:opacity-90'}`}
+      className={`
+        flex items-center gap-2 px-4 py-3 border-b-2 cursor-pointer transition-all
+        ${isActive 
+          ? 'border-black text-black opacity-100' 
+          : 'border-transparent text-neutral-600 opacity-60 hover:opacity-100'
+        }
+      `}
     >
-      <figure className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${isActive ? 'bg-black text-white' : 'bg-neutral-300 text-neutral-600'}`}>
+      <span className={`${isActive ? 'text-black' : 'text-neutral-600'}`}>
         {icon}
-      </figure>
-      <p className={`text-xs text-center font-medium ${isActive ? 'text-black' : 'text-neutral-500'}`}>
+      </span>
+      <p className="text-sm font-semibold whitespace-nowrap">
         {title}
       </p>
-    </article>
+    </button>
   )
 }

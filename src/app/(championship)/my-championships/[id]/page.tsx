@@ -8,8 +8,8 @@ export default async function SoccerLeagueDashboard({ params }: { params: Promis
   const data = await getChampionshipName(leagueId);
 
   return (
-    <main className="min-h-screen ml-0 sm:ml-25 lg:ml-68 bg-neutral-150">
-      <h1 className="font-semibold text-xl w-fit mx-auto sm:pt-16 pt-32 sm:pb-16 pb-16">
+    <main className="flex w-screen flex-col sm:w-full p-6">
+      <h1 className="text-neutral-800 font-semibold text-2xl">
         {data?.name || "Carregando..."}
       </h1>
       <Suspense fallback={<div className="text-center">Carregando dashboard...</div>}>
