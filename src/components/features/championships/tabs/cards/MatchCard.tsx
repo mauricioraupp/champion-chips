@@ -57,7 +57,7 @@ export default function MatchCard({ match, onUpdate }: { match: any, onUpdate: (
         <button 
           onClick={() => setShowModal(true)}
           className={`sm:absolute sm:right-8 p-2 rounded-full transition-colors cursor-pointer ${
-            isFinished ? 'hover:bg-neutral-300 text-neutral-500' : 'hover:bg-neutral-200 text-black'
+            isFinished ? 'hover:bg-neutral-300' : 'hover:bg-neutral-200'
           }`}
         >
           <Edit size="18"/>

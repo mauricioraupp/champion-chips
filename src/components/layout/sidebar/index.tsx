@@ -8,10 +8,11 @@ export default function SideBar() {
   const pathname = usePathname()
 
   const menuItems = [
-    { label: 'Meus torneios', href: '/my-championships', icon: <Folder size={22}/> },
-    { label: 'Torneios salvos', href: '/saved-championships', icon: <Bookmark size={22}/> },
-    { label: 'Criar torneio', href: '/create-championship', icon: <FolderPlus size={22}/> },
-    { label: 'Configurações', href: '/settings', icon: <Settings size={22}/> },
+    { label: 'Meus torneios', href: '/my-championships', icon: <Folder size={20}/> },
+    { label: 'Torneios salvos', href: '/saved-championships', icon: <Bookmark size={20}/> },
+    { label: 'Criar torneio', href: '/create-championship', icon: <FolderPlus size={20}/> },
+    { label: 'Conta', href: '/profile', icon: <User size={20}/> },
+    { label: 'Configurações', href: '/settings', icon: <Settings size={20}/> },
   ]
 
   return (
@@ -25,12 +26,12 @@ export default function SideBar() {
               <li className={`
                 w-full flex py-2 px-2 sm:px-4 sm:gap-4 rounded-md cursor-pointer transition-all
                 ${isActive 
-                  ? "opacity-100 bg-neutral-200 text-black" 
-                  : "opacity-60 hover:opacity-80 hover:bg-neutral-200 text-neutral-800"
+                  ? "opacity-100 bg-neutral-100 text-black" 
+                  : "opacity-60 hover:opacity-80 hover:bg-neutral-100 text-neutral-800"
                 }
               `}>
                 {item.icon}
-                <p className="hidden sm:block text-base font-semibold truncate">
+                <p className="hidden sm:block text-sm font-semibold truncate">
                   {item.label}
                 </p>
               </li>

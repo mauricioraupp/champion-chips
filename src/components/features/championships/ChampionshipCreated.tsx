@@ -31,8 +31,8 @@ export default function ChampionshipCreated({ leagueId }: { leagueId: string }) 
   const nextMatch = championship.Matches?.find((m: any) => m.status === "SCHEDULED");
 
   return (
-    <Link href={`/my-championships/${leagueId}`} className="relative flex gap-2 lg:gap-12 bg-neutral-50 border border-neutral-200 rounded-md w-full 
-      px-4 sm:px-6 py-3 mx-auto shadow-sm hover:shadow-md hover:bg-neutral-100 transition-shadow cursor-pointer overflow-x-auto"
+    <Link href={`/my-championships/${leagueId}`} className="relative flex gap-2 lg:gap-12 bg-white border border-neutral-200 rounded-md w-full 
+      px-4 sm:px-6 py-3 mx-auto shadow-xs hover:shadow-sm hover:bg-neutral-50 transition-shadow cursor-pointer overflow-x-auto"
     >
       <section className="flex flex-col justify-center text-left border-r-2 border-neutral-200 pb-4 pr-2 lg:pr-12">
         <h1 className="font-bold text-xl text-neutral-900 sm:max-w-48 max-w-24 truncate">{championship.name}</h1>
