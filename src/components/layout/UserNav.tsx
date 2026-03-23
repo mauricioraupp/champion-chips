@@ -66,7 +66,7 @@ export default function UserNav({ user }: UserNavProps) {
               <Link
                 href="/profile"
                 onClick={() => setIsOpen(false)}
-                className="flex items-center gap-3 w-full px-3 py-2 text-sm font-semibold text-neutral-600 hover:bg-neutral-50 rounded-md cursor-pointer transition-colors"
+                className="flex items-center gap-3 w-full px-3 py-2 text-sm font-semibold text-neutral-600 hover:bg-neutral-50 rounded-md cursor-default transition-colors"
               >
                 <User size={16} color="black"/>
                 Conta
@@ -76,7 +76,7 @@ export default function UserNav({ user }: UserNavProps) {
             <div className="border-t border-neutral-100 p-1">
               <button
                 onClick={() => signOut()}
-                className="flex items-center gap-3 w-full px-3 py-2 text-sm font-semibold text-neutral-600 hover:bg-neutral-50 rounded-md cursor-pointer transition-colors"
+                className="flex items-center gap-3 w-full px-3 py-2 text-sm font-semibold text-neutral-600 hover:bg-neutral-50 rounded-md transition-colors"
               >
                 <LogOut size={16} color="black"/>
                 Log out

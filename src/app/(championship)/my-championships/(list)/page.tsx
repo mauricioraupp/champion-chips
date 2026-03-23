@@ -12,7 +12,7 @@ export default async function MyChampionships() {
       </h1>
       <p className="text-neutral-500 font-medium text-sm">Gerencie todos os seus torneios criados</p>
       
-      <div className="overflow-y-auto max-h-150 my-4">
+      <div className="overflow-y-auto max-h-154 my-4">
       <section className="flex flex-col gap-8 w-full">
         {leagues.length > 0 ? (
           leagues.map((league) => (

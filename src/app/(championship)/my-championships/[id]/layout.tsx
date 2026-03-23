@@ -15,7 +15,7 @@ export default async function MyChampionshipLayout({ children, params }: { child
     <div className="flex min-h-screen w-full flex-col">
       <ChampionshipHeader leagueId={id}/> 
       
-      <div className="mx-auto flex w-full max-w-7xl grow flex-col sm:flex-row sm:py-6">
+      <div className="mx-auto flex w-full max-w-7xl grow flex-col sm:flex-row">
         <ChampionshipSideBar />
         {children}
       </div>

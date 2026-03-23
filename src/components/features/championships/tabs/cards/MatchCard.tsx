@@ -9,7 +9,7 @@ export default function MatchCard({ match, onUpdate }: { match: any, onUpdate: (
   if (!match.HomeTeam || !match.AwayTeam) return null;
 
   return (
-      <div className={`relative flex items-center justify-between px-4 sm:px-10 h-32 border rounded-md hover:border-neutral-400 shadow-sm transition-all ${
+      <div className={`relative flex items-center justify-between px-4 sm:px-10 h-32 shrink-0 border rounded-md hover:border-neutral-400 shadow-sm transition-all ${
         isFinished ? 'bg-neutral-200 border-neutral-200' : 'bg-white border-neutral-300'
       }`}>
         

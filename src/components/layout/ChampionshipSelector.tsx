@@ -80,7 +80,7 @@ export default function ChampionshipSelector({ currentLeague, leagues }: Champio
                       onClick={() => {router.push(`/my-championships/${league.id}`)
                       setIsOpen(false)
                       }}
-                      className={`flex items-center justify-between w-full p-2 rounded-md text-sm cursor-pointer transition-all ${
+                      className={`flex items-center justify-between w-full p-2 rounded-md text-sm transition-all ${
                         isSelected ? "bg-neutral-100" : "hover:bg-neutral-50 text-neutral-700"}`
                       }
                     >

@@ -8,21 +8,29 @@ import ScorersTab from './tabs/ScorersTab';
 
 export default function ChampionshipDashboard({ leagueId }: { leagueId: string }) {
   const searchParams = useSearchParams();
-  const activeTab = searchParams.get('tab') || 'tabela';
+  const activeTab = searchParams.get('tab') || 'standings';
 
   return (
-    <section className="w-full flex flex-col overflow-y-auto max-h-150">
-      <h1 className="text-neutral-800 font-semibold text-xl pb-6">
-        {activeTab === "tabela" && "Tabela de classificação"}
-        {activeTab === "partidas" && "Calendário de partidas"}
-        {activeTab === "clubes" && "Clubes participantes"}
-        {activeTab === "artilharia" && "Tabela de artilharia"}
+    <section className="w-full flex flex-col overflow-y-auto max-h-190 sm:pt-6 [&::-webkit-scrollbar]:hidden">
+      <h1 className="text-neutral-800 font-semibold text-xl pb-1">
+        {activeTab === "standings" && "Tabela de classificação"}
+        {activeTab === "matches" && "Calendário de partidas"}
+        {activeTab === "teams" && "Clubes participantes"}
+        {activeTab === "scorers" && "Tabela de artilharia"}
+        {activeTab === "settings" && "Configurações"}
       </h1>
-      <div className="border-t border-neutral-300 pt-8 ">
-        {activeTab === "tabela" && <StandingsTab leagueId={leagueId}/>}
-        {activeTab === "partidas" && <MatchesTab leagueId={leagueId}/>}
-        {activeTab === "clubes" && <TeamsTab leagueId={leagueId}/>}
-        {activeTab === "artilharia" && <ScorersTab leagueId={leagueId}/>}
+      <p className="text-neutral-500 font-medium text-sm pb-6">
+        {activeTab === "standings" && "Acompanhe a tabela com o desempenho de cada equipe em tempo real"}
+        {activeTab === "matches" && "Gerencie os resultados, datas e horários de todos os confrontos do campeonato"}
+        {activeTab === "teams" && "Gerencie os dados de todos os times e jogadores do campeonato"}
+        {activeTab === "scorers" && "Acompanhe a tabela com o desempenho dos artilheiros do campeonato"}
+        {activeTab === "settings" && "Gerencie todas as informações do campeonato"}
+      </p>
+      <div>
+        {activeTab === "standings" && <StandingsTab leagueId={leagueId}/>}
+        {activeTab === "matches" && <MatchesTab leagueId={leagueId}/>}
+        {activeTab === "teams" && <TeamsTab leagueId={leagueId}/>}
+        {activeTab === "scorers" && <ScorersTab leagueId={leagueId}/>}
       </div>
     </section>
   )

@@ -13,16 +13,16 @@ export default function ChampionshipSideBar() {
   };
 
   const menuItems = [
-    { label: 'Tabela', tab: 'tabela', onClick: () => setTab("tabela"), icon: <Clipboard size={20}/> },
-    { label: 'Partidas', tab: 'partidas', onClick: () => setTab("partidas"), icon: <Calendar size={20}/> },
-    { label: 'Clubes', tab: 'clubes', onClick: () => setTab("clubes"), icon: <Shield size={20}/> },
-    { label: 'Artilharia', tab: 'artilharia', onClick: () => setTab("artilharia"), icon: <Target size={20}/> },
-    { label: 'Configurações', tab: 'configuracoes', onClick: () => setTab("configuracoes"), icon: <Settings size={20}/> }
+    { label: 'Tabela', tab: 'standings', onClick: () => setTab("standings"), icon: <Clipboard size={20}/> },
+    { label: 'Partidas', tab: 'matches', onClick: () => setTab("matches"), icon: <Calendar size={20}/> },
+    { label: 'Clubes', tab: 'teams', onClick: () => setTab("teams"), icon: <Shield size={20}/> },
+    { label: 'Artilharia', tab: 'scorers', onClick: () => setTab("scorers"), icon: <Target size={20}/> },
+    { label: 'Configurações', tab: 'settings', onClick: () => setTab("settings"), icon: <Settings size={20}/> }
   ]
 
   return (
     <aside className="flex w-screen sm:w-fit flex-col justify-between">
-      <ul className="flex w-full sm:flex-col gap-2 p-4 sm:p-6 justify-between">
+      <ul className="flex w-full sm:flex-col gap-2 p-4 sm:px-6 sm:py-12 justify-between">
         {menuItems.map((item) => {
           const isActive = activeTab === item.tab
 
