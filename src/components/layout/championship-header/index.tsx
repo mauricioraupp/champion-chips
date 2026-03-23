@@ -1,9 +1,9 @@
 import { getServerSession } from "next-auth/next";
 import { prisma } from "@/lib/prisma";
 import ChampionshipSelector from "../ChampionshipSelector";
+import MobileMenu from "../MobileMenu";
 import UserNav from "../UserNav";
 import Link from "next/link";
-import { Menu } from '@geist-ui/icons'
 
 export default async function ChampionshipHeader({ leagueId }: { leagueId: string }) {
   const session = await getServerSession();
@@ -54,9 +54,8 @@ export default async function ChampionshipHeader({ leagueId }: { leagueId: strin
 
         <UserNav user={user} />
 
-        <div className="block sm:hidden pr-4">
-          <Menu size={24}/>
-        </div>
+        <MobileMenu user={user} currentLeague={currentLeague} leagues={leagues} 
+        />
       </div>
     </header>
   )

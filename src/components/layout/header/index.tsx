@@ -1,9 +1,8 @@
 import { getServerSession } from "next-auth/next";
 import { prisma } from "@/lib/prisma";
 import UserNav from "../UserNav";
-import Image from "next/image";
 import Link from "next/link";
-import { Menu } from "@geist-ui/icons";
+import MobileMenu from "../MobileMenu";
 
 export default async function Header() {
   
@@ -25,9 +24,7 @@ export default async function Header() {
 
         <UserNav user={user} />
 
-        <div className="block sm:hidden pr-4">
-          <Menu size={24}/>
-        </div>
+        <MobileMenu user={user} currentLeague={null} leagues={[]}/>
       </div>
     </header>
   )
