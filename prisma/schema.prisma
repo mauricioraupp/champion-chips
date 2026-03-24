@@ -28,10 +28,11 @@ model PasswordResetToken {
 
 model SoccerLeague {
   id         String              @id @default(cuid())
-  User       User?               @relation(fields: [userId], references: [id])
+  User       User?               @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId     String
   name       String
   logo       String?
+  public     Boolean             @default(false)
   secondLegs Boolean             @default(false)
   createdAt  DateTime            @default(now())
   Teams      TeamsSoccerLeague[]
@@ -41,9 +42,9 @@ model SoccerLeague {
 
 model TeamsSoccerLeague {
   id             Int           @id @default(autoincrement())
-  User           User          @relation(fields: [userId], references: [id])
+  User           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId         String
-  SoccerLeague   SoccerLeague? @relation(fields: [soccerLeagueId], references: [id])
+  SoccerLeague   SoccerLeague? @relation(fields: [soccerLeagueId], references: [id], onDelete: Cascade)
   soccerLeagueId String?
   name           String
   sigla          String        @db.VarChar(3)
@@ -65,9 +66,9 @@ model TeamsSoccerLeague {
 
 model Players {
   id                Int                @id @default(autoincrement())
-  User              User               @relation(fields: [userId], references: [id])
+  User              User               @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId            String
-  TeamsSoccerLeague TeamsSoccerLeague? @relation(fields: [teamId], references: [id])
+  TeamsSoccerLeague TeamsSoccerLeague? @relation(fields: [teamId], references: [id], onDelete: Cascade)
   teamId            Int?
   name              String
   position          String?
@@ -78,11 +79,11 @@ model Players {
 
 model Match {
   id             Int               @id @default(autoincrement())
-  SoccerLeague   SoccerLeague      @relation(fields: [soccerLeagueId], references: [id])
+  SoccerLeague   SoccerLeague      @relation(fields: [soccerLeagueId], references: [id], onDelete: Cascade)
   soccerLeagueId String
-  HomeTeam       TeamsSoccerLeague @relation("HomeMatches", fields: [homeTeamId], references: [id])
+  HomeTeam       TeamsSoccerLeague @relation("HomeMatches", fields: [homeTeamId], references: [id], onDelete: Cascade)
   homeTeamId     Int
-  AwayTeam       TeamsSoccerLeague @relation("AwayMatches", fields: [awayTeamId], references: [id])
+  AwayTeam       TeamsSoccerLeague @relation("AwayMatches", fields: [awayTeamId], references: [id], onDelete: Cascade)
   awayTeamId     Int
   homeScore      Int               @default(0)
   awayScore      Int               @default(0)
@@ -97,12 +98,12 @@ model Match {
 
 model Goal {
   id                Int               @id @default(autoincrement())
-  Match             Match             @relation(fields: [matchId], references: [id])
+  Match             Match             @relation(fields: [matchId], references: [id], onDelete: Cascade)
   matchId           Int
-  Player            Players           @relation(fields: [playerId], references: [id])
+  Player            Players           @relation(fields: [playerId], references: [id], onDelete: Cascade)
   playerId          Int
-  TeamsSoccerLeague TeamsSoccerLeague @relation(fields: [teamId], references: [id])
+  TeamsSoccerLeague TeamsSoccerLeague @relation(fields: [teamId], references: [id], onDelete: Cascade)
   teamId            Int
-  SoccerLeague      SoccerLeague      @relation(fields: [soccerLeagueId], references: [id])
+  SoccerLeague      SoccerLeague      @relation(fields: [soccerLeagueId], references: [id], onDelete: Cascade)
   soccerLeagueId    String
 }

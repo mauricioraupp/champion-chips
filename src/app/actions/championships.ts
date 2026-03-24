@@ -3,6 +3,8 @@
 import { prisma } from "@/lib/prisma"
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export async function getChampionshipsList() {
   const session = await getServerSession(authOptions);
@@ -36,6 +38,66 @@ export async function getChampionshipInfo(leagueId: string) {
   })
 
   return league
+}
+
+export async function updateChampionshipName(leagueId: string, newName: string) {
+  try {
+    await prisma.soccerLeague.update({
+      where: { id: leagueId },
+      data: { name: newName },
+    });
+
+    revalidatePath(`/my-championships/${leagueId}`);
+    revalidatePath("/"); 
+
+    return { success: true };
+  } catch (error) {
+    console.error("Erro ao atualizar nome:", error);
+    return { success: false, error: "Não foi possível atualizar o nome." };
+  }
+}
+
+export async function updateChampionshipLogo(leagueId: string, logoUrl: string | null) {
+  try {
+    await prisma.soccerLeague.update({
+      where: { id: leagueId },
+      data: { logo: logoUrl },
+    });
+
+    revalidatePath(`/my-championships/${leagueId}`);
+    return { success: true };
+  } catch (error) {
+    console.error("Erro ao atualizar logo:", error);
+    return { success: false, error: "Erro ao salvar a nova imagem." };
+  }
+}
+
+export async function updateChampionshipVisibility(leagueId: string, isPublic: boolean) {
+  try {
+    await prisma.soccerLeague.update({
+      where: { id: leagueId },
+      data: { public: isPublic },
+    });
+
+    revalidatePath(`/my-championships/${leagueId}`);
+    return { success: true };
+  } catch (error) {
+    return { success: false, error: "Erro ao alterar visibilidade." };
+  }
+}
+
+export async function deleteChampionship(leagueId: string) {
+  try {
+    await prisma.soccerLeague.delete({
+      where: { id: leagueId },
+    });
+
+  } catch (error) {
+    console.error("Erro ao deletar liga:", error);
+    return { success: false, error: "Erro ao excluir o campeonato." };
+  }
+
+  redirect("/my-championships");
 }
 
 export async function generateChampionshipMatches(leagueId: string) {

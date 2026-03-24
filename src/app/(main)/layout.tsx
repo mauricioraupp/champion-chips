@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import SideBar from "@/components/layout/sidebar";
 import Header from "@/components/layout/header";
-
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -12,10 +12,11 @@ export default function MainLayout({children,}: Readonly<{children: React.ReactN
   return (
     <div className="flex min-h-screen w-full flex-col">
       <Header/>
-      <div className="mx-auto flex w-full max-w-7xl grow flex-col sm:flex-row sm:py-6">
+      <div className="mx-auto flex w-full max-w-7xl grow flex-col sm:flex-row">
         <SideBar/>
         {children}
       </div>
+      <Toaster richColors position="top-center"/>
     </div>
   );
 }

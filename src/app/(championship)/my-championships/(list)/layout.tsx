@@ -12,7 +12,7 @@ export default function ChampionshipsLayout({children,}: Readonly<{children: Rea
   return (
     <div className="flex min-h-screen w-full flex-col">
       <Header/>
-      <div className="mx-auto flex w-full max-w-7xl grow flex-col sm:flex-row sm:py-6">
+      <div className="mx-auto flex w-full max-w-7xl grow flex-col sm:flex-row">
         <SideBar/>
         {children}
       </div>

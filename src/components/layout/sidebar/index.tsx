@@ -12,7 +12,6 @@ export default function SideBar() {
     { label: 'Torneios salvos', href: '/saved-championships', icon: <Bookmark size={20}/> },
     { label: 'Criar torneio', href: '/create-championship', icon: <FolderPlus size={20}/> },
     { label: 'Conta', href: '/profile', icon: <User size={20}/> },
-    { label: 'Configurações', href: '/settings', icon: <Settings size={20}/> },
   ]
 
   return (

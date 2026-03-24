@@ -16,7 +16,7 @@ export function DeleteTeamModal({ team, league, onClose, onUpdate }: { team: any
 
   return (
     <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
-      <div className="bg-white rounded-lg w-full max-w-sm p-6 text-center shadow-2xl">
+      <div className="bg-white rounded-md w-full max-w-sm p-6 text-center shadow-2xl">
         <div className="bg-red-100 text-red-600 p-3 rounded-full w-fit mx-auto mb-4"><Trash size="30" /></div>
         <h3 className="font-bold text-xl mb-2">Excluir {team.name}?</h3>
         <p className="text-neutral-600 text-sm mb-6">Esta ação apagará o time e todas as suas partidas permanentemente.</p>

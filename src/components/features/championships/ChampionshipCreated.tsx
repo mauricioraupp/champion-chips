@@ -98,7 +98,7 @@ export default function ChampionshipCreated({ leagueId }: { leagueId: string }) 
             <tbody>
               {teams.slice(0, 3).map((entry, index) => (
                 <tr key={entry.id} className="text-sm text-center transition-colors">
-                  <td className="text-left flex items-center gap-3 p-1">
+                  <td className="text-left flex items-center h-full gap-3 p-1">
                     <span className={`text-xs`}>
                       {index + 1}
                     </span>

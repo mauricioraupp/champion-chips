@@ -1,171 +1,111 @@
 import { getServerSession } from "next-auth/next";
 import { prisma } from "@/lib/prisma";
-
-import { Edit, Tool, QuestionCircle, LogOut } from '@geist-ui/icons';
 import Image from "next/image";
-import ProfileCardsNeutral from '@/components/features/profile/ProfileCardsNeutral';
-import ProfileCardsRed from "@/components/features/profile/ProfileCardsRed";
-import ActivityItem from '@/components/features/profile/RecentActivity';
-import StatCard from "@/components/features/profile/StatCards";
+import { Edit, Tool, QuestionCircle, LogOut, Shield } from '@geist-ui/icons';
+import StatCard from "@/components/features/profile/StatCard";
+import ActivityItem from '@/components/features/profile/ActivityItem';
+import ProfileActionCard from "@/components/features/profile/ProfileActionCard";
 
 export default async function ProfilePage() {
-  const cardsNeutral = [
-    { 
-      title: 'Editar perfil', 
-      description: 'Altere os dados exibidos em seu perfil', 
-      icon: <Edit size={20}/> 
-    },
-    { 
-      title: 'Preferências', 
-      description: 'Altere as preferências da sua conta', 
-      icon: <Tool size={20}/> 
-    },
-    { 
-      title: 'Ajuda', 
-      description: 'Dúvidas ou Sugestões? Fale conosco ou acesse nosso guia', 
-      icon: <QuestionCircle size={20}/> 
-    }
-  ];
-  const cardsRed = [
-    { 
-      title: 'Sair da conta', 
-      description: 'Encerre sua sessão', 
-      icon: <LogOut size={20} color="red" /> 
-    }
-  ];
-
-  const recentActivities = [
-    { type: 'champ', name: 'Copa 2024', date: '2 dias' },
-    { type: 'team', name: 'Time Azul', date: '1 dia' },
-    { type: 'team', name: 'Gremio', date: '3 dias' },
-    { type: 'champ', name: 'Copa 2024', date: '2 dias' },
-    { type: 'team', name: 'Time Azul', date: '1 dia' },
-    { type: 'player', name: 'Lucas Silva', date: '3 horas' },
-  ];
-
   const session = await getServerSession();
-
   const user = await prisma.user.findUnique({
-    where: { email: session!.user!.email! },
+    where: { email: session?.user?.email! },
     select: {
       email: true,
       name: true,
       image: true,
       _count: {
-        select: {
-          SoccerLeagues: true,
-          TeamsSoccerLeague: true,
-          Players: true
-        }
+        select: { SoccerLeagues: true, TeamsSoccerLeague: true, Players: true }
       }
     }
   });
 
-  if (!user) {
-    return <div>Usuário não encontrado.</div>;
-  }
+  if (!user) return <div className="p-8 text-center text-neutral-500">Usuário não encontrado.</div>;
 
   return (
     <main className="flex w-screen flex-col gap-1 px-4 sm:w-full sm:p-6">
-      <section className="flex flex-col gap-8">
-        <article className="w-full flex flex-col gap-1 ">
-          <h1 className="font-semibold text-xl">Informações da conta</h1>
-          <p className="text-neutral-500 font-medium text-sm">Verifique as informações ou altere os dados da sua conta</p>
-          <section className="lg:h-[calc(100vh-128px)] mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6 w-full my-4">
-            <div className="bg-neutral-50 border-2 border-neutral-300 rounded-md py-10 px-4 flex flex-col items-center justify-center mx-auto w-full">
-              <div className="w-24 h-24 bg-gray-200 rounded-full mb-3 relative">
-                <Image
-                  src={user.image || "/default-user-pic.png"}
-                  alt={"Foto de perfil"}
-                  fill
-                  className="rounded-full"
-                />
+      <div className="w-full flex flex-col overflow-y-auto max-h-196 sm:pt-6 [&::-webkit-scrollbar]:hidden">
+        <h1 className="text-neutral-800 font-semibold text-xl pb-1">Configurações da Conta</h1>
+        <p className="text-neutral-500 font-medium text-sm pb-6">Gerencie suas informações pessoais e visualize suas estatísticas na plataforma.</p>
+
+        <section className="flex flex-col gap-8 w-full">
+
+        <section className="bg-white border border-neutral-200 rounded-md overflow-hidden shadow-sm">
+          <div className="p-6">
+            <h3 className="text-sm font-semibold text-neutral-900 mb-1">Avatar e Nome</h3>
+            <p className="text-sm text-neutral-500 mb-6">Sua foto de perfil será exibida nos campeonatos que você gerencia.</p>
+            
+            <div className="flex items-center gap-6">
+              <div className="relative w-20 h-20 rounded-full border border-neutral-200 overflow-hidden shadow-inner">
+                <Image src={user.image || "/default-user-pic.png"} alt="Profile" fill className="object-cover" />
               </div>
-              <h2 className="text-xl font-semibold">{user.name}</h2>
-              <p className="text-neutral-700 mb-3">{user.email}</p>
-              <button className="bg-zinc-950 rounded-md py-2 px-12 text-white cursor-pointer hover:bg-zinc-700 transition">Editar perfil</button>
+              <div className="flex flex-col gap-1">
+                <h4 className="font-bold text-lg text-neutral-900">{user.name}</h4>
+                <p className="text-sm text-neutral-500">{user.email}</p>
+              </div>
             </div>
-
-            <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4 mx-auto w-full">
-              {cardsNeutral.map((item) => (
-                <ProfileCardsNeutral
-                  key={item.title}
-                  title={item.title}
-                  description={item.description}
-                  icon={item.icon}
-                />
-              ))}
-              {cardsRed.map((item) => (
-                <ProfileCardsRed
-                  key={item.title}
-                  title={item.title}
-                  description={item.description}
-                  icon={item.icon}
-                />
-              ))}
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 lg:col-span-3 mb-12 border-2 border-neutral-300 rounded-md mx-auto w-full
-              divide-y-2 sm:divide-y-0 divide-x-0 sm:divide-x-2 divide-neutral-300">
-                <StatCard
-                  title={"Torneios criados"}
-                  stat={user._count.SoccerLeagues}
-                />
-                <StatCard
-                  title={"Times criados"}
-                  stat={user._count.TeamsSoccerLeague}
-                />
-                <StatCard
-                  title={"Jogadores criados"}
-                  stat={user._count.Players}
-                />
-            </div>
-          </section>
-        </article>
-
-        <article className="w-full flex flex-col gap-8">
-          <h1 className="font-semibold text-xl">Atividade recente</h1>
-          <section className="border-2 border-neutral-300 bg-neutral-50 rounded-md mx-auto py-6 px-8 divide-y-2 divide-neutral-300 space-y-4 w-full">
-            {recentActivities.map((item, index) => {
-              if (item.type === 'champ') {
-                return (
-                  <ActivityItem
-                    key={index}
-                    icon="🏆"
-                    message="Novo torneio criado:"
-                    name={item.name}
-                    date={item.date}
-                  />
-                );
-              } else if (item.type === 'team') {
-                return (
-                  <ActivityItem
-                    key={index}
-                    icon="⚽"
-                    message="Novo time criado:"
-                    name={item.name}
-                    date={item.date}
-                  />
-                );
-              } else if (item.type === 'player') {
-                return (
-                  <ActivityItem
-                    key={index}
-                    icon="👦"
-                    message="Novo jogador criado:"
-                    name={item.name}
-                    date={item.date}
-                  />
-                );
-              }
-            })}
-            <button 
-              className="border-2 border-neutral-300 font-semibold text-neutral-800 text-md text-center rounded-md py-3 px-12 w-full cursor-pointer 
-              hover:bg-neutral-200 transition">Ver mais
+          </div>
+          <div className="bg-neutral-50 border-t border-neutral-200 px-6 py-3 flex justify-end">
+            <button className="bg-black text-white text-xs font-medium px-4 py-2 rounded-md hover:bg-neutral-800 cursor-pointer transition-colors">
+              Editar Informações
             </button>
-          </section>
-        </article>
-      </section>
+          </div>
+        </section>
+
+        {/* SEÇÃO 2: ESTATÍSTICAS (GRID DE CARDS LIMPOS) */}
+        <section className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <StatCard title="Torneios" stat={user._count.SoccerLeagues} />
+          <StatCard title="Times" stat={user._count.TeamsSoccerLeague} />
+          <StatCard title="Jogadores" stat={user._count.Players} />
+        </section>
+
+        {/* SEÇÃO 3: AÇÕES E PREFERÊNCIAS */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <ProfileActionCard 
+            title="Preferências" 
+            description="Ajuste notificações e o idioma da plataforma." 
+            icon={<Tool size={18}/>} 
+          />
+          <ProfileActionCard 
+            title="Segurança" 
+            description="Altere sua senha ou configure autenticação em duas etapas." 
+            icon={<Shield size={18}/>} 
+          />
+        </div>
+
+        {/* SEÇÃO 4: ATIVIDADE RECENTE */}
+        <section className="bg-white border border-neutral-200 rounded-lg shadow-sm">
+          <div className="p-6">
+            <h3 className="text-sm font-semibold text-neutral-900 mb-1">Atividade Recente</h3>
+            <p className="text-sm text-neutral-500 mb-4">Acompanhe suas últimas interações no sistema.</p>
+            
+            <ul className="divide-y divide-neutral-100">
+              <ActivityItem icon="🏆" message="Criou o torneio" name="Copa 2024" date="2 dias" />
+              <ActivityItem icon="⚽" message="Adicionou o time" name="Gremio" date="3 dias" />
+              <ActivityItem icon="👦" message="Cadastrou o jogador" name="Lucas Silva" date="3 horas" />
+            </ul>
+          </div>
+          <div className="bg-neutral-50 border-t border-neutral-200 px-6 py-3 flex justify-center">
+            <button className="text-xs font-semibold text-neutral-600 hover:text-black transition-colors">
+              Ver todo o histórico
+            </button>
+          </div>
+        </section>
+
+        {/* SEÇÃO PERIGOSA: LOGOUT */}
+        <section className="bg-white border border-red-200 rounded-lg shadow-sm">
+          <div className="p-6 flex justify-between items-center">
+            <div>
+              <h3 className="text-sm font-semibold text-red-600">Sair da Conta</h3>
+              <p className="text-sm text-neutral-500">Encerre sua sessão atual com segurança.</p>
+            </div>
+            <button className="bg-red-600 text-white text-xs font-medium px-4 py-2 rounded-md hover:bg-red-700 transition-colors flex items-center gap-2">
+              <LogOut size={14} /> Sair agora
+            </button>
+          </div>
+        </section>  
+        </section>
+      </div>
     </main>
   );
 }

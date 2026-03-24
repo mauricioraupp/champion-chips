@@ -5,13 +5,14 @@ import StandingsTab from './tabs/StandingsTab';
 import MatchesTab from './tabs/MatchesTab';
 import TeamsTab from './tabs/TeamsTab';
 import ScorersTab from './tabs/ScorersTab';
+import SettingsTab from './tabs/SettingsTab';
 
 export default function ChampionshipDashboard({ leagueId }: { leagueId: string }) {
   const searchParams = useSearchParams();
   const activeTab = searchParams.get('tab') || 'standings';
 
   return (
-    <section className="w-full flex flex-col overflow-y-auto max-h-190 sm:pt-6 [&::-webkit-scrollbar]:hidden">
+    <section className="w-full flex flex-col overflow-y-auto max-h-196 sm:pt-6 [&::-webkit-scrollbar]:hidden">
       <h1 className="text-neutral-800 font-semibold text-xl pb-1">
         {activeTab === "standings" && "Tabela de classificação"}
         {activeTab === "matches" && "Calendário de partidas"}
@@ -31,6 +32,7 @@ export default function ChampionshipDashboard({ leagueId }: { leagueId: string }
         {activeTab === "matches" && <MatchesTab leagueId={leagueId}/>}
         {activeTab === "teams" && <TeamsTab leagueId={leagueId}/>}
         {activeTab === "scorers" && <ScorersTab leagueId={leagueId}/>}
+        {activeTab === "settings" && <SettingsTab leagueId={leagueId}/>}
       </div>
     </section>
   )
