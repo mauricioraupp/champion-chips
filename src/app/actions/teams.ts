@@ -8,20 +8,20 @@ import { UTApi } from "uploadthing/server"
 
 const utapi = new UTApi();
 
-export async function getTeams(leagueId: string) {
-  const teams = await prisma.teamsSoccerLeague.findMany({
-    where: { soccerLeagueId: leagueId },
-    orderBy: [
-      { name: 'asc' },
-    ]
-  })
+const extractKey = (url: string | null) => {
+  if (!url || url.startsWith("/") || !url.includes("http")) return null;
+  return url.substring(url.lastIndexOf('/') + 1);
+};
 
-  return teams
+export async function getTeams(leagueId: string) {
+  return await prisma.teamsSoccerLeague.findMany({
+    where: { soccerLeagueId: leagueId },
+    orderBy: [{ name: 'asc' }]
+  });
 }
 
 export async function createTeam(leagueId: string, data: any) {
   const session = await getServerSession(authOptions);
-  
   if (!session?.user?.id) return { success: false, error: "Não autorizado" };
 
   const userId = session.user.id;
@@ -55,13 +55,12 @@ export async function createTeam(leagueId: string, data: any) {
       });
 
       const matchups: { homeTeamId: number; awayTeamId: number }[] = [];
-      const teams = allTeams;
       
-      for (let i = 0; i < teams.length; i++) {
-        for (let j = i + 1; j < teams.length; j++) {
+      for (let i = 0; i < allTeams.length; i++) {
+        for (let j = i + 1; j < allTeams.length; j++) {
           matchups.push({
-            homeTeamId: teams[i].id,
-            awayTeamId: teams[j].id
+            homeTeamId: allTeams[i].id,
+            awayTeamId: allTeams[j].id
           });
         }
       }
@@ -92,8 +91,8 @@ export async function createTeam(leagueId: string, data: any) {
           }))
         : [];
 
-      const matchesPerRound = Math.floor(allTeams.length / 2) || 1;
       const combinedMatches = [...firstLeg, ...secondLeg];
+      const matchesPerRound = Math.floor(allTeams.length / 2) || 1;
 
       const finalSchedule = combinedMatches.map((match, index) => ({
         ...match,
@@ -119,14 +118,13 @@ export async function createTeam(leagueId: string, data: any) {
 
 export async function updateTeam(teamId: number, leagueId: string, data: any, oldLogoUrl?: string) {
   const session = await getServerSession(authOptions);
-  
   if (!session?.user?.id) return { success: false, error: "Não autorizado" };
 
   const userId = session.user.id;
 
   try {
     if (data.logo && oldLogoUrl && data.logo !== oldLogoUrl) {
-      const fileKey = oldLogoUrl.split("/f/")[1];
+      const fileKey = extractKey(oldLogoUrl);
       if (fileKey) await utapi.deleteFiles(fileKey);
     }
 
@@ -167,7 +165,7 @@ export async function updateTeam(teamId: number, leagueId: string, data: any, ol
         },
       });
 
-      revalidatePath(`/championships/${leagueId}`, 'page');
+      revalidatePath(`/championships/${leagueId}`);
       return { success: true, error: null };
     });
   } catch (error) {
@@ -178,17 +176,20 @@ export async function updateTeam(teamId: number, leagueId: string, data: any, ol
 
 export async function deleteTeam(teamId: number, leagueId: string) {
   try {
-
     const teamCount = await prisma.teamsSoccerLeague.count({
       where: { soccerLeagueId: leagueId }
     });
 
     if (teamCount <= 2) {
-      return { 
-        success: false, 
-        error: "A liga deve ter pelo menos 2 times. Não é possível excluir." 
-      };
+      return { success: false, error: "A liga deve ter pelo menos 2 times." };
     }
+
+    const team = await prisma.teamsSoccerLeague.findUnique({
+      where: { id: teamId },
+      include: { Players: true }
+    });
+
+    if (!team) return { success: false, error: "Time não encontrado." };
 
     const matchesToCancel = await prisma.match.findMany({
       where: {
@@ -200,33 +201,22 @@ export async function deleteTeam(teamId: number, leagueId: string) {
     for (const match of matchesToCancel) {
       const isHomeTeam = match.homeTeamId === teamId;
       const opponentId = isHomeTeam ? match.awayTeamId : match.homeTeamId;
-      
       const opponentScore = isHomeTeam ? match.awayScore : match.homeScore;
       const deletedTeamScore = isHomeTeam ? match.homeScore : match.awayScore;
 
-      let pointsToSubtract = 0;
-      let winToSubtract = 0;
-      let drawToSubtract = 0;
-      let lossToSubtract = 0;
-
-      if (opponentScore > deletedTeamScore) {
-        pointsToSubtract = 3;
-        winToSubtract = 1;
-      } else if (opponentScore === deletedTeamScore) {
-        pointsToSubtract = 1;
-        drawToSubtract = 1;
-      } else {
-        lossToSubtract = 1;
-      }
+      let p = 0, w = 0, d = 0, l = 0;
+      if (opponentScore > deletedTeamScore) { p = 3; w = 1; }
+      else if (opponentScore === deletedTeamScore) { p = 1; d = 1; }
+      else { l = 1; }
 
       await prisma.teamsSoccerLeague.update({
         where: { id: opponentId },
         data: {
-          points: { decrement: pointsToSubtract },
+          points: { decrement: p },
           playedMatches: { decrement: 1 },
-          wins: { decrement: winToSubtract },
-          draws: { decrement: drawToSubtract },
-          losses: { decrement: lossToSubtract },
+          wins: { decrement: w },
+          draws: { decrement: d },
+          losses: { decrement: l },
           goalsScored: { decrement: opponentScore },
           goalsConceded: { decrement: deletedTeamScore },
           goalsDiff: { decrement: opponentScore - deletedTeamScore },
@@ -234,25 +224,23 @@ export async function deleteTeam(teamId: number, leagueId: string) {
       });
     }
 
+    const keysToDelete: string[] = [];
+    const teamLogoKey = extractKey(team.logo);
+    if (teamLogoKey) keysToDelete.push(teamLogoKey);
+
+    if (keysToDelete.length > 0) {
+      await utapi.deleteFiles(keysToDelete);
+    }
+
     await prisma.match.deleteMany({
       where: { OR: [{ homeTeamId: teamId }, { awayTeamId: teamId }] }
     });
-
-    const team = await prisma.teamsSoccerLeague.findUnique({
-      where: { id: teamId },
-      select: { logo: true }
-    });
-
-    if (team?.logo) {
-      const fileKey = team.logo.split("/f/")[1];
-      if (fileKey) await utapi.deleteFiles(fileKey);
-    }
 
     await prisma.teamsSoccerLeague.delete({
       where: { id: teamId },
     });
 
-    revalidatePath(`/championships/${leagueId}`, 'page');
+    revalidatePath(`/championships/${leagueId}`);
     return { success: true };
   } catch (error) {
     console.error(error);

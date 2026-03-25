@@ -78,7 +78,7 @@ export default function SettingsTab({ leagueId }: { leagueId: string }) {
       if (file) {
         const res = await startUpload([file]);
         if (res && res[0]) {
-          urlToSave = res[0].url;
+          urlToSave = res[0].ufsUrl || res[0].url;
         } else {
           throw new Error("Erro no upload da imagem");
         }
@@ -87,6 +87,10 @@ export default function SettingsTab({ leagueId }: { leagueId: string }) {
       const result = await updateChampionshipLogo(leagueId, urlToSave as string);
       
       if (result.success) {
+        if (logo?.startsWith('blob:')) {
+          URL.revokeObjectURL(logo);
+        }
+
         setSavedLogo(urlToSave);
         setLogo(urlToSave);
         setFile(null);
@@ -148,7 +152,7 @@ export default function SettingsTab({ leagueId }: { leagueId: string }) {
             <button 
               onClick={handleSaveName}
               disabled={saving || name === savedName}
-              className="bg-zinc-950 text-white text-xs font-medium px-4 py-2 rounded-md shrink-0 hover:bg-zinc-800 
+              className="bg-black text-white text-sm font-medium px-4 py-2 rounded-md shrink-0 hover:bg-zinc-800 
                 cursor-pointer transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-black"
             >
               {saving ? "Salvando..." : "Salvar Alterações"}
@@ -201,7 +205,7 @@ export default function SettingsTab({ leagueId }: { leagueId: string }) {
             <button 
               onClick={handleSaveLogo}
               disabled={savingLogo || (logo === savedLogo)}
-              className="bg-black text-white text-xs font-medium px-4 py-2 rounded-md shrink-0 hover:bg-neutral-800 
+              className="bg-black text-white text-sm font-medium px-4 py-2 rounded-md shrink-0 hover:bg-zinc-800 
                 cursor-pointer transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-black"
             >
               {savingLogo ? "Salvando..." : "Salvar Alterações"}
@@ -252,7 +256,7 @@ export default function SettingsTab({ leagueId }: { leagueId: string }) {
             <button 
               onClick={handleSaveVisibility}
               disabled={saving || isPublic === isPublicSaved}
-              className="bg-black text-white text-xs font-medium px-4 py-2 shrink-0 rounded-md hover:bg-neutral-800 
+              className="bg-black text-white text-sm font-medium px-4 py-2 shrink-0 rounded-md hover:bg-zinc-800 
                 cursor-pointer transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-black"
             >
               {saving ? "Salvando..." : "Salvar Alterações"}
@@ -260,13 +264,14 @@ export default function SettingsTab({ leagueId }: { leagueId: string }) {
           </div>
         </section>
 
-        <section className="bg-white border border-red-200 rounded-md overflow-hidden shadow-sm mb-2">
-          <div className="p-6">
-            <h3 className="text-sm font-semibold text-red-600 mb-1">Excluir Campeonato</h3>
-            <p className="text-neutral-500 text-sm">Remover permanentemente este campeonato e todos os seus dados (times, jogos, estatísticas).</p>
-          </div>
-          <div className="bg-red-50 border-t border-red-200 px-6 py-3 flex justify-end">
-            <button onClick={() => setActiveModal("delete")} className="bg-red-600 text-white text-xs font-medium px-4 py-2 shrink-0 rounded-md hover:bg-red-700 cursor-pointer transition-colors">
+        <section className="bg-white border border-red-300 rounded-md overflow-hidden shadow-sm mb-2">
+          <div className="p-6 flex justify-between items-center gap-2">
+            <div>
+              <h3 className="text-sm font-semibold text-red-600">Excluir Campeonato</h3>
+              <p className="text-neutral-500 text-sm">Remover permanentemente este campeonato e todos os seus dados (times, jogos, estatísticas).</p>
+            </div>
+            <button onClick={() => setActiveModal("delete")} className="flex items-center gap-2 text-sm font-semibold text-red-600 font-medium border border-red-600 px-4 py-2 shrink-0 rounded-md 
+                hover:bg-red-600 hover:text-white cursor-pointer transition-colors">
               Deletar torneio
             </button>
           </div>

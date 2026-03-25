@@ -39,47 +39,48 @@ export default function ModalStepThree({ prevStep, teams, setTeams, data, onFini
     setIsUploading(true);
 
     try {
-      const updatedTeams = [...teams];
-      let finalLeagueLogoUrl = data.leagueLogoUrl;
-      let finalLeagueLogoKey = ""
+      let finalLeagueLogoUrl = data.leagueLogoUrl || "/default-league-logo.png";
+      let finalLeagueLogoKey = "";
 
       if (data.leagueLogoFile) {
         const resLeague = await uploadLeagueLogo([data.leagueLogoFile]);
         if (resLeague?.[0]) {
-          finalLeagueLogoUrl = resLeague[0].ufsUrl;
+          finalLeagueLogoUrl = resLeague[0].ufsUrl || resLeague[0].url;
           finalLeagueLogoKey = resLeague[0].key;
         }
       }
 
-      for (let i = 0; i < updatedTeams.length; i++) {
-        if (updatedTeams[i].teamLogoFile) {
-          const res = await uploadTeamLogo([updatedTeams[i].teamLogoFile!]);
+      const updatedTeams = await Promise.all(teams.map(async (team) => {
+        if (team.teamLogoFile) {
+          const res = await uploadTeamLogo([team.teamLogoFile]);
           if (res && res[0]) {
-            updatedTeams[i].teamLogoUrl = res[0].ufsUrl;
-            (updatedTeams[i] as any).teamLogoKey = res[0].key;
+            return {
+              ...team,
+              teamLogoUrl: res[0].ufsUrl || res[0].url,
+              teamLogoKey: res[0].key
+            };
           }
         }
-      }
+        return { ...team, teamLogoUrl: team.teamLogoUrl || "/default-team-logo.png" };
+      }));
 
       const finalData = {
         ...data,
-        leagueLogoUrl: finalLeagueLogoUrl || "/default-league-logo.png",
+        leagueLogoUrl: finalLeagueLogoUrl,
         leagueLogoKey: finalLeagueLogoKey,
         teams: updatedTeams.map(t => ({
           name: t.name,
           sigla: t.sigla,
-          teamLogoUrl: t.teamLogoUrl || "/default-team-logo.png",
-          teamLogoKey: t.teamLogoKey
+          teamLogoUrl: t.teamLogoUrl,
+          teamLogoKey: (t as any).teamLogoKey
         }))
       };
 
-      setTeams(updatedTeams);
-      
       await onFinish(finalData);
 
     } catch (err: any) {
       console.error("Erro no processo de criação:", err);
-      alert(err.message || "Erro ao processar o campeonato. Tente novamente.");
+      alert("Erro ao processar imagens. Verifique sua conexão.");
     } finally {
       setIsUploading(false);
     }

@@ -107,14 +107,61 @@ export async function updateChampionshipVisibility(leagueId: string, isPublic: b
 }
 
 export async function deleteChampionship(leagueId: string) {
+  let fileKeys: string[] = [];
+
   try {
+    const leagueData = await prisma.soccerLeague.findUnique({
+      where: { id: leagueId },
+      include: {
+        Teams: {
+          include: {
+            Players: true
+          }
+        }
+      }
+    });
+
+    if (!leagueData) return { success: false, error: "Campeonato não encontrado." };
+
+    const extractKey = (url: string | null) => {
+
+      if (!url || url.startsWith("/") || url === defaultLogo) {
+        return;
+      }
+
+      if (url.includes("http")) {
+        const parts = url.split("/");
+        const key = parts[parts.length - 1];
+        if (key) {
+          fileKeys.push(key);
+        }
+      } else {
+        fileKeys.push(url);
+      }
+    };
+
+    extractKey(leagueData.logo);
+    leagueData.Teams.forEach((team) => {
+      extractKey(team.logo);
+      team.Players.forEach((player) => extractKey(player.picture));
+    });
+
+    if (fileKeys.length > 0) {
+      const uniqueKeys = Array.from(new Set(fileKeys));
+      const utResponse = await utapi.deleteFiles(uniqueKeys);
+      console.log("Resposta do UploadThing:", utResponse);
+    }
+
     await prisma.soccerLeague.delete({
       where: { id: leagueId },
     });
 
   } catch (error) {
-    console.error("Erro ao deletar liga:", error);
-    return { success: false, error: "Erro ao excluir o campeonato." };
+    if (error instanceof Error && error.message === 'NEXT_REDIRECT') {
+       throw error;
+    }
+    console.error("Erro crítico na deleção:", error);
+    return { success: false, error: "Falha ao limpar dados." };
   }
 
   redirect("/my-championships");

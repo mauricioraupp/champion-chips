@@ -45,7 +45,9 @@ export default async function ProfilePage() {
               </div>
             </div>
             <div className="bg-neutral-50 border-t border-neutral-300 px-6 py-3 flex justify-end">
-              <button className="bg-black text-white text-xs font-medium px-4 py-2 rounded-md hover:bg-neutral-800 cursor-pointer transition-colors">
+              <button className="bg-black text-white text-sm font-medium px-4 py-2 rounded-md shrink-0 hover:bg-zinc-800 
+                cursor-pointer transition-colors"
+              >
                 Editar Informações
               </button>
             </div>
@@ -87,17 +89,17 @@ export default async function ProfilePage() {
               </button>
             </div>
           </section>
-          
+
           <section className="bg-white border border-neutral-300 rounded-md shadow-sm">
             <div className="p-6 flex justify-between items-center gap-2">
               <div>
                 <h3 className="text-sm font-semibold text-neutral-900">Sair da Conta</h3>
                 <p className="text-sm text-neutral-500">Encerre sua sessão atual com segurança.</p>
               </div>
-              <button className="flex items-center gap-2 bg-black text-white text-xs font-medium px-4 py-2 shrink-0 rounded-md hover:bg-neutral-800 
+              <button className="flex items-center gap-2 bg-black text-white text-sm font-medium px-4 py-2 rounded-md shrink-0 hover:bg-zinc-800 
                 cursor-pointer transition-colors"
               >
-                <LogOut size={14} /> Log out
+                <LogOut size={16} /> Log out
               </button>
             </div>
           </section>
@@ -108,8 +110,8 @@ export default async function ProfilePage() {
                 <h3 className="text-sm font-semibold text-red-600">Deletar Conta</h3>
                 <p className="text-sm text-neutral-500">Delete todos os dados da sua conta <span className="font-semibold text-neutral-800">(irreversível)</span></p>
               </div>
-              <button className="flex items-center gap-2 bg-red-600 text-white text-xs font-medium px-4 py-2 shrink-0 rounded-md hover:bg-red-700 
-                cursor-pointer transition-colors"
+              <button className="flex items-center gap-2 text-sm font-semibold text-red-600 font-medium border border-red-600 px-4 py-2 shrink-0 rounded-md 
+                hover:bg-red-600 hover:text-white cursor-pointer transition-colors"
               >
                 Deletar conta
               </button>

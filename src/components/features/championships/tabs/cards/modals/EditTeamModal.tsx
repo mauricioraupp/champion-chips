@@ -48,33 +48,47 @@ export function EditTeamModal({ team, onClose, onUpdate }: EditModalProps) {
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      if (preview.startsWith('blob:')) URL.revokeObjectURL(preview);
+      
       setLogoFile(file);
       setPreview(URL.createObjectURL(file));
     }
   };
 
   const handleSave = async () => {
-    if (!formData.name || !formData.sigla) return alert("Campos obrigatórios!");
+    if (!formData.name || !formData.sigla) return toast.error("Campos obrigatórios!");
     setIsUploading(true);
+
     try {
       let finalLogoUrl = team.logo;
+
       if (logoFile) {
         const res = await startUpload([logoFile]);
-        if (res?.[0]) finalLogoUrl = res[0].url;
+        if (res?.[0]) {
+          finalLogoUrl = res[0].ufsUrl || res[0].url;
+        }
       }
-      const result = await updateTeam(team.id, team.soccerLeagueId, { ...formData, logo: finalLogoUrl }, team.logo);
-      if (result.error) {
-        toast.error("Não foi possível editar o time")
-      } if (result.success) {
-        toast.success("Time editado com sucesso")
+
+      const result = await updateTeam(
+        team.id, 
+        team.soccerLeagueId, 
+        { ...formData, logo: finalLogoUrl }, 
+        team.logo
+      );
+
+      if (result.success) {
+        toast.success("Time editado com sucesso");
         onUpdate();
         onClose();
+      } else {
+        toast.error(result.error || "Não foi possível editar o time");
       }
+    } catch (err) {
+      toast.error("Erro ao salvar alterações");
     } finally {
       setIsUploading(false);
     }
   };
-
   const addPlayer = () => {
     if (!newPlayerName.trim()) return;
     setFormData(prev => ({
