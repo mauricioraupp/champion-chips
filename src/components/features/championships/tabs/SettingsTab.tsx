@@ -46,6 +46,19 @@ export default function SettingsTab({ leagueId }: { leagueId: string }) {
     loadData()
   }, [leagueId])
 
+  const handleSaveName = async () => {
+    if (!name.trim()) return;
+    setSaving(true);
+    const result = await updateChampionshipName(leagueId, name);
+    if (result.success) {
+      setSavedName(name)
+      toast.success("Nome atualizado com sucesso!");
+    } else {
+      toast.error(result.error);
+    }
+    setSaving(false);
+  };
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0]
     if (selectedFile) {
@@ -58,46 +71,36 @@ export default function SettingsTab({ leagueId }: { leagueId: string }) {
   }
 
   const handleSaveLogo = async () => {
-    setSavingLogo(true)
+    setSavingLogo(true);
     try {
-      let finalUrl = logo
+      let urlToSave = logo;
 
       if (file) {
-        const res = await startUpload([file])
+        const res = await startUpload([file]);
         if (res && res[0]) {
-          finalUrl = res[0].url
+          urlToSave = res[0].url;
         } else {
-          throw new Error("Erro no upload da imagem")
+          throw new Error("Erro no upload da imagem");
         }
       }
 
-      const result = await updateChampionshipLogo(leagueId, finalUrl)
+      const result = await updateChampionshipLogo(leagueId, urlToSave as string);
       
       if (result.success) {
-        setSavedLogo(finalUrl)
-        setFile(null)
-        toast.success("Logo atualizada com sucesso!")
+        setSavedLogo(urlToSave);
+        setLogo(urlToSave);
+        setFile(null);
+        
+        toast.success("Logo atualizada com sucesso!");
       } else {
-        toast.error(result.error)
+        toast.error(result.error);
       }
     } catch (err) {
-      toast.error("Falha ao salvar a imagem.")
+      console.error(err);
+      toast.error("Falha ao salvar a imagem.");
     } finally {
-      setSavingLogo(false)
+      setSavingLogo(false);
     }
-  }
-
-  const handleSaveName = async () => {
-    if (!name.trim()) return;
-    setSaving(true);
-    const result = await updateChampionshipName(leagueId, name);
-    if (result.success) {
-      setSavedName(name)
-      toast.success("Nome atualizado com sucesso!");
-    } else {
-      toast.error(result.error);
-    }
-    setSaving(false);
   };
 
   const handleSaveVisibility = async () => {
@@ -140,12 +143,12 @@ export default function SettingsTab({ leagueId }: { leagueId: string }) {
               maxLength={32}
             />
           </div>
-          <div className="bg-neutral-50 border-t border-neutral-300 px-6 py-3 flex justify-between items-center">
+          <div className="bg-neutral-50 border-t border-neutral-300 px-6 py-3 flex justify-between items-center gap-2">
             <p className="text-xs text-neutral-500">Máximo de 32 caracteres</p>
             <button 
               onClick={handleSaveName}
               disabled={saving || name === savedName}
-              className="bg-zinc-950 text-white text-xs font-medium px-4 py-2 rounded-md hover:bg-zinc-800 
+              className="bg-zinc-950 text-white text-xs font-medium px-4 py-2 rounded-md shrink-0 hover:bg-zinc-800 
                 cursor-pointer transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-black"
             >
               {saving ? "Salvando..." : "Salvar Alterações"}
@@ -159,13 +162,13 @@ export default function SettingsTab({ leagueId }: { leagueId: string }) {
             <p className="text-sm text-neutral-500 mb-4">Recomendamos uma imagem de escala 1:1</p>
             
             <div className="flex items-center gap-6">
-              <div className="relative w-24 h-24 rounded-md bg-neutral-100 border border-neutral-300 overflow-hidden flex items-center justify-center">
+              <figure className="relative w-24 h-24 rounded-md bg-neutral-100 border border-neutral-300 shrink-0 overflow-hidden flex items-center justify-center">
                 {logo ? (
-                  <Image src={logo} alt="Preview" fill className="object-cover" />
+                  <Image src={logo} alt="Preview" fill />
                 ) : (
                   <Upload className="text-neutral-400" size={24} />
                 )}
-              </div>
+              </figure>
               
               <div className="flex flex-col gap-5">
                 <input 
@@ -177,25 +180,28 @@ export default function SettingsTab({ leagueId }: { leagueId: string }) {
                 />
                 <button 
                   onClick={() => fileInputRef.current?.click()}
-                  className="text-sm font-medium border border-dashed border-neutral-300 px-4 py-2 rounded-md hover:bg-neutral-50 transition-colors cursor-pointer text-center"
+                  className="text-sm font-medium border border-dashed border-neutral-300 px-4 py-2  rounded-md hover:bg-neutral-50 
+                    transition-colors cursor-pointer text-center"
                 >
                   Alterar imagem
                 </button>
                 <button 
-                  onClick={() => { setLogo(null); setFile(null); }}
-                  className="text-sm font-medium text-red-600 hover:bg-red-50 px-4 py-2 rounded-md transition-colors text-left flex items-center gap-2 cursor-pointer"
+                  onClick={() => { setLogo("/default-league-logo.png"); setFile(null); }}
+                  disabled={logo === "/default-league-logo.png"}
+                  className="text-sm font-medium text-red-600 hover:bg-red-50 px-4 py-2 rounded-md transition-colors text-left flex items-center gap-2 
+                    cursor-pointer transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white"
                 >
                   <Trash size={14} /> Remover logo
                 </button>
               </div>
             </div>
           </div>
-          <div className="bg-neutral-50 border-t border-neutral-300 px-6 py-3 flex justify-between items-center">
+          <div className="bg-neutral-50 border-t border-neutral-300 px-6 py-3 flex justify-between items-center gap-2">
             <p className="text-xs text-neutral-500">Arquivos aceitos: .jpg, .png. Tamanho máx: 2MB</p>
             <button 
               onClick={handleSaveLogo}
-              disabled={savingLogo || (logo === savedLogo && !file)}
-              className="bg-black text-white text-xs font-medium px-4 py-2 rounded-md hover:bg-neutral-800 
+              disabled={savingLogo || (logo === savedLogo)}
+              className="bg-black text-white text-xs font-medium px-4 py-2 rounded-md shrink-0 hover:bg-neutral-800 
                 cursor-pointer transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-black"
             >
               {savingLogo ? "Salvando..." : "Salvar Alterações"}
@@ -239,14 +245,14 @@ export default function SettingsTab({ leagueId }: { leagueId: string }) {
             </div>
           </div>
           
-          <div className="bg-neutral-50 border-t border-neutral-300 px-6 py-3 flex justify-between items-center">
+          <div className="bg-neutral-50 border-t border-neutral-300 px-6 py-3 flex justify-between items-center gap-2">
             <p className="text-xs text-neutral-500">
               Atualmente: <strong>{isPublicSaved ? "Público" : "Privado"}</strong>
             </p>
             <button 
               onClick={handleSaveVisibility}
               disabled={saving || isPublic === isPublicSaved}
-              className="bg-black text-white text-xs font-medium px-4 py-2 rounded-md hover:bg-neutral-800 
+              className="bg-black text-white text-xs font-medium px-4 py-2 shrink-0 rounded-md hover:bg-neutral-800 
                 cursor-pointer transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-black"
             >
               {saving ? "Salvando..." : "Salvar Alterações"}
@@ -260,7 +266,7 @@ export default function SettingsTab({ leagueId }: { leagueId: string }) {
             <p className="text-neutral-500 text-sm">Remover permanentemente este campeonato e todos os seus dados (times, jogos, estatísticas).</p>
           </div>
           <div className="bg-red-50 border-t border-red-200 px-6 py-3 flex justify-end">
-            <button onClick={() => setActiveModal("delete")} className="bg-red-600 text-white text-xs font-medium px-4 py-2 rounded-md hover:bg-red-700 cursor-pointer transition-colors">
+            <button onClick={() => setActiveModal("delete")} className="bg-red-600 text-white text-xs font-medium px-4 py-2 shrink-0 rounded-md hover:bg-red-700 cursor-pointer transition-colors">
               Deletar torneio
             </button>
           </div>

@@ -5,6 +5,10 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { UTApi } from "uploadthing/server";
+
+const utapi = new UTApi();
+const defaultLogo = "default-league-logo.png";
 
 export async function getChampionshipsList() {
   const session = await getServerSession(authOptions);
@@ -59,16 +63,32 @@ export async function updateChampionshipName(leagueId: string, newName: string) 
 
 export async function updateChampionshipLogo(leagueId: string, logoUrl: string | null) {
   try {
+    const currentLeague = await prisma.soccerLeague.findUnique({
+      where: { id: leagueId },
+      select: { logo: true }
+    });
+
+    if (currentLeague?.logo && currentLeague.logo !== defaultLogo && currentLeague.logo !== logoUrl) {
+      try {
+        const fileKey = currentLeague.logo.split("/f/")[1];
+        if (fileKey) {
+          await utapi.deleteFiles(fileKey);
+        }
+      } catch (deleteError) {
+        console.error("Aviso: Falha ao deletar arquivo antigo do UploadThing", deleteError);
+      }
+    }
+
     await prisma.soccerLeague.update({
       where: { id: leagueId },
       data: { logo: logoUrl },
     });
 
-    revalidatePath(`/my-championships/${leagueId}`);
+    revalidatePath(`/my-championships/${leagueId}/settings`);
     return { success: true };
   } catch (error) {
     console.error("Erro ao atualizar logo:", error);
-    return { success: false, error: "Erro ao salvar a nova imagem." };
+    return { success: false, error: "Erro ao salvar a nova imagem no banco." };
   }
 }
 
