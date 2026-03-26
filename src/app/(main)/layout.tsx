@@ -10,9 +10,9 @@ export const metadata: Metadata = {
 
 export default function MainLayout({children,}: Readonly<{children: React.ReactNode;}>) {
   return (
-    <div className="flex min-h-screen w-full flex-col">
+    <div className="flex h-screen w-full flex-col overflow-hidden">
       <Header/>
-      <div className="mx-auto flex w-full max-w-7xl grow flex-col sm:flex-row">
+      <div className="mx-auto flex w-full max-w-7xl h-[calc(100dvh-64px)] sm:py-8 flex-col sm:flex-row overflow-hidden">
         <SideBar/>
         {children}
       </div>

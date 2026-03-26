@@ -12,7 +12,7 @@ export default function ChampionshipDashboard({ leagueId }: { leagueId: string }
   const activeTab = searchParams.get('tab') || 'standings';
 
   return (
-    <section className="w-full flex flex-col overflow-y-auto max-h-202 sm:pt-6 [&::-webkit-scrollbar]:hidden">
+    <section className="w-full flex flex-col overflow-y-auto h-full p-4 sm:p-6 pb-8 [&::-webkit-scrollbar]:hidden">
       <h1 className="text-neutral-800 font-semibold text-xl pb-1">
         {activeTab === "standings" && "Tabela de classificação"}
         {activeTab === "matches" && "Calendário de partidas"}

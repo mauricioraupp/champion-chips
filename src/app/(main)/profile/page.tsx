@@ -28,8 +28,8 @@ export default async function ProfilePage() {
   if (!user) return <div className="p-8 text-center text-neutral-500">Usuário não encontrado.</div>;
 
   return (
-    <main className="flex w-screen flex-col gap-1 px-4 sm:w-full sm:p-6">
-      <div className="w-full flex flex-col overflow-y-auto max-h-202 sm:pt-6 [&::-webkit-scrollbar]:hidden">
+    <main className="flex-1 flex flex-col min-h-0 w-full">
+      <div className="w-full flex flex-col overflow-y-auto h-full p-4 sm:p-6 pb-8 [&::-webkit-scrollbar]:hidden">
         <h1 className="text-neutral-800 font-semibold text-xl pb-1">Configurações da Conta</h1>
         <p className="text-neutral-500 font-medium text-sm pb-6">Gerencie suas informações pessoais e visualize suas estatísticas na plataforma.</p>
         <section className="flex flex-col gap-8 w-full">

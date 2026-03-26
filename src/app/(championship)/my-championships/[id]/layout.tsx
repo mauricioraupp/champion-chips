@@ -12,10 +12,9 @@ export default async function MyChampionshipLayout({ children, params }: { child
   const { id } = await params;
 
   return (
-    <div className="flex min-h-screen w-full flex-col">
+    <div className="flex h-screen w-full flex-col overflow-hidden">
       <ChampionshipHeader leagueId={id}/> 
-      
-      <div className="mx-auto flex w-full max-w-7xl grow flex-col sm:flex-row">
+      <div className="mx-auto flex w-full max-w-7xl h-[calc(100dvh-64px)] sm:py-8 flex-col sm:flex-row overflow-hidden">
         <ChampionshipSideBar />
         {children}
       </div>

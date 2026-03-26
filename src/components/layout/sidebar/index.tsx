@@ -16,7 +16,7 @@ export default function SideBar() {
 
   return (
     <aside className="flex w-screen sm:w-fit flex-col justify-between">
-      <ul className="flex w-full sm:flex-col gap-2 p-4 sm:px-6 sm:py-12 justify-between">
+      <ul className="flex w-full sm:flex-col gap-2 p-4 sm:p-6 justify-between">
         {menuItems.map((item) => {
           const isActive = pathname === item.href || pathname === item.href
 

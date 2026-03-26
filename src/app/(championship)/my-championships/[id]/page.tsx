@@ -6,7 +6,7 @@ export default async function SoccerLeagueDashboard({ params }: { params: Promis
   const leagueId = id;
 
   return (
-    <main className="flex w-screen flex-col sm:w-full py-0 px-6 sm:py-6">
+    <main className="flex-1 flex flex-col min-h-0 w-full">
       <Suspense fallback={<div className="text-center">Carregando dashboard...</div>}>
         <ChampionshipDashboard leagueId={leagueId}/>
       </Suspense>
