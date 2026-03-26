@@ -46,8 +46,8 @@ export default function AddTeamForm({ onClose, onSave }: AddTeamFormProps) {
           </div>
         ) : (
           <div className="flex flex-col items-center">
-            <label className="cursor-pointer bg-zinc-100 p-4 border-2 border-dashed border-zinc-300 rounded-md hover:bg-zinc-200">
-              <span className="text-sm text-zinc-600">Selecionar Logo</span>
+            <label className="cursor-pointer bg-neutral-50 p-4 border border-dashed border-neutral-300 rounded-md hover:bg-neutral-200">
+              <span className="text-sm text-neutral-600">Selecionar Logo</span>
               <input type="file" className="hidden" accept="image/*" onChange={handleFileChange} />
             </label>
             <p className="text-xs text-neutral-500 mt-1">(Opcional)</p>
@@ -57,16 +57,16 @@ export default function AddTeamForm({ onClose, onSave }: AddTeamFormProps) {
 
       <fieldset className="flex flex-col gap-1 w-full">
         <label className="font-medium text-neutral-700 text-sm">Nome do Time</label>
-        <input value={name} onChange={(e) => setName(e.target.value)} className="py-2 px-3 border-2 rounded-sm border-neutral-300" />
+        <input value={name} onChange={(e) => setName(e.target.value)} className="py-2 px-3 border rounded-sm border-neutral-300" />
       </fieldset>
 
       <fieldset className="flex flex-col gap-1 w-full">
         <label className="font-medium text-neutral-700 text-sm">Sigla</label>
-        <input value={sigla} onChange={(e) => setSigla(e.target.value)} maxLength={3} className="py-2 px-3 border-2 rounded-sm border-neutral-300 uppercase placeholder:normal-case" placeholder="AAA"/>
+        <input value={sigla} onChange={(e) => setSigla(e.target.value)} maxLength={3} className="py-2 px-3 border rounded-sm border-neutral-300 uppercase placeholder:normal-case" placeholder="AAA"/>
       </fieldset>
 
       <div className="flex justify-between mt-6">
-        <button onClick={onClose} className="px-4 rounded-md font-medium hover:bg-neutral-300 cursor-pointer transition-colors">Cancelar</button>
+        <button onClick={onClose} className="px-4 rounded-md font-medium hover:bg-neutral-200 cursor-pointer transition-colors">Cancelar</button>
         <button onClick={handleConfirm} className="bg-black text-white px-6 py-2 rounded-md font-medium hover:bg-zinc-800 cursor-pointer">Adicionar</button>
       </div>
     </div>

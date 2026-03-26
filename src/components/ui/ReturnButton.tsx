@@ -12,7 +12,7 @@ export default function ReturnButton() {
   return (
     <button 
       onClick={handleGoBack}
-      className="px-4 rounded-md font-medium hover:bg-neutral-300 cursor-pointer transition-colors">Cancelar
+      className="px-4 rounded-md font-medium hover:bg-neutral-200 cursor-pointer transition-colors">Cancelar
     </button>
   );
 }

@@ -1,10 +1,11 @@
 import { getServerSession } from "next-auth/next";
 import { prisma } from "@/lib/prisma";
 import Image from "next/image";
-import { Edit, Tool, QuestionCircle, LogOut, Shield } from '@geist-ui/icons';
+import { Edit, Tool, LogOut, Shield } from '@geist-ui/icons';
 import StatCard from "@/components/features/profile/StatCard";
 import ActivityItem from '@/components/features/profile/ActivityItem';
 import ProfileActionCard from "@/components/features/profile/ProfileActionCard";
+import { DeleteAccountButton } from "@/components/ui/DeleteAccountButton";
 
 export default async function ProfilePage() {
   const session = await getServerSession();
@@ -15,7 +16,11 @@ export default async function ProfilePage() {
       name: true,
       image: true,
       _count: {
-        select: { SoccerLeagues: true, TeamsSoccerLeague: true, Players: true }
+        select: { 
+          SoccerLeagues: true, 
+          TeamsSoccerLeague: true, 
+          Players: true 
+        }
       }
     }
   });
@@ -24,7 +29,7 @@ export default async function ProfilePage() {
 
   return (
     <main className="flex w-screen flex-col gap-1 px-4 sm:w-full sm:p-6">
-      <div className="w-full flex flex-col overflow-y-auto max-h-196 sm:pt-6 [&::-webkit-scrollbar]:hidden">
+      <div className="w-full flex flex-col overflow-y-auto max-h-202 sm:pt-6 [&::-webkit-scrollbar]:hidden">
         <h1 className="text-neutral-800 font-semibold text-xl pb-1">Configurações da Conta</h1>
         <p className="text-neutral-500 font-medium text-sm pb-6">Gerencie suas informações pessoais e visualize suas estatísticas na plataforma.</p>
         <section className="flex flex-col gap-8 w-full">
@@ -110,11 +115,7 @@ export default async function ProfilePage() {
                 <h3 className="text-sm font-semibold text-red-600">Deletar Conta</h3>
                 <p className="text-sm text-neutral-500">Delete todos os dados da sua conta <span className="font-semibold text-neutral-800">(irreversível)</span></p>
               </div>
-              <button className="flex items-center gap-2 text-sm font-semibold text-red-600 font-medium border border-red-600 px-4 py-2 shrink-0 rounded-md 
-                hover:bg-red-600 hover:text-white cursor-pointer transition-colors"
-              >
-                Deletar conta
-              </button>
+              <DeleteAccountButton/>
             </div>
           </section>  
         </section>

@@ -26,7 +26,7 @@ export async function POST(req: Request) {
     }
     
     const body = await req.json();
-    const { name, leagueLogoUrl, secondLegs, teams, leagueLogoKey } = body;
+    const { name, leagueLogoUrl, isPublic, secondLegs, teams, leagueLogoKey } = body;
 
     if (leagueLogoKey) {
       keysToDelete.push(leagueLogoKey);
@@ -42,6 +42,7 @@ export async function POST(req: Request) {
         data: {
           name,
           logo: leagueLogoUrl || null,
+          public: Boolean(isPublic),
           secondLegs: Boolean(secondLegs),
           userId: dbUser.id,
           Teams: {

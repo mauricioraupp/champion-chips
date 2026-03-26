@@ -50,7 +50,7 @@ export default function ModalStepOne({ nextStep, data, updateData }: Props){
             updateData({ name: e.target.value });
             if (error) setError(false);
           }}
-          className={`py-2 px-3 w-full border-2 rounded-sm outline-none transition-colors ${
+          className={`py-2 px-3 w-full border rounded-sm outline-none transition-colors ${
             error ? "border-red-400 focus:border-red-500 bg-red-50" : "border-neutral-300 focus:border-zinc-800"
           }`}
         />
@@ -80,7 +80,7 @@ export default function ModalStepOne({ nextStep, data, updateData }: Props){
           </div>
         ) : (
           <div className="w-full">
-            <label className="flex flex-col items-center justify-center w-full h-12 bg-zinc-100 text-zinc-800 border-2 border-dashed border-zinc-300 rounded-md hover:bg-zinc-200 cursor-pointer transition-all">
+            <label className="flex flex-col items-center justify-center w-full h-12 bg-neutral-50 text-neutral-800 border border-dashed border-neutral-300 rounded-md hover:bg-neutral-100 cursor-pointer transition-all">
               <span className="text-sm font-medium">Selecionar Emblema</span>
               <input type="file" className="hidden" accept="image/*" onChange={handleFileChange} />
             </label>

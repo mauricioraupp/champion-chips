@@ -16,6 +16,7 @@ export default function CreateChampionship() {
     name: "",
     leagueLogoUrl: "",
     leagueLogoFile: null as File | null,
+    isPublic: false,
     format: "league",
     secondLegs: false,
     teams: [] as { name: string; sigla: string; teamLogoUrl?: string; teamLogoFile: File | null }[],
@@ -57,7 +58,7 @@ const handleFinish = async (finalDataFromStepThree: any) => {
   return (
     <main className="flex bg-black items-center justify-center h-full w-full absolute">
       <div className="bg-[url(/authbg.jpg)] bg-cover h-full w-full absolute blur-sm"/>
-      <section className="relative bg-neutral-150 flex flex-col items-center gap-8 mx-auto py-12 px-12 rounded-md shadow-2xl 
+      <section className="relative bg-white flex flex-col items-center gap-8 mx-auto py-12 px-12 rounded-md shadow-2xl 
         lg:min-w-132 min-w-72 w-2/3 sm:w-2/3 lg:w-1/3">
         
         <p className="font-semibold text-xl">

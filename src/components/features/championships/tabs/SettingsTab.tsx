@@ -9,7 +9,7 @@ import {
   updateChampionshipLogo 
 } from "@/app/actions/championships"
 import { useUploadThing } from "@/utils/uploadthing";
-import { Upload, Trash } from "@geist-ui/icons"
+import { Upload, Trash, Globe, Lock } from "@geist-ui/icons"
 import { toast } from "sonner"
 import Image from "next/image"
 
@@ -226,10 +226,12 @@ export default function SettingsTab({ leagueId }: { leagueId: string }) {
                   type="radio" 
                   checked={isPublic} 
                   onChange={() => setIsPublic(true)}
-                  className="mt-1 accent-black"
+                  className="mt-1 accent-black h-3 w-3 shrink-0"
                 />
                 <div>
-                  <span className="text-sm font-medium text-neutral-900">Público</span>
+                  <span className="flex items-center gap-2 text-sm font-medium text-neutral-900">
+                    <Globe size={14}/> Público
+                  </span>
                   <p className="text-xs text-neutral-500">Qualquer pessoa com o link pode visualizar as estatísticas.</p>
                 </div>
               </label>
@@ -239,10 +241,12 @@ export default function SettingsTab({ leagueId }: { leagueId: string }) {
                   type="radio" 
                   checked={!isPublic} 
                   onChange={() => setIsPublic(false)}
-                  className="mt-1 accent-black"
+                  className="mt-1 accent-black h-3 w-3 shrink-0"
                 />
                 <div>
-                  <span className="text-sm font-medium text-neutral-900">Privado</span>
+                  <span className="flex items-center gap-2 text-sm font-medium text-neutral-900">
+                    <Lock size={14}/> Privado
+                  </span>
                   <p className="text-xs text-neutral-500">Apenas você e membros convidados podem acessar os dados.</p>
                 </div>
               </label>

@@ -70,7 +70,7 @@ export default function ChampionshipSelector({ currentLeague, leagues }: Champio
                 Torneios
               </p>
               
-              <div className="space-y-1">
+              <div className="space-y-1 max-h-32 pr-2 overflow-y-auto">
                 {leagues?.map((league) => {
                   const isSelected = currentLeague?.id === league.id
                   
