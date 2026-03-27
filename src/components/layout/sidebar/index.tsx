@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from "next/navigation"
-import { Folder, FolderPlus, User, Settings, Bookmark } from '@geist-ui/icons'
+import { Folder, FolderPlus, User, Bookmark } from '@geist-ui/icons'
 
 export default function SideBar() {
   const pathname = usePathname()

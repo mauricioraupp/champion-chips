@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { getMatches } from "@/app/actions/matches"
 import MatchCard from "./cards/MatchCard"
 
-export default function MatchesTab({ leagueId }: { leagueId: string }) {
+export default function MatchesTab({ leagueId, isOwner }: { leagueId: string, isOwner: boolean }) {
   const [matches, setMatches] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -33,6 +33,7 @@ export default function MatchesTab({ leagueId }: { leagueId: string }) {
           key={match.id} 
           match={match} 
           onUpdate={loadMatches}
+          isOwner={isOwner}
         />
       ))}
     </div>

@@ -14,6 +14,7 @@ model User {
   image             String?
   createdAt         DateTime            @default(now())
   Activity          Activity[]
+  FavoriteLeague    FavoriteLeague[]
   SoccerLeagues     SoccerLeague[]
   TeamsSoccerLeague TeamsSoccerLeague[]
   Players           Players[]
@@ -29,6 +30,17 @@ model Activity {
   createdAt  DateTime @default(now())
 }
 
+model FavoriteLeague {
+  id        String       @id @default(cuid())
+  userId    String
+  leagueId  String
+  user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  league    SoccerLeague @relation(fields: [leagueId], references: [id], onDelete: Cascade)
+  createdAt DateTime     @default(now())
+
+  @@unique([userId, leagueId])
+}
+
 model PasswordResetToken {
   id        String   @id @default(cuid())
   email     String   @unique
@@ -38,17 +50,18 @@ model PasswordResetToken {
 }
 
 model SoccerLeague {
-  id         String              @id @default(cuid())
-  User       User?               @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId     String
-  name       String
-  logo       String?
-  public     Boolean             @default(false)
-  secondLegs Boolean             @default(false)
-  createdAt  DateTime            @default(now())
-  Teams      TeamsSoccerLeague[]
-  Matches    Match[]
-  goals      Goal[]
+  id             String              @id @default(cuid())
+  User           User?               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId         String
+  name           String
+  logo           String?
+  public         Boolean             @default(false)
+  secondLegs     Boolean             @default(false)
+  createdAt      DateTime            @default(now())
+  FavoriteLeague FavoriteLeague[]
+  Teams          TeamsSoccerLeague[]
+  Matches        Match[]
+  goals          Goal[]
 }
 
 model TeamsSoccerLeague {

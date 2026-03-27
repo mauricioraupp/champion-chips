@@ -16,9 +16,10 @@ interface League {
 interface ChampionshipSelectorProps {
   currentLeague: League | null; 
   leagues: League[];
+  isOwner: boolean;
 }
 
-export default function ChampionshipSelector({ currentLeague, leagues }: ChampionshipSelectorProps) {
+export default function ChampionshipSelector({ currentLeague, leagues, isOwner }: ChampionshipSelectorProps) {
   const [isOpen, setIsOpen] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
   const router = useRouter()
@@ -35,26 +36,47 @@ export default function ChampionshipSelector({ currentLeague, leagues }: Champio
 
   return (
     <div className="relative hidden sm:inline-block" ref={containerRef}>
-      <button 
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-between w-56 rounded-md p-1 pr-2 hover:bg-neutral-100 cursor-pointer transition-colors"
-      >
-        <article className="flex items-center gap-2">
-          {currentLeague?.logo && (
-            <div className="relative w-8 h-8 rounded-md shadow-sm overflow-hidden">
-              <Image 
-                src={currentLeague.logo} 
-                alt={currentLeague.name} 
-                fill 
-              />
-            </div>
-          )}
-          <span className="font-semibold text-sm text-neutral-900">
-            {currentLeague?.name || "Selecionar"}
-          </span>
-        </article>
-        <ChevronDown size={18}/>
-      </button>
+      {isOwner ? (
+        <button 
+          onClick={() => setIsOpen(!isOpen)}
+          className="flex items-center justify-between w-56 rounded-md p-1 pr-2 hover:bg-neutral-100 cursor-pointer transition-colors"
+        >
+          <article className="flex items-center gap-2">
+            {currentLeague?.logo && (
+              <div className="relative w-8 h-8 rounded-md shadow-sm overflow-hidden">
+                <Image 
+                  src={currentLeague.logo} 
+                  alt={currentLeague.name} 
+                  fill 
+                />
+              </div>
+            )}
+            <span className="font-semibold text-sm text-neutral-900">
+              {currentLeague?.name || "Selecionar"}
+            </span>
+          </article>
+          <ChevronDown size={18}/>
+        </button>
+      ) : (
+        <button 
+          className="flex items-center justify-between w-56 rounded-md p-1 pr-2"
+        >
+          <article className="flex items-center gap-2">
+            {currentLeague?.logo && (
+              <div className="relative w-8 h-8 rounded-md shadow-sm overflow-hidden">
+                <Image 
+                  src={currentLeague.logo} 
+                  alt={currentLeague.name} 
+                  fill 
+                />
+              </div>
+            )}
+            <span className="font-semibold text-sm text-neutral-900">
+              {currentLeague?.name || "Selecionar"}
+            </span>
+          </article>
+        </button>
+      )}
 
       <AnimatePresence>
         {isOpen && (

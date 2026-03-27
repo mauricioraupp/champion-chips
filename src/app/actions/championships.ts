@@ -30,19 +30,31 @@ export async function getChampionshipsList() {
 }
 
 export async function getChampionshipInfo(leagueId: string) {
-  const league = await prisma.soccerLeague.findUnique({
-    where: { id: leagueId },
-    include: { 
-      Matches: {
-        include: {
-          HomeTeam: true,
-          AwayTeam: true
+  try {
+    const league = await prisma.soccerLeague.findUnique({
+      where: { id: leagueId },
+      include: { 
+        _count: {
+          select: {
+            Teams: true,
+            Matches: true,
+            goals: true,
+          }
+        },
+        Matches: {
+          include: {
+            HomeTeam: true,
+            AwayTeam: true
+          }
         }
       }
-    }
-  })
+    })
 
-  return league
+    return league
+  } catch (error) {
+    console.error("Erro ao buscar informações do campeonato:", error)
+    return null
+  }
 }
 
 export async function updateChampionshipName(leagueId: string, newName: string) {

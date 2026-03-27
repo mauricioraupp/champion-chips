@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Edit } from '@geist-ui/icons';
 import { EditMatchModal } from "./modals/EditMatchModal";
 
-export default function MatchCard({ match, onUpdate }: { match: any, onUpdate: () => void }) {
+export default function MatchCard({ match, onUpdate, isOwner }: { match: any, onUpdate: () => void, isOwner: boolean }) {
   const [showModal, setShowModal] = useState(false);
   const isFinished = match.status === "FINISHED";
 
@@ -54,14 +54,16 @@ export default function MatchCard({ match, onUpdate }: { match: any, onUpdate: (
           </span>
         </div>
 
-        <button 
-          onClick={() => setShowModal(true)}
-          className={`sm:absolute sm:right-8 p-2 rounded-full transition-colors cursor-pointer ${
-            isFinished ? 'hover:bg-neutral-300' : 'hover:bg-neutral-200'
-          }`}
-        >
-          <Edit size="18"/>
-        </button>
+        {isOwner && 
+          <button 
+            onClick={() => setShowModal(true)}
+            className={`sm:absolute sm:right-8 p-2 rounded-full transition-colors cursor-pointer ${
+              isFinished ? 'hover:bg-neutral-300' : 'hover:bg-neutral-200'
+            }`}
+          >
+            <Edit size="18"/>
+          </button>
+        }
         
         {showModal && (
         <EditMatchModal 

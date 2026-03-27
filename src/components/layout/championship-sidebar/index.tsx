@@ -1,9 +1,9 @@
 "use client"
 
 import { useRouter, useSearchParams } from "next/navigation"
-import { Clipboard, Calendar, Shield, Target, Settings } from '@geist-ui/icons'
+import { Clipboard, Calendar, Shield, Target, Settings, Info } from '@geist-ui/icons'
 
-export default function ChampionshipSideBar() {
+export default function ChampionshipSideBar({isOwner}: {isOwner: boolean}) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const activeTab = searchParams.get('tab') || 'tabela';
@@ -13,17 +13,20 @@ export default function ChampionshipSideBar() {
   };
 
   const menuItems = [
-    { label: 'Tabela', tab: 'standings', onClick: () => setTab("standings"), icon: <Clipboard size={20}/> },
-    { label: 'Partidas', tab: 'matches', onClick: () => setTab("matches"), icon: <Calendar size={20}/> },
-    { label: 'Clubes', tab: 'teams', onClick: () => setTab("teams"), icon: <Shield size={20}/> },
-    { label: 'Artilharia', tab: 'scorers', onClick: () => setTab("scorers"), icon: <Target size={20}/> },
-    { label: 'Configurações', tab: 'settings', onClick: () => setTab("settings"), icon: <Settings size={20}/> }
+    { label: 'Tabela', tab: 'standings', onClick: () => setTab("standings"), icon: <Clipboard size={20}/>, public: true },
+    { label: 'Partidas', tab: 'matches', onClick: () => setTab("matches"), icon: <Calendar size={20}/>, public: true },
+    { label: 'Clubes', tab: 'teams', onClick: () => setTab("teams"), icon: <Shield size={20}/>, public: true },
+    { label: 'Artilharia', tab: 'scorers', onClick: () => setTab("scorers"), icon: <Target size={20}/>, public: true },
+    { label: 'Informações', tab: 'info', onClick: () => setTab("info"), icon: <Info size={20}/>, public: true },
+    { label: 'Configurações', tab: 'settings', onClick: () => setTab("settings"), icon: <Settings size={20}/>, public: false }
   ]
 
   return (
     <aside className="flex w-screen sm:w-fit flex-col justify-between">
       <ul className="flex w-full sm:flex-col gap-2 p-4 sm:p-6 justify-between">
         {menuItems.map((item) => {
+          if (!item.public && !isOwner) return null;
+
           const isActive = activeTab === item.tab
 
           return (

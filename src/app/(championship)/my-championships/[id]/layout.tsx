@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
 import ChampionshipSideBar from "@/components/layout/championship-sidebar";
 import ChampionshipHeader from "@/components/layout/championship-header";
+import { redirect } from "next/navigation";
 import { Toaster } from "sonner";
+import { prisma } from "@/lib/prisma";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getChampionshipInfo } from "@/app/actions/championships";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -10,12 +15,36 @@ export const metadata: Metadata = {
 
 export default async function MyChampionshipLayout({ children, params }: { children: React.ReactNode; params: Promise<{ id: string }> }) {
   const { id } = await params;
+  const session = await getServerSession(authOptions);
+
+  const league = await prisma.soccerLeague.findUnique({
+    where: { id: id },
+    select: { userId: true, public: true }
+  });
+
+  if (!league) {
+    redirect("/global-error");
+  }
+
+  // if (!league) {
+  //   redirect("/global-error");
+  // }
+
+  const isOwner = session?.user?.id === league?.userId;
+
+  if (!league.public && !isOwner) {
+    redirect("/my-championships"); 
+  }
+
+  // if (!league.public && !isOwner) {
+  //   redirect("/global-error?error=private-league"); 
+  // }
 
   return (
     <div className="flex h-screen w-full flex-col overflow-hidden">
-      <ChampionshipHeader leagueId={id}/> 
+      <ChampionshipHeader leagueId={id} isOwner={isOwner}/> 
       <div className="mx-auto flex w-full max-w-7xl h-[calc(100dvh-64px)] sm:py-8 flex-col sm:flex-row overflow-hidden">
-        <ChampionshipSideBar />
+        <ChampionshipSideBar isOwner={isOwner} />
         {children}
       </div>
       <Toaster richColors position="top-center"/>

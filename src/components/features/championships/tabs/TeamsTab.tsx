@@ -5,7 +5,7 @@ import { getTeams } from "@/app/actions/teams"
 import TeamCard from "./cards/TeamCard"
 import { CreateTeamModal } from "./cards/modals/CreateTeamModal"
 
-export default function TeamsTab({ leagueId }: { leagueId: string }) {
+export default function TeamsTab({ leagueId, isOwner }: { leagueId: string, isOwner: boolean }) {
   const [teams, setTeams] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
@@ -28,18 +28,21 @@ export default function TeamsTab({ leagueId }: { leagueId: string }) {
           team={team} 
           league={leagueId}
           onUpdate={loadTeams}
+          isOwner={isOwner}
         />
       ))}
 
-      <button 
-        onClick={() => setIsCreateModalOpen(true)}
-        className={`flex flex-1 items-center justify-center min-w-32 h-32 sm:h-52 rounded-md bg-black
-          hover:bg-zinc-900 cursor-pointer transition-colors`}
-      >
-        <span className={`font-medium text-white sm:text-md`}>
-          + Criar time
-        </span>
-      </button>
+      {isOwner &&
+        <button 
+          onClick={() => setIsCreateModalOpen(true)}
+          className={`flex flex-1 items-center justify-center min-w-32 h-32 sm:h-52 rounded-md bg-black
+            hover:bg-zinc-900 cursor-pointer transition-colors`}
+        >
+          <span className={`font-medium text-white sm:text-md`}>
+            + Criar time
+          </span>
+        </button>
+      }
 
       {isCreateModalOpen && (
         <CreateTeamModal 

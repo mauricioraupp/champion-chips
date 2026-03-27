@@ -4,7 +4,7 @@ import { MoreHorizontal, Edit2, Trash } from '@geist-ui/icons';
 import { EditTeamModal } from "./modals/EditTeamModal";
 import { DeleteTeamModal } from "./modals/DeleteTeamModal";
 
-export default function TeamCard({ team, league, onUpdate }: { team: any, league: string, onUpdate: () => void }) {
+export default function TeamCard({ team, league, onUpdate, isOwner }: { team: any, league: string, onUpdate: () => void, isOwner: boolean }) {
   const [showOptions, setShowOptions] = useState(false);
   const [activeModal, setActiveModal] = useState<"edit" | "delete" | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -25,9 +25,11 @@ export default function TeamCard({ team, league, onUpdate }: { team: any, league
         bg-white border border-neutral-300 rounded-md shadow-sm hover:border-neutral-400 transition-colors"
       >
         <div className="absolute top-2 right-2" ref={menuRef}>
-          <button onClick={() => setShowOptions(!showOptions)} className="p-1 hover:bg-neutral-200 rounded-full cursor-pointer transition-colors">
-            <MoreHorizontal size="20" />
-          </button>
+          {isOwner &&
+            <button onClick={() => setShowOptions(!showOptions)} className="p-1 hover:bg-neutral-200 rounded-full cursor-pointer transition-colors">
+              <MoreHorizontal size="20" />
+            </button>
+          }
 
           <AnimatePresence>
             {showOptions && (

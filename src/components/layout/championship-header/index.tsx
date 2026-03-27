@@ -5,7 +5,7 @@ import MobileMenu from "../MobileMenu";
 import UserNav from "../UserNav";
 import Link from "next/link";
 
-export default async function ChampionshipHeader({ leagueId }: { leagueId: string }) {
+export default async function ChampionshipHeader({ leagueId, isOwner }: { leagueId: string, isOwner: boolean }) {
   const session = await getServerSession();
   
   const user = await prisma.user.findUnique({
@@ -48,12 +48,12 @@ export default async function ChampionshipHeader({ leagueId }: { leagueId: strin
           <Link href="/my-championships" className="flex text-black font-bold text-3xl">champion<span className="text-yellow-600">chips</span></Link>
           
           <p className="hidden sm:block text-5xl italic font-thin pr-2 text-neutral-600">|</p>
-          
-          <ChampionshipSelector currentLeague={currentLeague} leagues={leagues}/>
+              
+          <ChampionshipSelector currentLeague={currentLeague} leagues={leagues} isOwner={isOwner}/>
         </div>
 
         <UserNav user={user} />
-
+        
         <MobileMenu user={user} currentLeague={currentLeague} leagues={leagues} 
         />
       </div>
