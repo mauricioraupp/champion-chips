@@ -1,6 +1,7 @@
 "use server"
 
 import { prisma } from "@/lib/prisma"
+import { logActivity } from "@/lib/activity-log";
 import { revalidatePath } from "next/cache"
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
@@ -107,6 +108,13 @@ export async function createTeam(leagueId: string, data: any) {
         data: finalSchedule
       });
 
+      await logActivity(
+        session.user.id, 
+        "Criou o time", 
+        data.name,
+        "CREATE"
+      );
+
       revalidatePath(`/championships/${leagueId}`);
       return { success: true, error: null };
     });
@@ -165,6 +173,13 @@ export async function updateTeam(teamId: number, leagueId: string, data: any, ol
         },
       });
 
+      await logActivity(
+        session.user.id, 
+        "Editou o time", 
+        data.name,
+        "UPDATE"
+      );
+
       revalidatePath(`/championships/${leagueId}`);
       return { success: true, error: null };
     });
@@ -175,6 +190,9 @@ export async function updateTeam(teamId: number, leagueId: string, data: any, ol
 }
 
 export async function deleteTeam(teamId: number, leagueId: string) {
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.id) return { success: false, error: "Não autorizado" };
+
   try {
     const teamCount = await prisma.teamsSoccerLeague.count({
       where: { soccerLeagueId: leagueId }
@@ -240,7 +258,15 @@ export async function deleteTeam(teamId: number, leagueId: string) {
       where: { id: teamId },
     });
 
+    await logActivity(
+      session.user.id, 
+      "Deletou o time", 
+      team.name,
+      "DELETE"
+    );
+
     revalidatePath(`/championships/${leagueId}`);
+
     return { success: true };
   } catch (error) {
     console.error(error);

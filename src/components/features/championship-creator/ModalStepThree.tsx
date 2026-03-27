@@ -45,7 +45,7 @@ export default function ModalStepThree({ prevStep, teams, setTeams, data, onFini
       if (data.leagueLogoFile) {
         const resLeague = await uploadLeagueLogo([data.leagueLogoFile]);
         if (resLeague?.[0]) {
-          finalLeagueLogoUrl = resLeague[0].ufsUrl || resLeague[0].url;
+          finalLeagueLogoUrl = resLeague[0].ufsUrl;
           finalLeagueLogoKey = resLeague[0].key;
         }
       }
@@ -56,7 +56,7 @@ export default function ModalStepThree({ prevStep, teams, setTeams, data, onFini
           if (res && res[0]) {
             return {
               ...team,
-              teamLogoUrl: res[0].ufsUrl || res[0].url,
+              teamLogoUrl: res[0].ufsUrl,
               teamLogoKey: res[0].key
             };
           }

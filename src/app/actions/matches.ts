@@ -1,6 +1,9 @@
 "use server"
 
 import { prisma } from "@/lib/prisma"
+import { logActivity } from "@/lib/activity-log";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { revalidatePath } from "next/cache"
 
 export async function getMatches(leagueId: string) {
@@ -20,9 +23,28 @@ export async function getMatches(leagueId: string) {
 }
 
 export async function updateMatch(matchId: number, leagueId: string, data: any) {
+  const session = await getServerSession(authOptions);
+  
+  if (!session?.user?.id) {
+    return { success: false, error: "Não autorizado" };
+  }
+
   try {
+    const currentMatch = await prisma.match.findUnique({
+      where: { id: matchId },
+      include: {
+        HomeTeam: { select: { name: true } },
+        AwayTeam: { select: { name: true } },
+      }
+    });
+
+    if (!currentMatch) {
+      return { success: false, error: "Partida não encontrada." };
+    }
+
     const homeScore = parseInt(data.homeScore) || 0;
     const awayScore = parseInt(data.awayScore) || 0;
+
     const updateData: any = {
       homeScore,
       awayScore,
@@ -76,7 +98,19 @@ export async function updateMatch(matchId: number, leagueId: string, data: any) 
 
     await updateLeagueTable(leagueId);
 
-    revalidatePath(`/championships/${leagueId}`, 'page');
+    const actionText = data.status === "FINISHED" ? "Finalizou a partida" : "Editou a partida";
+    const matchLabel = `${currentMatch.HomeTeam.name} ${homeScore} x ${awayScore} ${currentMatch.AwayTeam.name}`;
+
+    await logActivity(
+      session.user.id,
+      actionText,
+      matchLabel,
+      "MATCH"
+    );
+
+    revalidatePath(`/championships/${leagueId}`);
+    revalidatePath("/profile");
+
     return { success: true, updatedMatch: result };
 
   } catch (error) {

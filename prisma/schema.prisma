@@ -13,9 +13,20 @@ model User {
   password          String?
   image             String?
   createdAt         DateTime            @default(now())
+  Activity          Activity[]
   SoccerLeagues     SoccerLeague[]
   TeamsSoccerLeague TeamsSoccerLeague[]
   Players           Players[]
+}
+
+model Activity {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  action     String
+  type       String
+  targetName String
+  createdAt  DateTime @default(now())
 }
 
 model PasswordResetToken {

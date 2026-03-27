@@ -1,6 +1,7 @@
 "use server"
 
 import { prisma } from "@/lib/prisma"
+import { logActivity } from "@/lib/activity-log";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { revalidatePath } from "next/cache";
@@ -45,14 +46,31 @@ export async function getChampionshipInfo(leagueId: string) {
 }
 
 export async function updateChampionshipName(leagueId: string, newName: string) {
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.id) return { success: false, error: "Não autorizado" };
+
   try {
+    const currentLeague = await prisma.soccerLeague.findUnique({
+      where: { id: leagueId },
+      select: { name: true }
+    });
+
+    if (!currentLeague) return { success: false, error: "Campeonato não encontrado" };
+
     await prisma.soccerLeague.update({
       where: { id: leagueId },
       data: { name: newName },
     });
 
+    await logActivity(
+      session.user.id, 
+      "Alterou o nome do campeonato", 
+      newName,
+      "UPDATE"
+    );
+
     revalidatePath(`/my-championships/${leagueId}`);
-    revalidatePath("/"); 
+    revalidatePath("/profile");
 
     return { success: true };
   } catch (error) {
@@ -62,11 +80,16 @@ export async function updateChampionshipName(leagueId: string, newName: string) 
 }
 
 export async function updateChampionshipLogo(leagueId: string, logoUrl: string | null) {
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.id) return { success: false, error: "Não autorizado" };
+
   try {
     const currentLeague = await prisma.soccerLeague.findUnique({
       where: { id: leagueId },
-      select: { logo: true }
+      select: { logo: true, name: true }
     });
+
+    if (!currentLeague) return { success: false, error: "Campeonato não encontrado" };
 
     if (currentLeague?.logo && currentLeague.logo !== defaultLogo && currentLeague.logo !== logoUrl) {
       try {
@@ -84,7 +107,14 @@ export async function updateChampionshipLogo(leagueId: string, logoUrl: string |
       data: { logo: logoUrl },
     });
 
-    revalidatePath(`/my-championships/${leagueId}/settings`);
+    await logActivity(
+      session.user.id, 
+      "Alterou a logo do campeonato", 
+      currentLeague.name,
+      "UPDATE"
+    );
+
+    revalidatePath(`/my-championships/${leagueId}`);
     return { success: true };
   } catch (error) {
     console.error("Erro ao atualizar logo:", error);
@@ -107,6 +137,9 @@ export async function updateChampionshipVisibility(leagueId: string, isPublic: b
 }
 
 export async function deleteChampionship(leagueId: string) {
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.id) return { success: false, error: "Não autorizado" };
+
   let fileKeys: string[] = [];
 
   try {
@@ -155,6 +188,13 @@ export async function deleteChampionship(leagueId: string) {
     await prisma.soccerLeague.delete({
       where: { id: leagueId },
     });
+
+    await logActivity(
+      session.user.id, 
+      "Deletou o campeonato", 
+      leagueData.name,
+      "DELETE"
+    );
 
   } catch (error) {
     if (error instanceof Error && error.message === 'NEXT_REDIRECT') {

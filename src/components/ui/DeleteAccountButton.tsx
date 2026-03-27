@@ -6,7 +6,7 @@ import { signOut } from "next-auth/react";
 import { toast } from "sonner";
 import { Trash } from "@geist-ui/icons";
 
-export function DeleteAccountButton() {
+export default function DeleteAccountButton() {
   const [loading, setLoading] = useState(false);
   const [activeModal, setActiveModal] = useState<"delete" | null>(null);
 

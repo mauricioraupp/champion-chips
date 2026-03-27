@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { logActivity } from "@/lib/activity-log";
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../auth/[...nextauth]/route";
@@ -56,6 +57,17 @@ export async function POST(req: Request) {
         },
       });
     });
+
+    try {
+      await logActivity(
+        dbUser.id, 
+        "Criou o campeonato", 
+        newLeague.name, 
+        "CREATE"
+      );
+    } catch (logError) {
+      console.error("Erro ao registrar log de atividade:", logError);
+    }
 
     try {
       await generateChampionshipMatches(newLeague.id);

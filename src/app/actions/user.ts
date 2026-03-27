@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { UTApi } from "uploadthing/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { revalidatePath } from "next/cache";
 
 const utapi = new UTApi();
 
@@ -11,6 +12,32 @@ const extractKey = (url: string | null) => {
   if (!url || !url.includes("http")) return null;
   return url.substring(url.lastIndexOf('/') + 1);
 };
+
+export async function updateUser(data: { name: string; image?: string | null }) {
+  try {
+    const session = await getServerSession(authOptions);
+
+    if (!session?.user?.email) {
+      return { success: false, error: "Não autorizado" };
+    }
+
+    const updatedUser = await prisma.user.update({
+      where: { email: session.user.email },
+      data: {
+        name: data.name,
+        image: data.image,
+      },
+    });
+
+    revalidatePath("/profile"); 
+    revalidatePath("/my-championships");
+
+    return { success: true, user: updatedUser };
+  } catch (error) {
+    console.error("Erro ao atualizar usuário:", error);
+    return { success: false, error: "Erro interno ao salvar alterações" };
+  }
+}
 
 export async function deleteUserAccount() {
   const session = await getServerSession(authOptions);

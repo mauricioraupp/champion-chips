@@ -65,7 +65,7 @@ export function EditTeamModal({ team, onClose, onUpdate }: EditModalProps) {
       if (logoFile) {
         const res = await startUpload([logoFile]);
         if (res?.[0]) {
-          finalLogoUrl = res[0].ufsUrl || res[0].url;
+          finalLogoUrl = res[0].ufsUrl;
         }
       }
 
