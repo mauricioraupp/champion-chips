@@ -7,7 +7,7 @@ import { Shield, Calendar, Award, Target, Info, Globe, Lock, Share2, Bookmark } 
 import Image from "next/image"
 import { toast } from "sonner"
 
-export default function InfoTab({ leagueId, initialIsFavorite }: { leagueId: string, initialIsFavorite: boolean }) {
+export default function InfoTab({ leagueId, isOwner, initialIsFavorite }: { leagueId: string, isOwner: boolean, initialIsFavorite: boolean }) {
   const [isFavorite, setIsFavorite] = useState(initialIsFavorite);
   const [data, setData] = useState<any>(null)
   const [loading, setLoading] = useState(true)
@@ -24,7 +24,6 @@ export default function InfoTab({ leagueId, initialIsFavorite }: { leagueId: str
   const handleToggleFavorite = async () => {
     if (loading) return;
     
-    setLoading(true);
     setIsFavorite(!isFavorite);
 
     const result = await toggleFavorite(leagueId);
@@ -35,13 +34,12 @@ export default function InfoTab({ leagueId, initialIsFavorite }: { leagueId: str
     } else {
       toast.success(result.isFavorite ? "Adicionado aos favoritos" : "Removido dos favoritos");
     }
-    setLoading(false);
   };
 
   if (loading) return <div className="p-8 text-center text-neutral-500 italic text-sm">Carregando informações...</div>
 
   const stats = [
-    { label: "Times", value: data?._count?.Teams || 0, icon: <Shield size={18} /> },
+    { label: "Clubes", value: data?._count?.Teams || 0, icon: <Shield size={18} /> },
     { label: "Partidas Finalizadas", value: data?.Matches?.filter((m: any) => m.status === "FINISHED").length || 0, icon: <Calendar size={18} /> },
     { label: "Gols Marcados", value: data?._count?.goals || 0, icon: <Target size={18} /> },
     { label: "Rodadas", value: data?.secondLegs ? "Ida e Volta" : "Turno Único", icon: <Award size={18} /> },
@@ -66,29 +64,34 @@ export default function InfoTab({ leagueId, initialIsFavorite }: { leagueId: str
               {data?.public ? (
                 <span className="p-1 text-green-600 bg-green-50 rounded-full" title="Público"><Globe size={14}/></span>
               ) : (
-                <span className="p-1 text-neutral-400 bg-neutral-50 rounded-full" title="Privado"><Lock size={14}/></span>
+                <span className="p-1 text-neutral-600 bg-neutral-100 rounded-full" title="Privado"><Lock size={14}/></span>
               )}
             </div>
             <p className="text-neutral-500 text-sm mb-4">Campeonato criado em {new Date(data?.createdAt).toLocaleDateString('pt-BR')}</p>
             
             <div className="flex flex-wrap justify-center sm:justify-start gap-3 items-center">
-              <span className="px-3 py-1 bg-neutral-100 text-neutral-600 text-[10px] font-bold uppercase tracking-widest rounded-full border border-neutral-200">
+              <button 
+                title={leagueId}
+                className="px-3 py-1 bg-neutral-100 text-neutral-600 text-[10px] font-bold uppercase tracking-wider rounded-full border border-neutral-200"
+              >
                 ID: {leagueId.slice(0, 8)}...
-              </span>
+              </button>
 
-              <span className={`px-3 py-1 text-[10px] font-bold uppercase tracking-widest rounded-full border ${
-                data?.public ? "bg-blue-50 text-blue-600 border-blue-100" : "bg-neutral-50 text-neutral-500 border-neutral-200"
+              <span className={`px-3 py-1 text-[10px] font-bold uppercase tracking-wider rounded-full border ${
+                data?.public ? "bg-green-100 text-green-600 border-green-200" : "bg-neutral-100 text-neutral-600 border-neutral-200"
               }`}>
                 {data?.public ? "Disponível para todos" : "Acesso Restrito"}
               </span>
 
-              <button 
-                onClick={handleToggleFavorite}
-                className="flex items-center gap-2 ml-1 px-2 py-1 text-neutral-500 hover:text-black cursor-pointer transition-colors"
-              >
-                <Bookmark size={16} className={isFavorite ? "fill-neutral-900 text-neutral-900" : ""} color={isFavorite ? "neutral-900" : "neutral-400"} />
-                <span className={"text-[10px] font-bold uppercase tracking-widest"}>Favoritar</span>
-              </button>
+              {!isOwner &&
+                <button 
+                  onClick={handleToggleFavorite}
+                  className="flex items-center gap-2 px-2 py-1 text-neutral-500 hover:text-black cursor-pointer transition-colors"
+                >
+                  <Bookmark size={16} className={isFavorite ? "fill-neutral-900 text-neutral-900" : ""} color={isFavorite ? "neutral-900" : "neutral-400"} />
+                  <span className={"text-[10px] font-bold uppercase tracking-wider"}>Favoritar</span>
+                </button>
+              }
 
               {data?.public && (
                 <button 
@@ -97,11 +100,11 @@ export default function InfoTab({ leagueId, initialIsFavorite }: { leagueId: str
                     navigator.clipboard.writeText(url);
                     toast.success("Link de acesso copiado!");
                   }}
-                  className="flex items-center gap-2 ml-1 px-2 py-1 text-neutral-500 hover:text-black cursor-pointer transition-colors"
-                  title="Compartilhar campeonato"
+                  className="flex items-center gap-2 px-2 py-1 text-neutral-500 hover:text-black cursor-pointer transition-colors"
+                  title={`${window.location.origin}/championships/${leagueId}`}
                 >
                   <Share2 size={14} />
-                  <span className="text-[10px] font-bold uppercase tracking-widest">Compartilhar</span>
+                  <span className="text-[10px] font-bold uppercase tracking-wider">Compartilhar</span>
                 </button>
               )}
             </div>
@@ -122,7 +125,7 @@ export default function InfoTab({ leagueId, initialIsFavorite }: { leagueId: str
       <section className="border border-neutral-300 rounded-md overflow-hidden shadow-sm">
         <header className="px-6 py-4 border-b border-neutral-100 flex items-center gap-2">
           <Info size={16} className="text-neutral-500" />
-          <h3 className="text-xs font-bold text-neutral-900 uppercase tracking-widest">Resumo Técnico</h3>
+          <h3 className="text-xs font-bold text-neutral-900 uppercase tracking-wider">Resumo Técnico</h3>
         </header>
         <div className="p-6">
           <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-4">
@@ -145,7 +148,7 @@ export default function InfoTab({ leagueId, initialIsFavorite }: { leagueId: str
           </dl>
         </div>
         <footer className="px-6 py-3 border-t border-neutral-100 text-center">
-          <p className="text-[10px] text-neutral-400 uppercase font-medium">Dados atualizados em tempo real conforme resultados das partidas</p>
+          <p className="text-xs text-neutral-400 font-medium">Dados atualizados em tempo real conforme resultados das partidas</p>
         </footer>
       </section>
 

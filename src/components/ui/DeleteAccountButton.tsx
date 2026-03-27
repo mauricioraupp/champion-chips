@@ -4,7 +4,7 @@ import { useState } from "react";
 import { deleteUserAccount } from "@/app/actions/user";
 import { signOut } from "next-auth/react";
 import { toast } from "sonner";
-import { Trash } from "@geist-ui/icons";
+import { Trash, AlertTriangle } from "@geist-ui/icons";
 
 export default function DeleteAccountButton() {
   const [loading, setLoading] = useState(false);
@@ -31,7 +31,7 @@ export default function DeleteAccountButton() {
     <>
       <button 
         onClick={() => setActiveModal("delete")}
-        className="flex items-center gap-2 text-sm font-semibold text-red-600 font-medium border border-red-600 px-4 py-2 shrink-0 rounded-md 
+        className="flex items-center justify-center gap-2 w-30 text-sm font-semibold text-red-600 font-medium border border-red-600 py-2 shrink-0 rounded-md 
           hover:bg-red-600 hover:text-white cursor-pointer transition-colors"
       >
         {loading ? "Processando..." : "Deletar Conta"}

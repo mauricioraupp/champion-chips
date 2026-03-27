@@ -30,7 +30,7 @@ export async function updateUser(data: { name: string; image?: string | null }) 
     });
 
     revalidatePath("/profile"); 
-    revalidatePath("/my-championships");
+    revalidatePath("/championships");
 
     return { success: true, user: updatedUser };
   } catch (error) {

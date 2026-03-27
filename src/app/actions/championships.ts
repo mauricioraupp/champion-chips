@@ -14,14 +14,14 @@ const defaultLogo = "default-league-logo.png";
 export async function getChampionshipsList() {
   const session = await getServerSession(authOptions);
 
-  if (!session?.user?.email) {
+  if (!session?.user?.id) {
     return []; 
   }
 
   const userLeagues = await prisma.soccerLeague.findMany({
     where: { 
       User: {
-        email: session.user.email 
+        id: session.user.id
       }
     }
   });
@@ -81,7 +81,7 @@ export async function updateChampionshipName(leagueId: string, newName: string) 
       "UPDATE"
     );
 
-    revalidatePath(`/my-championships/${leagueId}`);
+    revalidatePath(`/championships/${leagueId}`);
     revalidatePath("/profile");
 
     return { success: true };
@@ -126,7 +126,7 @@ export async function updateChampionshipLogo(leagueId: string, logoUrl: string |
       "UPDATE"
     );
 
-    revalidatePath(`/my-championships/${leagueId}`);
+    revalidatePath(`/championships/${leagueId}`);
     return { success: true };
   } catch (error) {
     console.error("Erro ao atualizar logo:", error);
@@ -141,7 +141,7 @@ export async function updateChampionshipVisibility(leagueId: string, isPublic: b
       data: { public: isPublic },
     });
 
-    revalidatePath(`/my-championships/${leagueId}`);
+    revalidatePath(`/championships/${leagueId}`);
     return { success: true };
   } catch (error) {
     return { success: false, error: "Erro ao alterar visibilidade." };
@@ -216,7 +216,7 @@ export async function deleteChampionship(leagueId: string) {
     return { success: false, error: "Falha ao limpar dados." };
   }
 
-  redirect("/my-championships");
+  redirect("/championships");
 }
 
 export async function generateChampionshipMatches(leagueId: string) {

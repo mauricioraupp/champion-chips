@@ -33,7 +33,7 @@ export default async function MyChampionshipLayout({ children, params }: { child
   const isOwner = session?.user?.id === league?.userId;
 
   if (!league.public && !isOwner) {
-    redirect("/my-championships"); 
+    redirect("/championships"); 
   }
 
   // if (!league.public && !isOwner) {

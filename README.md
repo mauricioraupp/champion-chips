@@ -1,4 +1,4 @@
-http://localhost:3000/my-championships/cmn6ycpoo000170v0l3ndkke1?tab=standings
+http://localhost:3000/championships/cmn6ycpoo000170v0l3ndkke1?tab=standings
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 

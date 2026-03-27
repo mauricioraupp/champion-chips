@@ -99,7 +99,7 @@ export default function ChampionshipSelector({ currentLeague, leagues, isOwner }
                   return (
                     <button
                       key={league.id}
-                      onClick={() => {router.push(`/my-championships/${league.id}`)
+                      onClick={() => {router.push(`/championships/${league.id}`)
                       setIsOpen(false)
                       }}
                       className={`flex items-center justify-between w-full p-2 rounded-md text-sm transition-all ${

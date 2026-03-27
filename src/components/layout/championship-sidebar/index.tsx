@@ -6,7 +6,7 @@ import { Clipboard, Calendar, Shield, Target, Settings, Info } from '@geist-ui/i
 export default function ChampionshipSideBar({isOwner}: {isOwner: boolean}) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const activeTab = searchParams.get('tab') || 'tabela';
+  const activeTab = searchParams.get('tab') || 'info';
 
   const setTab = (tabName: string) => {
     router.push(`?tab=${tabName}`, { scroll: false });

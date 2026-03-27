@@ -15,8 +15,8 @@ export default function ActivityItem({ message, name, date }: { message: string,
     <li className="flex items-center justify-between py-4">
       <div className="flex items-center gap-3">
         
-        <p className="flex gap-1 text-sm text-neutral-600 font-medium">
-          <CornerDownRight size={16} /> {message} <span className="text-neutral-900 font-bold">{name}</span>
+        <p className="flex flex-col sm:flex-row gap-1 text-sm text-neutral-600 font-medium">
+          <CornerDownRight size={16} className="shrink-0" /> {message} <span className="text-neutral-900 font-bold">{name}</span>
         </p>
       </div>
       

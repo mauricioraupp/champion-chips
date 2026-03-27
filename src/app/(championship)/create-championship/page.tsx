@@ -41,7 +41,7 @@ const handleFinish = async (finalDataFromStepThree: any) => {
       });
       
       if (response.ok) {
-        router.push("/my-championships");
+        router.push("/championships");
         router.refresh();
       } else {
         const errorData = await response.json().catch(() => ({}));

@@ -12,11 +12,11 @@ import InfoTab from './tabs/InfoTab';
 export default function ChampionshipDashboard({ leagueId, isOwner, initialIsFavorite }: { leagueId: string, isOwner: boolean, initialIsFavorite: boolean }) {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const activeTab = searchParams.get('tab') || 'standings';
+  const activeTab = searchParams.get('tab') || 'info';
 
   useEffect(() => {
     if (!isOwner && (activeTab === 'settings')) {
-      router.replace(`?tab=standings`);
+      router.replace(`?tab=info`);
     }
   }, [activeTab, isOwner, router]);
 
@@ -51,7 +51,7 @@ export default function ChampionshipDashboard({ leagueId, isOwner, initialIsFavo
         {activeTab === "matches" && <MatchesTab leagueId={leagueId} isOwner={isOwner}/>}
         {activeTab === "teams" && <TeamsTab leagueId={leagueId} isOwner={isOwner}/>}
         {activeTab === "scorers" && <ScorersTab leagueId={leagueId}/>}
-        {activeTab === "info" && <InfoTab leagueId={leagueId} initialIsFavorite={initialIsFavorite} />}
+        {activeTab === "info" && <InfoTab leagueId={leagueId} isOwner={isOwner} initialIsFavorite={initialIsFavorite} />}
         {isOwner && (
           <>
             {activeTab === "settings" && <SettingsTab leagueId={leagueId} />}

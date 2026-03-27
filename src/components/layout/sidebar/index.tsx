@@ -8,7 +8,7 @@ export default function SideBar() {
   const pathname = usePathname()
 
   const menuItems = [
-    { label: 'Meus torneios', href: '/my-championships', icon: <Folder size={20}/> },
+    { label: 'Meus torneios', href: '/championships', icon: <Folder size={20}/> },
     { label: 'Torneios salvos', href: '/saved-championships', icon: <Bookmark size={20}/> },
     { label: 'Criar torneio', href: '/create-championship', icon: <FolderPlus size={20}/> },
     { label: 'Conta', href: '/profile', icon: <User size={20}/> },

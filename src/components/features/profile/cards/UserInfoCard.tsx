@@ -41,7 +41,7 @@ export default function UserInfoCard({ user }: UserInfoCardProps) {
         <div className="bg-neutral-50 border-t border-neutral-300 px-6 py-3 flex justify-end">
           <button 
             onClick={() => setIsModalOpen(true)}
-            className="bg-black text-white text-xs font-bold px-4 py-2 rounded-md shrink-0 hover:bg-zinc-800 cursor-pointer transition-all"
+            className="bg-black text-white text-sm font-medium py-2 px-3 rounded-md shrink-0 hover:bg-zinc-800 cursor-pointer transition-colors"
           >
             Editar Informações
           </button>

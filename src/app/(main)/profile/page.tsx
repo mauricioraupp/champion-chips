@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth/next";
 import { prisma } from "@/lib/prisma";
-import { Edit, Tool, Shield } from '@geist-ui/icons';
+import { Tool, Folder, Shield, Users, Bookmark } from '@geist-ui/icons';
 import UserInfoCard from "@/components/features/profile/cards/UserInfoCard";
 import StatCard from "@/components/features/profile/StatCard";
 import RecentActivityContainer from "@/components/features/profile/RecentActivityContainer";
@@ -20,7 +20,8 @@ export default async function ProfilePage() {
         select: { 
           SoccerLeagues: true, 
           TeamsSoccerLeague: true, 
-          Players: true 
+          Players: true,
+          FavoriteLeague: true
         }
       }
     }
@@ -43,12 +44,6 @@ export default async function ProfilePage() {
 
           <UserInfoCard user={user}/>
 
-          <section className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <StatCard title="Torneios" stat={user._count.SoccerLeagues} />
-            <StatCard title="Times" stat={user._count.TeamsSoccerLeague} />
-            <StatCard title="Jogadores" stat={user._count.Players} />
-          </section>
-
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <ProfileActionCard 
               title="Preferências" 
@@ -62,12 +57,19 @@ export default async function ProfilePage() {
             />
           </div>
 
+          <section className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <StatCard title="Torneios" stat={user._count.SoccerLeagues} Icon={Folder} />
+            <StatCard title="Clubes" stat={user._count.TeamsSoccerLeague} Icon={Shield} />
+            <StatCard title="Jogadores" stat={user._count.Players} Icon={Users} />
+            <StatCard title="Torneios salvos" stat={user._count.FavoriteLeague} Icon={Bookmark} />
+          </section>
+
           <RecentActivityContainer allActivities={allActivities} />
 
           <section className="bg-white border border-neutral-300 rounded-md shadow-sm">
             <div className="p-6 flex justify-between items-center gap-2">
               <div>
-                <h3 className="text-sm font-semibold text-neutral-900">Sair da Conta</h3>
+                <h3 className="flex items-center gap-2 text-sm font-semibold text-neutral-900 mb-1">Sair da Conta</h3>
                 <p className="text-sm text-neutral-500">Encerre sua sessão atual com segurança.</p>
               </div>
               <LogoutButton/>
@@ -77,7 +79,7 @@ export default async function ProfilePage() {
           <section className="bg-white border border-red-300 rounded-md shadow-sm">
             <div className="p-6 flex justify-between items-center gap-2">
               <div>
-                <h3 className="text-sm font-semibold text-red-600">Deletar Conta</h3>
+                <h3 className="flex items-center gap-2 text-sm font-semibold text-red-600 mb-1">Deletar Conta</h3>
                 <p className="text-sm text-neutral-500">Delete todos os dados da sua conta <span className="font-semibold text-neutral-800">(irreversível)</span></p>
               </div>
               <DeleteAccountButton/>

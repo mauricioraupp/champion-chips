@@ -50,9 +50,9 @@ export default function RecentActivityContainer({ allActivities }: { allActiviti
         <div className="bg-neutral-50 border-t border-neutral-300 px-6 py-3 flex justify-center">
           <button 
             onClick={() => setIsModalOpen(true)}
-            className="hover:bg-neutral-200 text-sm font-medium text-neutral-700 px-3 py-2 rounded-md hover:text-neutral-800 cursor-pointer transition-colors"
+            className="hover:bg-neutral-200 text-[10px] font-bold uppercase tracking-wider text-neutral-700 px-3 py-2 rounded-md hover:text-neutral-800 cursor-pointer transition-colors"
           >
-            Histórico completo
+            Ver histórico completo
           </button>
         </div>
       </section>

@@ -17,7 +17,7 @@ export async function middleware(req: NextRequest) {
     pathname === "/profile" || 
     pathname.startsWith("/profile") ||
     pathname === "/create-championship" ||
-    pathname.startsWith("/my-championships")
+    pathname.startsWith("/championships")
 
   if (token && isAuthPage) {
     return NextResponse.redirect(new URL("/profile", req.url))
@@ -35,6 +35,6 @@ export const config = {
     "/auth/:path*",
     "/profile/:path*",
     "/create-championship",
-    "/my-championships/:path*",
+    "/championships/:path*",
   ],
 }
