@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import UserNav from "../UserNav";
 import Link from "next/link";
 import MobileMenu from "../MobileMenu";
+import { ThemeToggle } from "@/components/layout/ThemeToggle";
 
 export default async function Header() {
   
@@ -22,9 +23,11 @@ export default async function Header() {
       <div className="flex justify-between items-center w-full gap-1 rounded-md">
         <Link href="/championships" className="flex text-black font-bold text-3xl">champion<span className="text-yellow-600">chips</span></Link>
 
-        <UserNav user={user} />
-
-        <MobileMenu user={user} currentLeague={null} leagues={[]}/>
+        <div className="flex items-center gap-4">
+          <ThemeToggle />
+          <UserNav user={user} />
+          <MobileMenu user={user} currentLeague={null} leagues={[]}/>
+        </div>
       </div>
     </header>
   )
