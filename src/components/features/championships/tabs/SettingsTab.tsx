@@ -5,11 +5,11 @@ import {
   getChampionshipInfo, 
   updateChampionshipName, 
   updateChampionshipVisibility, 
-  deleteChampionship, 
   updateChampionshipLogo 
 } from "@/app/actions/championships"
+import DeleteChampionshipButton from "@/components/ui/DeleteChampionshipButton";
 import { useUploadThing } from "@/utils/uploadthing";
-import { Upload, Trash, Globe, Lock } from "@geist-ui/icons"
+import { Upload, Globe, Trash, Lock } from "@geist-ui/icons"
 import { toast } from "sonner"
 import Image from "next/image"
 
@@ -22,7 +22,6 @@ export default function SettingsTab({ leagueId }: { leagueId: string }) {
   
   const [isPublic, setIsPublic] = useState(false);
   const [isPublicSaved, setIsPublicSaved] = useState(isPublic);
-  const [activeModal, setActiveModal] = useState<"delete" | null>(null);
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [savingLogo, setSavingLogo] = useState(false)
@@ -119,19 +118,9 @@ export default function SettingsTab({ leagueId }: { leagueId: string }) {
     setSaving(false);
   };
 
-  const handleDelete = async () => {
-    const result = await deleteChampionship(leagueId);
-    if (result?.error) {
-        toast.error(result.error);
-    } else {
-        toast.success("Campeonato excluído.");
-    }
-  };
-
   if (loading) return <div className="p-8 text-center text-neutral-500 italic">Carregando configurações...</div>
 
   return (
-    <>
       <div className="flex flex-col gap-8">
         
         <section className="bg-white border border-neutral-300 rounded-md overflow-hidden shadow-sm">
@@ -274,27 +263,9 @@ export default function SettingsTab({ leagueId }: { leagueId: string }) {
               <h3 className="text-sm font-semibold text-red-600">Excluir Campeonato</h3>
               <p className="text-neutral-500 text-sm">Remover permanentemente este campeonato e todos os seus dados (times, jogos, estatísticas).</p>
             </div>
-            <button onClick={() => setActiveModal("delete")} className="flex items-center gap-2 text-sm font-semibold text-red-600 font-medium border border-red-600 px-4 py-2 shrink-0 rounded-md 
-                hover:bg-red-600 hover:text-white cursor-pointer transition-colors">
-              Deletar torneio
-            </button>
+            <DeleteChampionshipButton leagueId={leagueId} name={name}/>
           </div>
         </section>
       </div>
-      
-      {activeModal === "delete" && (
-        <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
-          <div className="bg-white rounded-md w-full max-w-sm p-6 text-center shadow-2xl">
-            <div className="bg-red-100 text-red-600 p-3 rounded-full w-fit mx-auto mb-4"><Trash size="30" /></div>
-            <h3 className="font-bold text-xl mb-2">Excluir {name}?</h3>
-            <p className="text-neutral-600 text-sm mb-6">Esta ação apagará todos os dados da liga permanentemente.</p>
-            <div className="flex gap-3">
-              <button onClick={() => setActiveModal(null)} className="flex-1 py-2 text-sm font-semibold hover:bg-neutral-100 rounded-sm cursor-pointer transition-colors">Cancelar</button>
-              <button onClick={handleDelete} className="flex-1 py-2 text-sm bg-red-600 text-white hover:bg-red-800 rounded-sm font-medium cursor-pointer transition-colors">Excluir</button>
-            </div>
-          </div>
-        </div>
-      )}
-    </>
   )
 }

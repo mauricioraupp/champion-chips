@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { AnimatePresence, motion } from "framer-motion";
 import Stepper from "@/components/features/championship-creator/Stepper";
 import ModalStepOne from "@/components/features/championship-creator/ModalStepOne";
 import ModalStepTwo from "@/components/features/championship-creator/ModalStepTwo";
@@ -10,6 +11,7 @@ import ModalStepThree from "@/components/features/championship-creator/ModalStep
 export default function CreateChampionship() {
   const router = useRouter();
   const [step, setStep] = useState(1);
+  const [direction, setDirection] = useState(0)
   const [isLoading, setIsLoading] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -22,8 +24,15 @@ export default function CreateChampionship() {
     teams: [] as { name: string; sigla: string; teamLogoUrl?: string; teamLogoFile: File | null }[],
   });
 
-  const nextStep = () => setStep((prev) => Math.min(prev + 1, 3));
-  const prevStep = () => setStep((prev) => Math.max(prev - 1, 1));
+  const nextStep = () => {
+    setDirection(1);
+    setStep((prev) => Math.min(prev + 1, 3));
+  };
+
+  const prevStep = () => {
+    setDirection(-1);
+    setStep((prev) => Math.max(prev - 1, 1));
+  };
 
   const updateFormData = (newData: Partial<typeof formData>) => {
     setFormData((prev) => ({ ...prev, ...newData }));
@@ -55,6 +64,21 @@ const handleFinish = async (finalDataFromStepThree: any) => {
     }
   };
 
+  const carouselVariants = {
+    initial: (direction: number) => ({
+      opacity: 0,
+      x: direction > 0 ? 50 : -50,
+    }),
+    animate: {
+      opacity: 1,
+      x: 0,
+    },
+    exit: (direction: number) => ({
+      opacity: 0,
+      x: direction > 0 ? -50 : 50,
+    }),
+  };
+
   return (
     <main className="flex bg-black items-center justify-center h-full w-full absolute">
       <div className="bg-[url(/authbg.jpg)] bg-cover h-full w-full absolute blur-sm"/>
@@ -69,34 +93,45 @@ const handleFinish = async (finalDataFromStepThree: any) => {
 
         <Stepper currentStep={step} />
 
-        <div className="w-full">
-          {step === 1 && (
-            <ModalStepOne 
-              nextStep={nextStep} 
-              data={formData} 
-              updateData={updateFormData} 
-            />
-          )}
+        <AnimatePresence mode="wait" custom={direction}>
+          <motion.div
+            key={step}
+            custom={direction}
+            variants={carouselVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            transition={{ duration: 0.2, ease: "easeInOut" }}
+            className="w-full"
+          >
+            {step === 1 && (
+              <ModalStepOne 
+                nextStep={nextStep} 
+                data={formData} 
+                updateData={updateFormData} 
+              />
+            )}
 
-          {step === 2 && (
-            <ModalStepTwo 
-              nextStep={nextStep} 
-              prevStep={prevStep} 
-              data={formData} 
-              updateData={updateFormData} 
-            />
-          )}
+            {step === 2 && (
+              <ModalStepTwo 
+                nextStep={nextStep} 
+                prevStep={prevStep} 
+                data={formData} 
+                updateData={updateFormData} 
+              />
+            )}
 
-          {step === 3 && (
-            <ModalStepThree 
-              prevStep={prevStep} 
-              teams={formData.teams} 
-              data={formData}
-              setTeams={(teams) => updateFormData({ teams })}
-              onFinish={handleFinish}
-            />
-          )}
-        </div>
+            {step === 3 && (
+              <ModalStepThree 
+                prevStep={prevStep} 
+                teams={formData.teams} 
+                data={formData}
+                setTeams={(teams) => updateFormData({ teams })}
+                onFinish={handleFinish}
+              />
+            )}
+          </motion.div>
+        </AnimatePresence>
       </section>
     </main>
   );

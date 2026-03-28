@@ -1,7 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { Suspense } from 'react';
 import ChampionshipDashboard from '@/components/features/championships/ChampionshipDashboard';
 
 export default async function SoccerLeagueDashboard({ params }: { params: Promise<{ id: string }> }) {
@@ -32,9 +31,7 @@ export default async function SoccerLeagueDashboard({ params }: { params: Promis
 
   return (
     <main className="flex-1 flex flex-col min-h-0 w-full">
-      <Suspense fallback={<div className="text-center">Carregando dashboard...</div>}>
-        <ChampionshipDashboard leagueId={leagueId} isOwner={isOwner} initialIsFavorite={isFavorite}/>
-      </Suspense>
+      <ChampionshipDashboard leagueId={leagueId} isOwner={isOwner} initialIsFavorite={isFavorite}/>
     </main>
   );
 }
