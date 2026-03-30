@@ -93,5 +93,23 @@ export const authOptions: NextAuthOptions = {
         secure: process.env.NODE_ENV === "production",
       },
     },
-  }
+    state: {
+      name: process.env.NODE_ENV === "production" ? `__Secure-next-auth.state` : `next-auth.state`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: process.env.NODE_ENV === "production",
+      },
+    },
+    callbackUrl: {
+      name: process.env.NODE_ENV === "production" ? `__Secure-next-auth.callback-url` : `next-auth.callback-url`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: process.env.NODE_ENV === "production",
+      },
+    },
+  },
 };
