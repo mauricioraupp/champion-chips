@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth";
 import ChampionshipDashboard from '@/components/features/championships/ChampionshipDashboard';
 
 export default async function SoccerLeagueDashboard({ params }: { params: Promise<{ id: string }> }) {
