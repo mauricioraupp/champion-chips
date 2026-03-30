@@ -44,7 +44,7 @@ export default async function ProfilePage() {
 
           <UserInfoCard user={user}/>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {/* <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <ProfileActionCard 
               title="Preferências" 
               description="Ajuste notificações e o idioma da plataforma." 
@@ -55,7 +55,7 @@ export default async function ProfilePage() {
               description="Altere sua senha ou configure autenticação em duas etapas." 
               icon={<Shield size={18}/>} 
             />
-          </div>
+          </div> */}
 
           <section className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             <StatCard title="Torneios" stat={user._count.SoccerLeagues} Icon={Folder} />

@@ -1,38 +1,93 @@
-http://localhost:3000/championships/cmn6ycpoo000170v0l3ndkke1?tab=standings
+# Championchips
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+A dynamic web application designed for interactive tournaments management. This project provides a robust foundation for handling user authentication, database interactions, and file uploads within a modern web environment.
+## Features
 
-## Getting Started
+This application includes a suite of functionalities:
 
-First, run the development server:
+*   **User Authentication**: Secure user sign-up and login capabilities, powered by NextAuth.
+*   **Data Management**: Integration with a database for efficient storage and retrieval of application data.
+*   **Interactive User Interface**: A responsive front-end built with modern component-based architecture for dynamic content display, including interactive elements like modals, cards and tables.
+*   **File Uploads**: Functionality to handle file uploads, enabling users to add and manage various types of content, powered by Uploadthing.
+*   **API Endpoints & Actions**: Structured API routes for request processing and security and Actions for data interaction.
+*   **Environment Configuration**: Utilizes environment variables for secure and flexible application configuration.
+*   **Type Safety**: Developed with TypeScript, ensuring robust code quality and maintainability through static type checking.
+*   **Continuous Integration/Deployment**: Automated workflows for building, testing, and deploying the application, maintaining consistent quality and quick delivery.
+## Tech Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+* **Client:** Next, React, TypeScript, Tailwind
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+* **Server:** Next, Prisma ORM, PostgreSQL, UploadThing
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Screenshots
 
-## Learn More
+![App Screenshot](/public/printone.png)
+![App Screenshot](/public/printtwo.png)
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Installation Guide
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+To get `champion-chips` up and running on your local machine, follow these steps:
 
-## Deploy on Vercel
+### Prerequisites
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Ensure you have the following installed:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+*   Node.js
+*   npm or Yarn package manager
+
+### Steps
+
+1.  **Clone the Repository**
+    ```bash
+    git clone https://github.com/mauricioraupp/champion-chips.git
+    cd champion-chips
+    ```
+
+2.  **Install Dependencies**
+
+    Choose your preferred package manager:
+    
+    Using npm:
+    ```bash
+    npm install
+    ```
+    Using Yarn:
+    ```bash
+    yarn install
+    ```
+
+3.  **Environment Configuration**
+
+    Create a `.env` file in the root of the project by copying the example:
+    ```bash
+    cp .env.example .env
+    ```
+    Open the newly created `.env` file and populate the necessary environment variables (e.g., database connection strings, authentication secrets).
+
+4.  **Database Setup**
+
+    Initialize your database and run migrations using Prisma:
+    ```bash
+    npx prisma migrate dev --name init
+    ```
+    Generate the required files into your node_modules directory:
+    ```bash
+    npx prisma generate
+    ```
+    This command will apply your database schema and seed data if configured.
+
+5.  **Run the Development Server**
+
+    Start the application in development mode:
+    
+    Using npm:
+    ```bash
+    npm run dev
+    ```
+    Using Yarn:
+    ```bash
+    yarn dev
+    ```
+    The application will typically be accessible at `http://localhost:3000`.
