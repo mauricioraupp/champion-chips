@@ -47,11 +47,12 @@ export default async function LandingPage() {
                 <MobileMenu user={userData} currentLeague={null} leagues={[]}/>
               </div>
             ) : (
-              <div className="hidden sm:flex items-center gap-2">
-                <Link href="/auth/login" className="inline-flex items-center justify-center h-10 px-6 font-bold hover:text-white dark:hover:text-neutral-900 hover:bg-black dark:hover:bg-white rounded-md transition-colors">
+              <div className="flex items-center gap-2">
+                <ThemeToggle />
+                <Link href="/auth/login" className="hidden sm:inline-flex items-center justify-center h-10 px-6 font-bold hover:text-white dark:hover:text-neutral-900 hover:bg-black dark:hover:bg-white rounded-md transition-colors">
                   Login
                 </Link>
-                <Link href="/auth/register" className="inline-flex items-center justify-center h-10 px-6 bg-black dark:bg-white font-bold text-white dark:text-black rounded-md transition-all hover:bg-neutral-800 dark:hover:bg-neutral-300 hover:shadow-[0_0_20px_rgba(0,0,0,0.5)] dark:hover:shadow-[0_0_20px_rgba(365,365,365,0.5)]">
+                <Link href="/auth/register" className="hidden sm:inline-flex items-center justify-center h-10 px-6 bg-black dark:bg-white font-bold text-white dark:text-black rounded-md transition-all hover:bg-neutral-800 dark:hover:bg-neutral-300 hover:shadow-[0_0_20px_rgba(0,0,0,0.5)] dark:hover:shadow-[0_0_20px_rgba(365,365,365,0.5)]">
                   Criar conta
                 </Link>
               </div>
