@@ -66,7 +66,7 @@ export default async function ProfilePage() {
 
           <RecentActivityContainer allActivities={allActivities} />
 
-          <section className="bg-white dark:bg-zinc-950 border border-neutral-300 dark:border-neutral-900 rounded-md shadow-sm">
+          <section className="bg-white dark:bg-zinc-950 border border-neutral-300 dark:border-neutral-900 rounded-md">
             <div className="p-6 flex justify-between items-center gap-2">
               <div>
                 <h3 className="flex items-center gap-2 text-sm font-semibold text-neutral-900 dark:text-neutral-200 mb-1">Sair da Conta</h3>
@@ -76,7 +76,7 @@ export default async function ProfilePage() {
             </div>
           </section>
 
-          <section className="bg-white dark:bg-zinc-950 border border-red-500 dark:border-red-600 rounded-md shadow-sm">
+          <section className="bg-white dark:bg-zinc-950 border border-red-500 dark:border-red-600 rounded-md">
             <div className="p-6 flex justify-between items-center gap-2">
               <div>
                 <h3 className="flex items-center gap-2 text-sm font-semibold text-red-600 mb-1">Deletar Conta</h3>

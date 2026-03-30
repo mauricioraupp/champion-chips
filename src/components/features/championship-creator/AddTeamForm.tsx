@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react";
+import { toast } from "sonner";
 import { X } from '@geist-ui/icons'
 
 interface AddTeamFormProps {
@@ -24,7 +25,7 @@ export default function AddTeamForm({ onClose, onSave }: AddTeamFormProps) {
 
   const handleConfirm = () => {
     if (!name || !sigla) {
-      alert("Nome e Sigla são obrigatórios.");
+      toast.error("Nome e Sigla são obrigatórios.");
       return;
     }
     onSave({ name, sigla, teamLogoFile });

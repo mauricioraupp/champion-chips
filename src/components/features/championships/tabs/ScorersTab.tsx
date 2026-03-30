@@ -30,9 +30,9 @@ export default function ScorersTab({ leagueId }: { leagueId: string }) {
   let currentPos = 1;
 
   return (
-    <div className="w-full overflow-x-auto border-neutral-300 dark:border-neutral-900 border rounded-md shadow-sm">
+    <div className="w-full overflow-x-auto border-neutral-300 dark:border-neutral-900 border rounded-md">
       <table className="w-full text-sm text-left border-collapse">
-        <thead className="bg-neutral-50 dark:bg-zinc-900 text-[10px] text-neutral-500 dark:text-neutral-300 uppercase 
+        <thead className="bg-neutral-100 dark:bg-zinc-900 text-[10px] text-neutral-500 dark:text-neutral-300 uppercase 
           border-b border-neutral-300 dark:border-neutral-900 font-bold"
         >
           <tr>
@@ -42,7 +42,7 @@ export default function ScorersTab({ leagueId }: { leagueId: string }) {
             <th className="px-6 py-4 text-center w-24">Gols</th>
           </tr>
         </thead>
-        <tbody className="bg-neutral-50 dark:bg-zinc-950 divide-y divide-neutral-200 dark:divide-neutral-900">
+        <tbody className="bg-white dark:bg-zinc-950 divide-y divide-neutral-200 dark:divide-neutral-900">
           {players.map((entry, index) => {
             if (index > 0 && entry.goals !== players[index - 1].goals) {
               currentPos = index + 1;

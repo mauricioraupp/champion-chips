@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth/next";
 import { prisma } from "@/lib/prisma";
 import ChampionshipSelector from "../ChampionshipSelector";
-import { ThemeToggle } from "../ThemeToggle";
+import ThemeToggle from "../ThemeToggle";
 import MobileMenu from "../MobileMenu";
 import UserNav from "../UserNav";
 import Link from "next/link";

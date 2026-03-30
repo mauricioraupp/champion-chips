@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 import UserNav from "../UserNav";
 import Link from "next/link";
 import MobileMenu from "../MobileMenu";
-import { ThemeToggle } from "@/components/layout/ThemeToggle";
+import ThemeToggle from "@/components/layout/ThemeToggle";
 
 export default async function Header() {
   

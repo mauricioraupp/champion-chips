@@ -1,9 +1,10 @@
 "use client"
 
 import { useState } from "react";
+import { toast } from "sonner";
 import { useUploadThing } from "@/utils/uploadthing";
-import AddTeamForm from "./AddTeamForm";
 import { Trash } from '@geist-ui/icons'
+import AddTeamForm from "./AddTeamForm";
 
 interface Team {
   name: string;
@@ -80,7 +81,7 @@ export default function ModalStepThree({ prevStep, teams, setTeams, data, onFini
 
     } catch (err: any) {
       console.error("Erro no processo de criação:", err);
-      alert("Erro ao processar imagens. Verifique sua conexão.");
+      toast.error("Erro ao processar imagens. Verifique sua conexão.");
     } finally {
       setIsUploading(false);
     }

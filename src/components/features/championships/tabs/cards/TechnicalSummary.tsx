@@ -2,7 +2,7 @@ import { Info } from "@geist-ui/icons"
 
 export default function TechnicalSummary({ data }: { data: any }) {
   return (
-    <section className="bg-white dark:bg-zinc-950 border border-neutral-300 dark:border-neutral-900 rounded-md overflow-hidden shadow-sm">
+    <section className="bg-white dark:bg-zinc-950 border border-neutral-300 dark:border-neutral-900 rounded-md overflow-hidden">
       <header className="px-6 py-4 border-b border-neutral-100 dark:border-neutral-900 flex items-center gap-2">
         <Info size={16} className="text-neutral-500 dark:text-neutral-400" />
         <h3 className="text-xs font-bold text-neutral-900 dark:text-neutral-200 uppercase tracking-wider">

@@ -71,7 +71,7 @@ export default function ChampionshipSelector({ currentLeague, leagues, isOwner }
                 />
               </div>
             )}
-            <span className="font-semibold text-sm text-neutral-900">
+            <span className="font-semibold text-sm text-neutral-900 dark:text-neutral-200">
               {currentLeague?.name || "Selecionar"}
             </span>
           </article>

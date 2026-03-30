@@ -4,7 +4,7 @@ import { useTheme } from "next-themes"
 import { Sun, Moon } from "@geist-ui/icons"
 import { useEffect, useState } from "react"
 
-export function ThemeToggle() {
+export default function ThemeToggle() {
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
 

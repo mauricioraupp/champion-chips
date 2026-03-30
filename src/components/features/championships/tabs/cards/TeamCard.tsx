@@ -22,7 +22,7 @@ export default function TeamCard({ team, league, onUpdate, isOwner }: { team: an
   return (
     <>
       <div className="relative flex flex-1 flex-col items-center justify-center min-w-32 h-32 sm:h-52 
-        bg-white dark:bg-zinc-950 border border-neutral-300 dark:border-neutral-900 rounded-md shadow-sm hover:border-neutral-400 dark:hover:border-neutral-800 transition-colors"
+        bg-white dark:bg-zinc-950 border border-neutral-300 dark:border-neutral-900 rounded-md hover:border-neutral-400 dark:hover:border-neutral-800 transition-colors"
       >
         <div className="absolute top-1 right-2" ref={menuRef}>
           {isOwner &&

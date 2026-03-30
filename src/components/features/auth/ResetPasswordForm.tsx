@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useState } from "react";
-import { toast, Toaster } from "sonner";
+import { toast } from "sonner";
 
 export default function ResetPasswordForm() {
   const searchParams = useSearchParams();
@@ -95,7 +95,6 @@ export default function ResetPasswordForm() {
       <p className="font-medium text-neutral-700 dark:text-neutral-400">
         Lembrou da senha? <Link href="/auth/login" className="text-sky-600 underline font-medium">Fazer login</Link>
       </p>
-      <Toaster richColors position="top-center"/>
     </form>
   );
 }

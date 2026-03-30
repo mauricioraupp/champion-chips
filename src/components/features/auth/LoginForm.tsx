@@ -3,7 +3,7 @@
 import { signIn } from "next-auth/react"
 import { useSearchParams, useRouter } from "next/navigation";
 import { useState } from "react";
-import { toast, Toaster } from "sonner";
+import { toast } from "sonner";
 import GoogleLoginBtn from "@/components/ui/GoogleAuthButton";
 import Link from "next/link";
 
@@ -94,7 +94,6 @@ export default function LoginForm() {
 
       <button className="bg-black dark:bg-neutral-900 hover:bg-neutral-800 py-3 w-full rounded-md text-neutral-200 font-medium cursor-pointer">Entrar</button>
       <p className="font-medium text-neutral-700 dark:text-neutral-400">Ainda não possui uma conta? <Link href={"/auth/register"} className="text-sky-600 underline font-medium">Fazer cadastro</Link></p>
-      <Toaster richColors position="top-center"/>
     </form>
   )
 }

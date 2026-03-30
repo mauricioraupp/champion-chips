@@ -28,7 +28,7 @@ export default function NameSettingsCard({ leagueId, initialName }: NameSettings
   };
 
   return (
-    <section className="bg-white dark:bg-zinc-950 border border-neutral-300 dark:border-neutral-900 rounded-md overflow-hidden shadow-sm">
+    <section className="bg-white dark:bg-zinc-950 border border-neutral-300 dark:border-neutral-900 rounded-md overflow-hidden">
       <div className="p-6">
         <h3 className="text-sm font-semibold text-neutral-800 dark:text-neutral-200 mb-1">Nome do Campeonato</h3>
         <p className="text-sm text-neutral-500 dark:text-neutral-400 mb-4">Este é o nome que aparecerá nas tabelas e menus de navegação</p>

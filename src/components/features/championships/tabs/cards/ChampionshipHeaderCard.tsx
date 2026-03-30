@@ -46,7 +46,7 @@ export default function ChampionshipHeaderCard({
   };
 
   return (
-    <section className="bg-white dark:bg-zinc-950 border border-neutral-300 dark:border-neutral-900 rounded-md overflow-hidden shadow-sm">
+    <section className="bg-white dark:bg-zinc-950 border border-neutral-300 dark:border-neutral-900 rounded-md overflow-hidden">
       <div className="p-8 flex flex-col sm:flex-row items-center gap-6">
         <figure className="relative w-32 h-32 rounded-md bg-neutral-100 border border-neutral-200 dark:border-neutral-900 overflow-hidden flex items-center justify-center shrink-0">
           {logo ? (

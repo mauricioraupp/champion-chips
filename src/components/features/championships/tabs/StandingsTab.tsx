@@ -17,9 +17,9 @@ export default function StandingsTab({ leagueId }: { leagueId: string }) {
   if (loading) return <div className="p-8 text-center text-neutral-500 dark:text-neutral-400 italic">Carregando classificação...</div>
 
   return (
-    <div className="w-full overflow-x-auto border-neutral-300 dark:border-neutral-900 border rounded-md shadow-sm">
+    <div className="w-full overflow-x-auto border-neutral-300 dark:border-neutral-900 border rounded-md">
       <table className="w-full text-sm text-left border-collapse">
-        <thead className="bg-neutral-50 dark:bg-zinc-900 text-[10px] text-neutral-500 dark:text-neutral-300 uppercase 
+        <thead className="bg-neutral-100 dark:bg-zinc-900 text-[10px] text-neutral-500 dark:text-neutral-300 uppercase 
           border-b border-neutral-300 dark:border-neutral-900 font-bold"
         >
           <tr>
@@ -35,7 +35,7 @@ export default function StandingsTab({ leagueId }: { leagueId: string }) {
             <th className="px-2 py-4 text-center">SG</th>
           </tr>
         </thead>
-        <tbody className="bg-neutral-50 dark:bg-zinc-950 divide-y divide-neutral-200 dark:divide-neutral-900">
+        <tbody className="bg-white dark:bg-zinc-950 divide-y divide-neutral-200 dark:divide-neutral-900">
           {teams.map((entry, index) => (
             <tr key={entry.id} className="text-neutral-600 dark:text-neutral-400 hover:bg-neutral-50 dark:hover:bg-neutral-950 transition-colors">
               <td className="px-4 py-4 text-center font-bold text-neutral-400 dark:text-neutral-300">

@@ -27,7 +27,7 @@ export default function StatsGrid({ data }: { data: any }) {
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
       {stats.map((stat, i) => (
-        <div key={i} className="bg-white dark:bg-zinc-950 border border-neutral-300 dark:border-neutral-900 p-4 rounded-md shadow-sm">
+        <div key={i} className="bg-white dark:bg-zinc-950 border border-neutral-300 dark:border-neutral-900 p-4 rounded-md">
           <div className="text-neutral-400 mb-2">{stat.icon}</div>
           <p className="text-2xl font-bold text-neutral-900 dark:text-neutral-100 leading-none mb-1">{stat.value}</p>
           <p className="text-[10px] font-bold text-neutral-500 dark:text-neutral-400 uppercase">

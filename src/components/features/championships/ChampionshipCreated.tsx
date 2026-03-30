@@ -49,7 +49,7 @@ export default function ChampionshipCreated({ leagueId }: { leagueId: string }) 
     <div 
       onClick={() => router.push(`/championships/${leagueId}`)} 
       className="relative flex gap-2 lg:gap-12 bg-white dark:bg-zinc-950 border border-neutral-200 dark:border-neutral-900 rounded-md w-full 
-        px-4 sm:px-6 py-3 mx-auto shadow-xs hover:shadow-sm hover:bg-neutral-50 dark:hover:bg-neutral-950 transition-shadow cursor-pointer overflow-x-auto"
+        px-4 sm:px-6 py-3 mx-auto hover:bg-neutral-50 dark:hover:bg-neutral-950 cursor-pointer overflow-x-auto"
     >
       <section className="flex flex-col justify-center text-left border-r-2 border-neutral-200 dark:border-neutral-900 pb-4 pr-2 lg:pr-12">
         <h1 className="font-bold text-xl text-neutral-900 dark:text-neutral-200 sm:max-w-48 max-w-24 truncate">{championship.name}</h1>

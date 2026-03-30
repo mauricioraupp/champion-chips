@@ -1,6 +1,6 @@
 export default function StatCard({ title, stat, Icon }: { title: string, stat: number, Icon: React.ElementType }) {
   return (
-    <div className="bg-white dark:bg-zinc-950 border border-neutral-300 dark:border-neutral-900 p-4 rounded-md shadow-sm">
+    <div className="bg-white dark:bg-zinc-950 border border-neutral-300 dark:border-neutral-900 p-4 rounded-md">
       <div className="text-neutral-400 mb-2">
         <Icon size={18}/>
       </div>

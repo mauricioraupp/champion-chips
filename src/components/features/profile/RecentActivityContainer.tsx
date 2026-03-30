@@ -26,7 +26,7 @@ export default function RecentActivityContainer({ allActivities }: { allActiviti
 
   return (
     <>
-      <section className="bg-white dark:bg-zinc-950 border border-neutral-300 dark:border-neutral-900 rounded-md overflow-hidden shadow-sm">
+      <section className="bg-white dark:bg-zinc-950 border border-neutral-300 dark:border-neutral-900 rounded-md overflow-hidden">
         <div className="p-6 pb-0">
           <h3 className="text-sm font-semibold text-neutral-900 dark:text-neutral-200 mb-1">Atividade Recente</h3>
           <p className="text-sm text-neutral-500 dark:text-neutral-400 mb-2">Suas últimas ações no sistema.</p>
@@ -89,7 +89,7 @@ export default function RecentActivityContainer({ allActivities }: { allActiviti
                 </button>
               </header>
 
-              <div className="border-b border-neutral-200 dark:border-neutral-800 bg-white dark:bg-zinc-950 flex items-center gap-2 overflow-x-auto no-scrollbar shrink-0 py-4">
+              <div className="border-b border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 flex items-center gap-2 overflow-x-auto no-scrollbar shrink-0 py-4">
                 {filterOptions.map((opt, index) => (
                   <button
                     key={opt.id}

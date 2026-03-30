@@ -10,7 +10,7 @@ export default function MatchCard({ match, onUpdate, isOwner }: { match: any, on
 
   return (
       <div className={`relative flex items-center justify-between px-4 sm:px-10 h-32 shrink-0 border border-neutral-300 dark:border-neutral-900 
-        rounded-md hover:border-neutral-400 dark:hover:border-neutral-800 shadow-sm transition-all ${
+        rounded-md hover:border-neutral-400 dark:hover:border-neutral-800 transition-all ${
         isFinished ? 'bg-neutral-200 dark:bg-neutral-900' : 'bg-white dark:bg-zinc-950'
       }`}>
         
