@@ -98,7 +98,8 @@ export default function EditProfileModal({ user, onClose }: EditProfileProps) {
                   <Image 
                       src={preview} 
                       alt="Preview" 
-                      fill 
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" 
                       className="object-cover"
                   />
                 </figure>

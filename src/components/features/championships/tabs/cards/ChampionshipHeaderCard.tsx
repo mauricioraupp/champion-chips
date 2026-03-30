@@ -50,7 +50,7 @@ export default function ChampionshipHeaderCard({
       <div className="p-8 flex flex-col sm:flex-row items-center gap-6">
         <figure className="relative w-32 h-32 rounded-md bg-neutral-100 border border-neutral-200 dark:border-neutral-900 overflow-hidden flex items-center justify-center shrink-0">
           {logo ? (
-            <Image src={logo} alt={name} fill className="object-cover" />
+            <Image src={logo} alt={name} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" className="object-cover" />
           ) : (
             <Shield className="text-neutral-300" size={48} />
           )}

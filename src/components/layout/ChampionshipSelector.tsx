@@ -48,6 +48,7 @@ export default function ChampionshipSelector({ currentLeague, leagues, isOwner }
                   src={currentLeague.logo} 
                   alt={currentLeague.name} 
                   fill 
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
               </div>
             )}
@@ -68,6 +69,7 @@ export default function ChampionshipSelector({ currentLeague, leagues, isOwner }
                   src={currentLeague.logo} 
                   alt={currentLeague.name} 
                   fill 
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
               </div>
             )}
@@ -109,7 +111,7 @@ export default function ChampionshipSelector({ currentLeague, leagues, isOwner }
                     >
                       <div className="flex items-center gap-2">
                         <div className="relative w-6 h-6 rounded overflow-hidden shadow-sm">
-                          {league.logo && <Image src={league.logo} alt={league.name} fill/>}
+                          {league.logo && <Image src={league.logo} alt={league.name} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"/>}
                         </div>
                         <span className={`font-semibold truncate ${isSelected ? 'max-w-33' : 'max-w-40'}`}>{league.name}</span>
                       </div>

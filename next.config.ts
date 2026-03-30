@@ -4,9 +4,6 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ['@geist-ui/icons', 'framer-motion', 'lucide-react'],
   },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'lh3.googleusercontent.com' },

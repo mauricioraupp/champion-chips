@@ -62,7 +62,7 @@ export default function MobileMenu({ user, currentLeague, leagues }: MobileMenuP
                   </p>
                   <div className="flex items-center gap-3 p-2 bg-neutral-100 dark:bg-neutral-900 rounded-md">
                     <figure className="relative w-8 h-8 rounded-md overflow-hidden shadow-sm">
-                      <Image src={currentLeague.logo || "/default.png"} alt={currentLeague.name} fill className="object-cover" />
+                      <Image src={currentLeague.logo || "/default.png"} alt={currentLeague.name} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" className="object-cover" />
                     </figure>
                     <span className="font-semibold text-neutral-900 dark:text-neutral-200">{currentLeague.name}</span>
                   </div>
@@ -99,7 +99,7 @@ export default function MobileMenu({ user, currentLeague, leagues }: MobileMenuP
               <div className="pt-6 border-t border-neutral-300 dark:border-neutral-900">
                 <div className="flex items-center gap-3">
                   <div className="relative w-10 h-10 rounded-full overflow-hidden">
-                    <Image src={user?.image || "/default-user-pic.png"} alt={user?.name} fill />
+                    <Image src={user?.image || "/default-user-pic.png"} alt={user?.name} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
                   </div>
                   <div className="flex flex-col">
                     <span className="text-sm text-neutral-900 dark:text-neutral-200 font-bold truncate max-w-[150px]">{user?.name}</span>

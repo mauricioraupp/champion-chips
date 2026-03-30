@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma"
 import { logActivity } from "@/lib/activity-log";
 import { revalidatePath } from "next/cache"
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth";
 import { UTApi } from "uploadthing/server"
 
 const utapi = new UTApi();

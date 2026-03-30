@@ -4,14 +4,12 @@ import GoogleProvider from "next-auth/providers/google";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
 
-export const authOptions: NextAuthOptions = ({
+export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/login"
   },
   session: {
     strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60,
-    updateAge: 60 * 60
   },
   providers: [
     CredentialsProvider({
@@ -22,29 +20,23 @@ export const authOptions: NextAuthOptions = ({
         remember: { label: "Remember", type: "text" }
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          return null
-        }
+        if (!credentials?.email || !credentials?.password) return null;
 
         const user = await prisma.user.findUnique({
           where: { email: credentials.email }
-        })
+        });
 
-        if (!user || !user.password) return null
+        if (!user || !user.password) return null;
 
-        const isValid = await bcrypt.compare(
-          credentials.password,
-          user.password
-        )
-
-        if (!isValid) return null
+        const isValid = await bcrypt.compare(credentials.password, user.password);
+        if (!isValid) return null;
 
         return {
           id: String(user.id),
           name: user.name,
           email: user.email,
           remember: credentials.remember
-        }
+        };
       }
     }),
     GoogleProvider({
@@ -67,7 +59,6 @@ export const authOptions: NextAuthOptions = ({
           },
         });
       }
-
       return true;
     },
     async jwt({ token, user }) {
@@ -75,20 +66,20 @@ export const authOptions: NextAuthOptions = ({
         const dbUser = await prisma.user.findUnique({
           where: { email: user.email! }
         });
+        if (dbUser) token.id = dbUser.id;
 
-        if (dbUser) {
-          token.id = dbUser.id;
-        }
+        const isRememberMe = (user as any).remember === true || (user as any).remember === "on";
         
-        token.rememberMe = (user as any).remember === true || (user as any).remember === "on";
+        const expiration = isRememberMe ? 30 * 24 * 60 * 60 : 24 * 60 * 60;
+        token.exp = Math.floor(Date.now() / 1000) + expiration;
       }
       return token;
     },
     async session({ session, token }) {
       if (session.user && token.id) {
-        session.user.id = token.id;
+        session.user.id = token.id as string;
       }
       return session;
     }
   }
-})
+};

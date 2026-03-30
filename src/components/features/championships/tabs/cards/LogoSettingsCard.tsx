@@ -77,7 +77,7 @@ export default function LogoSettingsCard({ leagueId, initialLogo }: LogoSettings
         <div className="flex items-center gap-6">
           <figure className="relative w-24 h-24 rounded-md bg-neutral-100 border border-neutral-300 dark:border-neutral-900 shrink-0 overflow-hidden flex items-center justify-center">
             {logo ? (
-              <Image src={logo} alt="Preview" fill className="object-cover" />
+              <Image src={logo} alt="Preview" fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" className="object-cover" />
             ) : (
               <Upload className="text-neutral-400" size={24} />
             )}
