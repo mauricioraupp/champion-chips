@@ -27,7 +27,7 @@ export default function InfoTab({ leagueId, isOwner, initialIsFavorite }: InfoTa
 
   if (loading) {
     return (
-      <div className="p-8 text-center text-neutral-500 italic text-sm animate-pulse">
+      <div className="p-8 text-center text-neutral-500 dark:text-neutral-400 italic text-sm animate-pulse">
         Carregando informações do campeonato...
       </div>
     )
@@ -35,7 +35,7 @@ export default function InfoTab({ leagueId, isOwner, initialIsFavorite }: InfoTa
 
   if (!data) {
     return (
-      <div className="p-8 text-center text-neutral-500">
+      <div className="p-8 text-center text-neutral-500 dark:text-neutral-400">
         Não foi possível carregar os dados deste torneio.
       </div>
     )

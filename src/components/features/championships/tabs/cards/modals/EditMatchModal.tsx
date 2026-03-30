@@ -126,17 +126,19 @@ export function EditMatchModal({ match, onClose, onUpdate }: EditMatchModalProps
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.98, y: 10 }}
           transition={{ type: "spring", duration: 0.4, bounce: 0.3 }} 
-          className="bg-white rounded-md shadow-2xl w-full max-w-lg overflow-hidden flex flex-col max-h-[90vh]"
+          className="bg-white dark:bg-neutral-950 rounded-md shadow-2xl w-full max-w-lg overflow-hidden flex flex-col max-h-[90vh]"
         >
-          <header className="flex items-center justify-between p-4 bg-neutral-100 border-b border-neutral-200">
-            <h3 className="font-bold text-neutral-900">Editar Resultado</h3>
-            <button onClick={onClose} className="p-1 rounded-full text-neutral-400 hover:text-neutral-600 hover:bg-neutral-200 cursor-pointer transition-colors">
+          <header className="flex items-center justify-between p-4 bg-neutral-100 dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-800">
+            <h3 className="font-bold text-neutral-900 dark:text-neutral-300">Editar Resultado</h3>
+            <button onClick={onClose} className="p-1 rounded-full text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200 
+              hover:bg-neutral-200 dark:hover:bg-neutral-800 cursor-pointer transition-colors"
+            >
               <X size="20" />
             </button>
           </header>
 
-          <div className="overflow-y-auto p-6 flex flex-col gap-6 border-b border-neutral-200">
-            <section className="flex items-center justify-around bg-neutral-50 p-4 rounded-sm border border-neutral-200">
+          <div className="overflow-y-auto p-6 flex flex-col gap-6 border-b border-neutral-200 dark:border-neutral-800">
+            <section className="flex items-center justify-around bg-neutral-50 dark:bg-neutral-900 p-4 rounded-sm border border-neutral-200 dark:border-neutral-800">
               <div className="flex flex-col items-center gap-2">
                 <figure className="w-12 h-12 shadow-inner border border-neutral-200 rounded-full overflow-hidden bg-white">
                   <img src={match.HomeTeam.logo} className="w-full h-full object-cover" />
@@ -146,7 +148,7 @@ export function EditMatchModal({ match, onClose, onUpdate }: EditMatchModalProps
                 <input 
                   type="number" 
                   min="0"
-                  className="w-16 text-center text-2xl font-black border-b-2 border-neutral-300 focus:border-black outline-none bg-transparent [&::-webkit-inner-spin-button]:appearance-none"
+                  className="w-16 text-center text-2xl font-black border-b-2 border-neutral-300 focus:border-black dark:focus:border-white outline-none bg-transparent [&::-webkit-inner-spin-button]:appearance-none"
                   value={formData.homeScore}
                   onChange={(e) => handleScoreChange('home', parseInt(e.target.value) || 0)}
                 />
@@ -163,16 +165,16 @@ export function EditMatchModal({ match, onClose, onUpdate }: EditMatchModalProps
                 <input 
                   type="number" 
                   min="0"
-                  className="no-spinner w-16 text-center text-2xl font-black border-b-2 border-neutral-300 focus:border-black outline-none bg-transparent [&::-webkit-inner-spin-button]:appearance-none"
+                  className="w-16 text-center text-2xl font-black border-b-2 border-neutral-300 focus:border-black dark:focus:border-white outline-none bg-transparent [&::-webkit-inner-spin-button]:appearance-none"
                   value={formData.awayScore}
                   onChange={(e) => handleScoreChange('away', parseInt(e.target.value) || 0)}
                 />
               </div>
             </section>
 
-            <section className="grid grid-cols-2 gap-6 border-t border-neutral-300 pt-4">
+            <section className="grid grid-cols-2 gap-6 border-t border-neutral-300 dark:border-neutral-800 pt-4">
               <div className="flex flex-col gap-2">
-                <label className="text-[10px] font-bold text-neutral-400 uppercase truncate mb-1">
+                <label className="text-[10px] font-bold text-neutral-400 dark:text-neutral-300 uppercase truncate mb-1">
                   {match.HomeTeam.name}
                 </label>
                 
@@ -182,7 +184,8 @@ export function EditMatchModal({ match, onClose, onUpdate }: EditMatchModalProps
                       key={`home-goal-${idx}`}
                       value={scorerId}
                       onChange={(e) => updateScorer('home', idx, e.target.value)}
-                      className="text-xs border border-neutral-300 p-2 rounded-sm outline-none focus:border-black bg-white w-full"
+                      className="text-xs border border-neutral-300 dark:border-neutral-800 p-2 rounded-sm outline-none focus:border-black 
+                        dark:focus:border-neutral-700 bg-white dark:bg-neutral-900 w-full"
                     >
                       <option value="">{idx + 1}º Gol</option>
                       {homePlayers.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
@@ -203,31 +206,38 @@ export function EditMatchModal({ match, onClose, onUpdate }: EditMatchModalProps
                       key={`away-goal-${idx}`}
                       value={scorerId}
                       onChange={(e) => updateScorer('away', idx, e.target.value)}
-                      className="text-xs border border-neutral-300 p-2 rounded-sm outline-none focus:border-black bg-white w-full"
+                      className="text-xs border border-neutral-300 dark:border-neutral-800 p-2 rounded-sm outline-none focus:border-black 
+                        dark:focus:border-neutral-700 bg-white dark:bg-neutral-900 w-full"
                     >
                       <option value="">{idx + 1}º Gol</option>
                       {awayPlayers.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
                     </select>
                   ))}
-                  {formData.awayScore === 0 && <span className="text-[10px] italic text-neutral-400">Sem gols</span>}
+                  {formData.awayScore === 0 && <span className="text-[10px] italic text-neutral-400 dark:text-neutral-300">Sem gols</span>}
                 </div>
               </div>
             </section>
 
-            <section className="grid grid-cols-3 gap-4 border-t border-neutral-300 pt-4">
+            <section className="grid grid-cols-3 gap-4 border-t border-neutral-300 dark:border-neutral-800 pt-4">
               <div className="flex flex-col gap-1">
-                <label className="text-[10px] font-bold text-neutral-500 uppercase">Data</label>
-                <input type="date" className="border border-neutral-300 p-2 text-sm rounded-sm outline-none focus:border-black" value={formData.date} onChange={(e) => setFormData({...formData, date: e.target.value})} />
+                <label className="text-[10px] font-bold text-neutral-400 dark:text-neutral-300 uppercase">Data</label>
+                <input type="date" className="bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 p-2 text-sm rounded-sm outline-none 
+                  focus:border-black dark:focus:border-neutral-700" 
+                  value={formData.date} onChange={(e) => setFormData({...formData, date: e.target.value})} 
+                />
               </div>
               <div className="flex flex-col gap-1">
-                <label className="text-[10px] font-bold text-neutral-500 uppercase">Hora</label>
-                <input type="time" className="border border-neutral-300 p-2 text-sm rounded-sm outline-none focus:border-black" value={formData.time} onChange={(e) => setFormData({...formData, time: e.target.value})} />
+                <label className="text-[10px] font-bold text-neutral-400 dark:text-neutral-300 uppercase">Hora</label>
+                <input type="time" className="bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 p-2 text-sm rounded-sm outline-none 
+                  focus:border-black dark:focus:border-neutral-700" 
+                  value={formData.time} onChange={(e) => setFormData({...formData, time: e.target.value})} 
+                />
               </div>
               <div className="flex flex-col gap-1">
-                <label className="text-[10px] font-bold text-neutral-500 uppercase">Status</label>
+                <label className="text-[10px] font-bold text-neutral-400 dark:text-neutral-300 uppercase">Status</label>
                 <select 
-                  className={`border p-2 text-sm rounded-sm outline-none transition-colors bg-white ${
-                    formData.status === 'FINISHED' ? 'border-green-600 font-bold text-green-800' : 'border-neutral-300'
+                  className={`bg-white dark:bg-neutral-900 border p-2 text-sm rounded-sm outline-none transition-colors ${
+                    formData.status === 'FINISHED' ? 'border-green-600 font-bold text-green-800' : 'border-neutral-300 dark:border-neutral-800'
                   }`} 
                   value={formData.status} 
                   onChange={(e) => setFormData({...formData, status: e.target.value})}
@@ -239,12 +249,16 @@ export function EditMatchModal({ match, onClose, onUpdate }: EditMatchModalProps
             </section>
           </div>
 
-          <footer className="p-4 bg-neutral-100 flex justify-end gap-3">
-            <button onClick={onClose} className="px-4 py-2 text-sm font-medium hover:bg-neutral-200 rounded-sm cursor-pointer transition-colors">Cancelar</button>
+          <footer className="p-4 bg-neutral-100 dark:bg-neutral-900 flex justify-end gap-3">
+            <button onClick={onClose} className="px-4 py-2 text-sm font-medium hover:bg-neutral-200 dark:hover:bg-neutral-800 rounded-sm cursor-pointer transition-colors"
+            >
+              Cancelar
+            </button>
             <button 
               onClick={handleSave} 
               disabled={loading}
-              className="px-6 py-2 bg-black text-white text-sm font-bold truncate rounded-sm hover:bg-neutral-800 disabled:bg-neutral-400 cursor-pointer transition-colors"
+              className="px-6 py-2 bg-black dark:bg-neutral-800 text-white text-sm font-bold truncate rounded-sm hover:bg-neutral-800 dark:hover:bg-neutral-700 
+                disabled:bg-neutral-400 cursor-pointer transition-colors"
             >
               {loading ? "Salvando..." : "Confirmar Resultado"}
             </button>

@@ -98,14 +98,16 @@ export function CreateTeamModal({ leagueId, onClose, onUpdate }: CreateModalProp
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.98, y: 10 }}
           transition={{ type: "spring", duration: 0.4, bounce: 0.3 }} 
-          className="bg-white rounded-md shadow-2xl w-full max-w-md overflow-y-auto"
+          className="bg-white dark:bg-neutral-950 rounded-md shadow-2xl w-full max-w-md overflow-y-auto"
         >
-          <header className="flex items-center justify-between p-4 bg-neutral-100 border-b border-neutral-200">
-            <h3 className="font-bold text-neutral-900">Novo Time</h3>
-            <button onClick={onClose} className="text-neutral-400 hover:text-neutral-600 cursor-pointer"><X size="20" /></button>
+          <header className="flex items-center justify-between p-4 bg-neutral-100 dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-800">
+            <h3 className="font-bold text-neutral-900 dark:text-neutral-300">Novo Time</h3>
+            <button onClick={onClose} className="p-1 rounded-full text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200 hover:bg-neutral-200 dark:hover:bg-neutral-800 cursor-pointer transition-colors">
+              <X size="20" />
+            </button>
           </header>
 
-          <section className="p-6 flex flex-col gap-6 border-b border-neutral-200">
+          <section className="p-6 flex flex-col gap-6 border-b border-neutral-200 dark:border-neutral-800">
             <article className="flex flex-col items-center gap-2">
               <div className="relative group">
                 <figure className="w-24 h-24 shadow-inner border border-neutral-200 rounded-full overflow-hidden bg-neutral-100">
@@ -116,48 +118,48 @@ export function CreateTeamModal({ leagueId, onClose, onUpdate }: CreateModalProp
                   <input type="file" className="hidden" accept="image/*" onChange={handleFileChange} />
                 </label>
               </div>
-              <span className="text-[10px] text-neutral-400 uppercase font-bold">Escudo do Time</span>
+              <span className="text-[10px] text-neutral-400 dark:text-neutral-300 uppercase font-bold">Escudo do Time</span>
             </article>
 
             <article className="grid grid-cols-4 gap-4">
               <div className="col-span-3 flex flex-col gap-1">
-                <label className="text-xs font-bold text-neutral-500 uppercase">Nome</label>
+                <label className="text-xs font-bold text-neutral-400 dark:text-neutral-300 uppercase">Nome</label>
                 <input 
                   type="text" 
                   placeholder="Nome do time"
                   value={formData.name} 
                   onChange={(e) => setFormData({...formData, name: e.target.value})} 
-                  className="w-full border border-neutral-300 rounded-sm p-2 text-sm outline-none focus:border-black" 
+                  className="w-full bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 rounded-sm p-2 text-sm outline-none focus:border-black dark:focus:border-neutral-700" 
                 />
               </div>
               <div className="col-span-1 flex flex-col gap-1">
-                <label className="text-xs font-bold text-neutral-500 uppercase">Sigla</label>
+                <label className="text-xs font-bold text-neutral-400 dark:text-neutral-300 uppercase">Sigla</label>
                 <input 
                   type="text" 
                   maxLength={3} 
                   placeholder="AAA"
                   value={formData.sigla} 
                   onChange={(e) => setFormData({...formData, sigla: e.target.value.toUpperCase()})} 
-                  className="w-full border border-neutral-300 rounded-sm p-2 text-sm outline-none focus:border-black text-center" 
+                  className="w-full bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 rounded-sm p-2 text-sm outline-none focus:border-black dark:focus:border-neutral-700 text-center uppercase" 
                 />
               </div>
             </article>
 
             <article className="flex flex-col gap-3">
-              <label className="text-xs font-bold text-neutral-500 uppercase border-b border-neutral-300 pb-1">Elenco Inicial</label>
+              <label className="text-xs font-bold text-neutral-400 dark:text-neutral-300 uppercase border-b border-neutral-300 dark:border-neutral-800 pb-1">Elenco Inicial</label>
               <div className="flex flex-col sm:flex-row gap-2">
                 <input 
                   type="text" 
                   placeholder="Nome do jogador" 
                   value={newPlayerName}
                   onChange={(e) => setNewPlayerName(e.target.value)}
-                  className="flex-1 border border-neutral-300 rounded-sm p-2 text-sm outline-none focus:border-black"
+                  className="flex-1 bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 rounded-sm p-2 text-sm outline-none focus:border-black dark:focus:border-neutral-700"
                 />
                 <div className="flex gap-2">
                   <select 
                     value={newPosition}
                     onChange={(e) => setNewPosition(e.target.value)}
-                    className="flex-1 border border-neutral-300 rounded-sm p-2 text-sm outline-none focus:border-black cursor-pointer"
+                    className="flex-1 bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 rounded-sm p-2 text-sm outline-none focus:border-black dark:focus:border-neutral-700 cursor-pointer"
                   >
                     <option value="">Posição</option>
                     <option value="Atacante">Atacante</option>
@@ -165,20 +167,22 @@ export function CreateTeamModal({ leagueId, onClose, onUpdate }: CreateModalProp
                     <option value="Defensor">Defensor</option>
                     <option value="Goleiro">Goleiro</option>
                   </select>
-                  <button onClick={addPlayer} className="bg-neutral-100 p-2 border border-neutral-300 rounded-sm hover:bg-neutral-200 cursor-pointer">
+                  <button onClick={addPlayer} className="bg-neutral-100 dark:bg-neutral-900 p-2 border border-neutral-300 dark:border-neutral-800 rounded-sm hover:bg-neutral-200 dark:hover:bg-neutral-800 cursor-pointer transition-colors">
                     <Plus size={18}/>
                   </button>
                 </div>
               </div>
 
-              <div className="max-h-40 overflow-y-auto flex flex-col gap-1 bg-neutral-50 p-2 rounded-sm border border-neutral-300">
+              <div className="max-h-40 overflow-y-auto flex flex-col gap-1 bg-neutral-50 dark:bg-neutral-900 p-2 rounded-sm border border-neutral-300 dark:border-neutral-800">
                 {formData.players.map((player, index) => (
-                  <div key={`new-${index}`} className="flex items-center bg-white border border-neutral-200 rounded-xs">
-                    <span className="flex-1 text-xs font-medium p-2 text-neutral-700">{player.name}</span>
+                  <div key={`new-${index}`} className="flex items-center bg-white dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 rounded-sm">
+                    <span className="flex-1 text-xs font-medium p-2 text-neutral-700 dark:text-neutral-200">{player.name}</span>
                     {player.position && (
-                      <span className="flex-1 text-xs font-medium p-2 text-neutral-700 border-l border-neutral-300">{player.position}</span>
+                      <span className="flex-1 text-xs font-medium p-2 text-neutral-700 dark:text-neutral-200 border-l border-neutral-300 dark:border-neutral-800">{player.position}</span>
                     )}
-                    <button onClick={() => removePlayer(index)} className="p-2 text-neutral-400 hover:text-red-500 cursor-pointer"><Trash size={14}/></button>
+                    <button onClick={() => removePlayer(index)} className="p-2 text-neutral-400 dark:text-neutral-300 hover:text-red-500 cursor-pointer transition-colors">
+                      <Trash size={14}/>
+                    </button>
                   </div>
                 ))}
                 {formData.players.length === 0 && <p className="text-[10px] text-center text-neutral-400 py-2 italic">Nenhum jogador adicionado</p>}
@@ -186,12 +190,12 @@ export function CreateTeamModal({ leagueId, onClose, onUpdate }: CreateModalProp
             </article>
           </section>
 
-          <footer className="p-4 bg-neutral-100 flex justify-end gap-3">
-            <button onClick={onClose} className="px-4 py-2 text-sm text-neutral-800 font-medium rounded-sm hover:bg-neutral-200 cursor-pointer">Cancelar</button>
+          <footer className="p-4 bg-neutral-100 dark:bg-neutral-900 flex justify-end gap-3">
+            <button onClick={onClose} className="px-4 py-2 text-sm font-medium text-neutral-800 dark:text-neutral-300 hover:bg-neutral-200 dark:hover:bg-neutral-800 rounded-sm cursor-pointer transition-colors">Cancelar</button>
             <button 
               onClick={handleSave} 
               disabled={isUploading}
-              className="px-6 py-2 bg-black text-white text-sm font-semibold rounded-sm disabled:bg-neutral-400 flex items-center hover:bg-zinc-800 cursor-pointer"
+              className="px-6 py-2 bg-black dark:bg-neutral-800 text-white text-sm font-bold rounded-sm disabled:bg-neutral-400 flex items-center hover:bg-zinc-800 dark:hover:bg-neutral-700 cursor-pointer transition-colors"
             >
               {isUploading ? "Criando..." : "Criar Time"}
             </button>

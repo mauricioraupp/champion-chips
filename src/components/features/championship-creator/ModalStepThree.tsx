@@ -99,7 +99,7 @@ export default function ModalStepThree({ prevStep, teams, setTeams, data, onFini
           <article className="flex flex-col gap-1 w-full">
             <button 
               onClick={() => setIsAddingTeam(true)}
-              className="bg-zinc-950 text-white h-12 rounded-md cursor-pointer hover:bg-zinc-800 transition-colors shadow-sm"
+              className="bg-black dark:bg-neutral-900 text-white h-12 rounded-md cursor-pointer hover:bg-neutral-800 transition-colors shadow-sm"
             >
               + Adicionar time
             </button>
@@ -114,24 +114,25 @@ export default function ModalStepThree({ prevStep, teams, setTeams, data, onFini
               teams.map((team, index) => (
                 <div 
                   key={index} 
-                  className="flex items-center justify-between p-3 bg-white border border-neutral-200 rounded-md shadow-sm shrink-0"
+                  className="flex items-center justify-between p-3 bg-white dark:bg-zinc-950 border border-neutral-200 dark:border-neutral-700 rounded-md shadow-sm shrink-0"
                 >
                   <div className="flex items-center gap-3">
                     {(team.teamLogoFile) ? (
                       <img 
                         src={(team.teamLogoFile ? URL.createObjectURL(team.teamLogoFile) : "")} 
                         alt={team.name} 
-                        className="w-8 h-8 rounded-full object-cover" 
+                        className="w-8 h-8 rounded-full object-cover bg-white" 
                       />
                     ) : (
-                      <img className="w-8 h-8 flex items-center justify-center"
+                      <img className="w-8 h-8 rounded-full flex items-center justify-center bg-white"
                         src="/default-team-logo.png"/>
                     )}
-                    <span className="font-medium text-neutral-800">{team.name}</span>
+                    <span className="font-medium text-neutral-800 dark:text-neutral-200">{team.name}</span>
                   </div>
                   <button 
                     onClick={() => setTeams(teams.filter((_, i) => i !== index))}
-                    className="p-2 rounded-full text-neutral-400 hover:text-red-500 text-xs px-2 hover:bg-neutral-200 cursor-pointer transition-colors"
+                    className="p-2 rounded-full text-neutral-400 dark:text-neutral-300 hover:text-red-500 text-xs px-2 
+                      hover:bg-neutral-200 dark:hover:bg-neutral-900 cursor-pointer transition-colors"
                   >
                     <Trash size="14"/>
                   </button>
@@ -141,12 +142,16 @@ export default function ModalStepThree({ prevStep, teams, setTeams, data, onFini
           </div>
 
           <section className="flex justify-between mt-8">
-            <button onClick={prevStep} className="px-4 sm:px-6 rounded-md font-medium hover:bg-neutral-200 cursor-pointer transition-colors">Voltar</button>
+            <button onClick={prevStep} className="px-4 sm:px-6 rounded-md font-medium hover:bg-neutral-200 dark:hover:bg-neutral-900 
+              cursor-pointer transition-colors"
+            >
+              Voltar
+            </button>
             <button 
               onClick={handleFinishWithUpload}
-              className={`py-2 px-8 rounded-md font-medium text-white transition-all 
+              className={` py-1 sm:py-2 px-4 sm:px-8 rounded-md font-medium text-white transition-colors 
                 ${teams.length >= 2 && !isUploading
-                  ? "bg-black cursor-pointer hover:bg-zinc-800" 
+                  ? "bg-black dark:bg-neutral-900 cursor-pointer hover:bg-neutral-800" 
                   : "bg-neutral-400 cursor-not-allowed"}`}
               disabled={teams.length < 2 || isUploading}
             >

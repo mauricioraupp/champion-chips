@@ -40,7 +40,7 @@ export default function ModalStepOne({ nextStep, data, updateData }: Props){
     <div className="flex flex-col gap-6 w-full">
 
       <fieldset className="flex flex-col gap-1 w-full">
-        <label className={`font-medium ${error ? "text-red-500" : "text-neutral-700"}`}>
+        <label className={`font-medium text-black dark:text-neutral-300 ${error ? "text-red-500" : "text-neutral-700"}`}>
           Nome do torneio
         </label>
         <input 
@@ -51,7 +51,7 @@ export default function ModalStepOne({ nextStep, data, updateData }: Props){
             if (error) setError(false);
           }}
           className={`py-2 px-3 w-full border rounded-sm outline-none transition-colors ${
-            error ? "border-red-400 focus:border-red-500 bg-red-50" : "border-neutral-300 focus:border-zinc-800"
+            error ? "border-red-400 focus:border-red-500 bg-red-50" : "border-neutral-300 dark:border-neutral-700 focus:border-neutral-800 dark:focus:border-neutral-200"
           }`}
         />
         {error && (
@@ -62,7 +62,7 @@ export default function ModalStepOne({ nextStep, data, updateData }: Props){
       </fieldset>
 
       <div className="flex flex-col items-center gap-2">
-        <label className="font-medium text-neutral-700 self-start">Emblema do torneio</label>
+        <label className="font-medium text-neutral-700 dark:text-neutral-300 self-start">Emblema do torneio</label>
         {preview ? (
           <div className="relative">
              <img src={preview} className="w-24 h-24 object-cover rounded-full border" />
@@ -80,11 +80,12 @@ export default function ModalStepOne({ nextStep, data, updateData }: Props){
           </div>
         ) : (
           <div className="w-full">
-            <label className="flex flex-col items-center justify-center w-full h-12 bg-neutral-50 text-neutral-800 border border-dashed border-neutral-300 rounded-md hover:bg-neutral-100 cursor-pointer transition-all">
+            <label className="flex flex-col items-center justify-center w-full h-12 bg-neutral-50 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 
+              border border-dashed border-neutral-300 dark:border-neutral-700 rounded-md hover:bg-neutral-100 dark:hover:bg-neutral-950 cursor-pointer transition-all">
               <span className="text-sm font-medium">Selecionar Emblema</span>
               <input type="file" className="hidden" accept="image/*" onChange={handleFileChange} />
             </label>
-            <p className="text-center text-xs text-neutral-500 mt-1">(Opcional)</p>
+            <p className="text-center text-xs text-neutral-500 dark:text-neutral-400 mt-1">(Opcional)</p>
           </div>
         )}
       </div>
@@ -93,7 +94,8 @@ export default function ModalStepOne({ nextStep, data, updateData }: Props){
         <ReturnButton/>
         <button 
           onClick={handleNext}
-          className={`bg-black py-1 sm:py-2 px-4 sm:px-8 rounded-md font-medium text-white hover:bg-zinc-800 cursor-pointer transition-colors`}
+          className={`bg-black dark:bg-neutral-900 py-1 sm:py-2 px-4 sm:px-8 rounded-md font-medium text-white 
+            hover:bg-neutral-800 cursor-pointer transition-colors`}
         >Avançar</button>
       </section>
     </div>

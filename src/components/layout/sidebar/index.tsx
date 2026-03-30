@@ -25,8 +25,8 @@ export default function SideBar() {
               <li className={`
                 w-full flex py-2 px-2 sm:px-4 sm:gap-4 rounded-md cursor-pointer transition-all
                 ${isActive 
-                  ? "opacity-100 bg-neutral-100 text-black" 
-                  : "opacity-60 hover:opacity-80 hover:bg-neutral-100 text-neutral-800"
+                  ? "opacity-100 bg-neutral-100 dark:bg-neutral-900" 
+                  : "opacity-60 hover:opacity-80 hover:bg-neutral-100 dark:hover:bg-neutral-900 text-neutral-800 dark:text-neutral-200"
                 }
               `}>
                 {item.icon}

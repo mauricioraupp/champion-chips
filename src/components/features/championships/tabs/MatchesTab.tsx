@@ -20,7 +20,7 @@ export default function MatchesTab({ leagueId, isOwner }: { leagueId: string, is
 
   if (matches.length === 0) {
     return (
-      <div className="p-10 text-center border-2 border-dashed rounded-xl border-neutral-200 text-neutral-400">
+      <div className="p-10 text-center border-2 border-dashed rounded-xl border-neutral-200 dark:border-neutral-900 text-neutral-400 dark:text-neutral-300">
         Nenhuma partida cadastrada nesta liga.
       </div>
     )

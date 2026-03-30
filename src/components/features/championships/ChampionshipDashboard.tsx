@@ -22,7 +22,7 @@ export default function ChampionshipDashboard({ leagueId, isOwner, initialIsFavo
 
   return (
     <section className="w-full flex flex-col overflow-y-auto h-full p-4 sm:p-6 pb-8 [&::-webkit-scrollbar]:hidden">
-      <h1 className="text-neutral-800 font-semibold text-xl pb-1">
+      <h1 className="text-neutral-800 dark:text-neutral-200 font-semibold text-xl pb-1">
         {activeTab === "standings" && "Tabela de classificação"}
         {activeTab === "matches" && "Calendário de partidas"}
         {activeTab === "teams" && "Clubes participantes"}
@@ -34,7 +34,7 @@ export default function ChampionshipDashboard({ leagueId, isOwner, initialIsFavo
           </>
         )}
       </h1>
-      <p className="text-neutral-500 font-medium text-sm pb-6">
+      <p className="text-neutral-500 dark:text-neutral-400 font-medium text-sm pb-6">
         {activeTab === "standings" && "Acompanhe a tabela com o desempenho de cada equipe em tempo real"}
         {activeTab === "matches" && "Gerencie os resultados, datas e horários de todos os confrontos do campeonato"}
         {activeTab === "teams" && "Gerencie os dados de todos os times e jogadores do campeonato"}

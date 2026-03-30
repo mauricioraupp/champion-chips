@@ -10,7 +10,7 @@ const raleway = Raleway({
 
 export default function RootLayout({children,}: Readonly<{children: React.ReactNode;}>) {
   return (
-    <html lang="pt-br" className={raleway.className}>
+    <html lang="pt-br" suppressHydrationWarning className={raleway.className}>
       <body className={`antialiased min-h-screen`}>
         <Providers>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>

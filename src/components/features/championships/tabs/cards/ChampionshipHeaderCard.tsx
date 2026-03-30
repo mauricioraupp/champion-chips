@@ -46,9 +46,9 @@ export default function ChampionshipHeaderCard({
   };
 
   return (
-    <section className="bg-white border border-neutral-300 rounded-md overflow-hidden shadow-sm">
+    <section className="bg-white dark:bg-zinc-950 border border-neutral-300 dark:border-neutral-900 rounded-md overflow-hidden shadow-sm">
       <div className="p-8 flex flex-col sm:flex-row items-center gap-6">
-        <figure className="relative w-32 h-32 rounded-lg bg-neutral-100 border border-neutral-200 shadow-inner overflow-hidden flex items-center justify-center shrink-0">
+        <figure className="relative w-32 h-32 rounded-md bg-neutral-100 border border-neutral-200 dark:border-neutral-900 overflow-hidden flex items-center justify-center shrink-0">
           {logo ? (
             <Image src={logo} alt={name} fill className="object-cover" />
           ) : (
@@ -58,32 +58,33 @@ export default function ChampionshipHeaderCard({
 
         <div className="flex flex-col text-center sm:text-left">
           <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
-            <h2 className="text-2xl font-bold text-neutral-900">{name}</h2>
+            <h2 className="text-2xl font-bold text-neutral-900 dark:text-neutral-200">{name}</h2>
             {isPublic ? (
-              <span className="p-1 text-green-600 bg-green-50 rounded-full" title="Público">
+              <span className="p-1 text-green-600 bg-green-50 dark:bg-neutral-900 rounded-full" title="Público">
                 <Globe size={14}/>
               </span>
             ) : (
-              <span className="p-1 text-neutral-600 bg-neutral-100 rounded-full" title="Privado">
+              <span className="p-1 text-neutral-600 bg-neutral-100 dark:bg-neutral-900 rounded-full" title="Privado">
                 <Lock size={14}/>
               </span>
             )}
           </div>
           
-          <p className="text-neutral-500 text-sm mb-4">
+          <p className="text-neutral-500 dark:text-neutral-400 text-sm mb-4">
             Campeonato criado em {new Date(createdAt).toLocaleDateString('pt-BR')}
           </p>
 
           <div className="flex flex-wrap justify-center sm:justify-start gap-3 items-center">
             <button 
               title={leagueId}
-              className="px-3 py-1 bg-neutral-100 text-neutral-600 text-[10px] font-bold uppercase tracking-wider rounded-full border border-neutral-200"
+              className="px-3 py-1 bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 
+                text-[10px] font-bold uppercase tracking-wider rounded-full border border-neutral-200 dark:border-neutral-900"
             >
               ID: {leagueId.slice(0, 8)}...
             </button>
 
             <span className={`px-3 py-1 text-[10px] font-bold uppercase tracking-wider rounded-full border ${
-              isPublic ? "bg-green-100 text-green-600 border-green-200" : "bg-neutral-100 text-neutral-600 border-neutral-200"
+              isPublic ? "bg-green-100 dark:bg-neutral-800 text-green-600 border-green-200 dark:border-green-800" : "bg-neutral-100 text-neutral-600 border-neutral-200"
             }`}>
               {isPublic ? "Disponível para todos" : "Acesso Restrito"}
             </span>
@@ -91,11 +92,11 @@ export default function ChampionshipHeaderCard({
             {!isOwner && (
               <button 
                 onClick={handleToggleFavorite}
-                className="flex items-center gap-2 px-2 py-1 text-neutral-500 hover:text-black cursor-pointer transition-colors"
+                className="flex items-center gap-2 px-2 py-1 text-neutral-500 dark:text-neutral-300 hover:text-black dark:hover:text-neutral-200 cursor-pointer transition-colors"
               >
                 <Bookmark 
                   size={16} 
-                  className={isFavorite ? "fill-neutral-900 text-neutral-900" : ""} 
+                  className={isFavorite ? "fill-neutral-900 dark:fill-neutral-300 text-neutral-900 dark:text-neutral-300" : ""} 
                 />
                 <span className="text-[10px] font-bold uppercase tracking-wider">Favoritar</span>
               </button>
@@ -104,7 +105,7 @@ export default function ChampionshipHeaderCard({
             {isPublic && (
               <button 
                 onClick={handleCopyLink}
-                className="flex items-center gap-2 px-2 py-1 text-neutral-500 hover:text-black cursor-pointer transition-colors"
+                className="flex items-center gap-2 px-2 py-1 text-neutral-500 dark:text-neutral-300 hover:text-black dark:hover:text-neutral-200 cursor-pointer transition-colors"
                 title={`${window.location.origin}/championships/${leagueId}`}
               >
                 <Share2 size={14} />

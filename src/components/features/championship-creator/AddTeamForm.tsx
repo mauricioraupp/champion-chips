@@ -31,7 +31,7 @@ export default function AddTeamForm({ onClose, onSave }: AddTeamFormProps) {
   };
 
   return (
-    <div className="flex flex-col gap-6 w-full animate-in zoom-in-95">
+    <div className="flex flex-col gap-6 w-full">
       <div className="flex flex-col items-center gap-2">
         {previewUrl ? (
           <div className="relative">
@@ -46,8 +46,10 @@ export default function AddTeamForm({ onClose, onSave }: AddTeamFormProps) {
           </div>
         ) : (
           <div className="flex flex-col items-center">
-            <label className="cursor-pointer bg-neutral-50 p-4 border border-dashed border-neutral-300 rounded-md hover:bg-neutral-200">
-              <span className="text-sm text-neutral-600">Selecionar Logo</span>
+            <label className="cursor-pointer bg-neutral-50 dark:bg-neutral-900 p-4 border border-dashed 
+              border-neutral-300 dark:border-neutral-700 rounded-md hover:bg-neutral-200 dark:hover:bg-neutral-950"
+            >
+              <span className="text-sm font-medium">Selecionar Logo</span>
               <input type="file" className="hidden" accept="image/*" onChange={handleFileChange} />
             </label>
             <p className="text-xs text-neutral-500 mt-1">(Opcional)</p>
@@ -56,18 +58,29 @@ export default function AddTeamForm({ onClose, onSave }: AddTeamFormProps) {
       </div>
 
       <fieldset className="flex flex-col gap-1 w-full">
-        <label className="font-medium text-neutral-700 text-sm">Nome do Time</label>
-        <input value={name} onChange={(e) => setName(e.target.value)} className="py-2 px-3 border rounded-sm border-neutral-300" />
+        <label className="font-medium text-neutral-700 dark:text-neutral-400">Nome do Time</label>
+        <input value={name} onChange={(e) => setName(e.target.value)} 
+        className="py-2 px-3 border rounded-sm border-neutral-300 dark:border-neutral-700 outline-none focus:border-neutral-800 dark:focus:border-neutral-200" />
       </fieldset>
 
       <fieldset className="flex flex-col gap-1 w-full">
-        <label className="font-medium text-neutral-700 text-sm">Sigla</label>
-        <input value={sigla} onChange={(e) => setSigla(e.target.value)} maxLength={3} className="py-2 px-3 border rounded-sm border-neutral-300 uppercase placeholder:normal-case" placeholder="AAA"/>
+        <label className="font-medium text-neutral-700 dark:text-neutral-400">Sigla</label>
+        <input value={sigla} onChange={(e) => setSigla(e.target.value)} maxLength={3} 
+        className="py-2 px-3 border rounded-sm border-neutral-300 dark:border-neutral-700 outline-none focus:border-neutral-800 dark:focus:border-neutral-200 uppercase placeholder:normal-case" 
+        placeholder="AAA" />
       </fieldset>
 
       <div className="flex justify-between mt-6">
-        <button onClick={onClose} className="px-4 rounded-md font-medium hover:bg-neutral-200 cursor-pointer transition-colors">Cancelar</button>
-        <button onClick={handleConfirm} className="bg-black text-white px-6 py-2 rounded-md font-medium hover:bg-zinc-800 cursor-pointer">Adicionar</button>
+        <button onClick={onClose} className="px-4 sm:px-6 rounded-md font-medium hover:bg-neutral-200 dark:hover:bg-neutral-900 
+          cursor-pointer transition-colors"
+        >
+          Cancelar
+        </button>
+        <button onClick={handleConfirm} className="bg-black dark:bg-neutral-900 py-1 sm:py-2 px-4 sm:px-8 rounded-md font-medium text-white 
+          hover:bg-neutral-800 cursor-pointer transition-colors"
+        >
+          Adicionar
+        </button>
       </div>
     </div>
   );

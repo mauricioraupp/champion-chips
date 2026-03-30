@@ -18,7 +18,7 @@ export default function TeamsTab({ leagueId, isOwner }: { leagueId: string, isOw
 
   useEffect(() => { loadTeams() }, [leagueId])
 
-  if (loading) return <div className="p-8 text-center text-neutral-500 italic">Carregando times...</div>
+  if (loading) return <div className="p-8 text-center text-neutral-500 dark:text-neutral-400 italic">Carregando times...</div>
 
   return (
     <div className={`grid grid-cols-2 lg:grid-cols-3 gap-4`}>
@@ -35,8 +35,8 @@ export default function TeamsTab({ leagueId, isOwner }: { leagueId: string, isOw
       {isOwner &&
         <button 
           onClick={() => setIsCreateModalOpen(true)}
-          className={`flex flex-1 items-center justify-center min-w-32 h-32 sm:h-52 rounded-md bg-black
-            hover:bg-zinc-900 cursor-pointer transition-colors`}
+          className={`flex flex-1 items-center justify-center min-w-32 h-32 sm:h-52 rounded-md bg-black dark:bg-neutral-900
+            hover:bg-neutral-800 cursor-pointer transition-colors`}
         >
           <span className={`font-medium text-white sm:text-md`}>
             + Criar time

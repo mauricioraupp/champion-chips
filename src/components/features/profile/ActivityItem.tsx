@@ -15,16 +15,16 @@ export default function ActivityItem({ message, name, date }: { message: string,
     <li className="flex items-center justify-between py-4">
       <div className="flex items-center gap-3">
         
-        <p className="flex flex-col sm:flex-row gap-1 text-sm text-neutral-600 font-medium">
-          <CornerDownRight size={16} className="shrink-0" /> {message} <span className="text-neutral-900 font-bold">{name}</span>
+        <p className="flex flex-col sm:flex-row gap-1 text-sm text-neutral-600 dark:text-neutral-400 font-medium">
+          <CornerDownRight size={16} className="shrink-0" /> {message} <span className="text-neutral-900 dark:text-neutral-200 font-bold">{name}</span>
         </p>
       </div>
       
       <div className="flex flex-col items-end shrink-0 ml-4">
-        <time className="text-xs text-neutral-500 font-bold tabular-nums">
+        <time className="text-xs text-neutral-400 font-bold tabular-nums">
           {onlyDate}
         </time>
-        <time className="text-xs text-neutral-400 font-medium tabular-nums">
+        <time className="text-xs text-neutral-500 font-medium tabular-nums">
           {onlyTime}
         </time>
       </div>

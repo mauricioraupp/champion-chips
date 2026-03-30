@@ -48,19 +48,19 @@ export default function ChampionshipCreated({ leagueId }: { leagueId: string }) 
   return (
     <div 
       onClick={() => router.push(`/championships/${leagueId}`)} 
-      className="relative flex gap-2 lg:gap-12 bg-white border border-neutral-200 rounded-md w-full 
-        px-4 sm:px-6 py-3 mx-auto shadow-xs hover:shadow-sm hover:bg-neutral-50 transition-shadow cursor-pointer overflow-x-auto"
+      className="relative flex gap-2 lg:gap-12 bg-white dark:bg-zinc-950 border border-neutral-200 dark:border-neutral-900 rounded-md w-full 
+        px-4 sm:px-6 py-3 mx-auto shadow-xs hover:shadow-sm hover:bg-neutral-50 dark:hover:bg-neutral-950 transition-shadow cursor-pointer overflow-x-auto"
     >
-      <section className="flex flex-col justify-center text-left border-r-2 border-neutral-200 pb-4 pr-2 lg:pr-12">
-        <h1 className="font-bold text-xl text-neutral-900 sm:max-w-48 max-w-24 truncate">{championship.name}</h1>
-        <p className="font-medium text-neutral-500 pt-1">Futebol • Liga</p>
-        <p className="font-medium text-neutral-500">
+      <section className="flex flex-col justify-center text-left border-r-2 border-neutral-200 dark:border-neutral-900 pb-4 pr-2 lg:pr-12">
+        <h1 className="font-bold text-xl text-neutral-900 dark:text-neutral-200 sm:max-w-48 max-w-24 truncate">{championship.name}</h1>
+        <p className="font-medium text-neutral-500 dark:text-neutral-400 pt-1">Futebol • Liga</p>
+        <p className="font-medium text-neutral-500 dark:text-neutral-400">
           {nextMatch ? `Rodada ${nextMatch.round}` : "Finalizado"}
         </p>
       </section>
 
-      <section className="hidden md:flex flex-col justify-center items-center border-r-2 border-neutral-200 pr-2 lg:pr-12 min-w-fit">
-        <h2 className="text-[10px] uppercase tracking-widest font-bold text-neutral-400 mb-2">Próxima partida</h2>
+      <section className="hidden md:flex flex-col justify-center items-center border-r-2 border-neutral-200 dark:border-neutral-900 pr-2 lg:pr-12 min-w-fit">
+        <h2 className="text-[10px] uppercase tracking-wider font-bold text-neutral-400 mb-2">Próxima partida</h2>
         {nextMatch ? (
           <div className="flex flex-col items-center gap-2">
             <article className="flex items-center gap-3">
@@ -74,7 +74,6 @@ export default function ChampionshipCreated({ leagueId }: { leagueId: string }) 
                     className="rounded-full shadow-sm bg-white"
                   />
                 )}
-                <span className="text-[10px] font-bold uppercase md:hidden">{nextMatch.HomeTeam?.sigla}</span>
               </div>
               
               <p className="font-black text-neutral-400 text-xl">X</p>
@@ -89,7 +88,6 @@ export default function ChampionshipCreated({ leagueId }: { leagueId: string }) 
                     className="rounded-full shadow-sm bg-white"
                   />
                 )}
-                <span className="text-[10px] font-bold uppercase md:hidden">{nextMatch.AwayTeam?.sigla}</span>
               </div>
             </article>
             <p className="text-xs font-semibold text-neutral-500">
@@ -104,7 +102,7 @@ export default function ChampionshipCreated({ leagueId }: { leagueId: string }) 
       <section className="flex-1 mr-5">
         <table className="w-full h-full">
           <thead>
-            <tr className="text-[10px] uppercase text-neutral-400 border-b border-neutral-400">
+            <tr className="text-[10px] uppercase text-neutral-400 border-b border-neutral-400 dark:border-neutral-900">
               <th className="text-left font-bold pb-1">Clube</th>
               <th className="w-10 pb-1 ">Pts</th>
               <th className="w-10 pb-1 ">PJ</th>
@@ -118,23 +116,23 @@ export default function ChampionshipCreated({ leagueId }: { leagueId: string }) 
           </thead>
           <tbody>
             {teams.slice(0, 3).map((entry, index) => (
-              <tr key={entry.id} className="text-sm text-center transition-colors">
+              <tr key={entry.id} className="text-sm text-center text-neutral-500 dark:text-neutral-400 transition-colors">
                 <td className="text-left flex items-center h-full gap-3 p-1">
                   <span className="text-xs">{index + 1}</span>
-                  <span className="hidden sm:block font-semibold text-neutral-800 truncate sm:max-w-24 max-w-13 whitespace-nowrap">
+                  <span className="hidden sm:block font-semibold text-neutral-800 dark:text-neutral-300 truncate sm:max-w-24 max-w-13 whitespace-nowrap">
                     {entry.name}
                   </span>
-                  <span className="block sm:hidden font-semibold text-neutral-800 truncate sm:max-w-24 max-w-13 whitespace-nowrap">
+                  <span className="block sm:hidden font-semibold text-neutral-800 dark:text-neutral-300 truncate sm:max-w-24 max-w-13 whitespace-nowrap">
                     {entry.sigla}
                   </span>
                 </td>
-                <td className="font-bold text-neutral-900">{entry.points}</td>
-                <td className="text-neutral-500">{entry.playedMatches}</td>
-                <td className="hidden sm:table-cell text-neutral-500">{entry.wins}</td>
-                <td className="hidden sm:table-cell text-neutral-500">{entry.draws}</td>
-                <td className="hidden sm:table-cell text-neutral-500">{entry.losses}</td>
-                <td className="hidden xl:table-cell text-neutral-500">{entry.goalsScored}</td>
-                <td className="hidden xl:table-cell text-neutral-500">{entry.goalsConceded}</td>
+                <td className="font-bold text-neutral-900 dark:text-neutral-200">{entry.points}</td>
+                <td className="">{entry.playedMatches}</td>
+                <td className="hidden sm:table-cell">{entry.wins}</td>
+                <td className="hidden sm:table-cell">{entry.draws}</td>
+                <td className="hidden sm:table-cell">{entry.losses}</td>
+                <td className="hidden xl:table-cell">{entry.goalsScored}</td>
+                <td className="hidden xl:table-cell">{entry.goalsConceded}</td>
                 <td className="text-right pr-[2px]">
                   <span className={`font-bold ${entry.goalsDiff > 0 ? "text-green-500" : entry.goalsDiff < 0 ? "text-red-500" : "text-neutral-400"}`}>
                     {entry.goalsDiff > 0 ? `+${entry.goalsDiff}` : entry.goalsDiff}
@@ -156,7 +154,8 @@ export default function ChampionshipCreated({ leagueId }: { leagueId: string }) 
             e.stopPropagation();
             setShowOptions(!showOptions);
           }} 
-          className="p-1 hover:bg-neutral-200 text-neutral-600 hover:text-neutral-900 rounded-full cursor-pointer transition-colors"
+          className="p-1 hover:bg-neutral-200 dark:hover:bg-neutral-900 text-neutral-600 dark:text-white 
+            hover:text-neutral-900 dark:hover:text-neutral-200 rounded-full cursor-pointer transition-colors"
         >
           <MoreHorizontal size="20" />
         </button>
@@ -168,7 +167,7 @@ export default function ChampionshipCreated({ leagueId }: { leagueId: string }) 
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.1, ease: "easeOut" }}
-              className="absolute right-0 bg-white border border-neutral-300 shadow-xl rounded-md z-10 overflow-hidden"
+              className="absolute right-0 bg-white dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-900 shadow-xl rounded-md z-10 overflow-hidden"
             >
               <button 
                 onClick={(e) => { 
@@ -178,7 +177,7 @@ export default function ChampionshipCreated({ leagueId }: { leagueId: string }) 
                   toast.success("Link de acesso copiado!");
                   setShowOptions(false); 
                 }} 
-                className="flex items-center gap-2 w-full px-3 py-2 text-sm hover:bg-neutral-100 cursor-pointer text-left"
+                className="flex items-center gap-2 w-full px-3 py-2 text-sm hover:bg-neutral-100 dark:hover:bg-neutral-900 cursor-pointer text-left"
                 title={`${window.location.origin}/championships/${leagueId}`}
               >
                 <Share2 size="14" /> Compartilhar

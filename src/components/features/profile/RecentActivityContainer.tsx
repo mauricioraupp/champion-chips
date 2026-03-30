@@ -12,8 +12,8 @@ export default function RecentActivityContainer({ allActivities }: { allActiviti
   const initialItems = allActivities.slice(0, 3);
 
   const filteredActivities = useMemo(() => {
-    if (filter === "ALL") return allActivities;
-    return allActivities.filter((act) => act.type === filter);
+    const filtered = filter === "ALL" ? allActivities : allActivities.filter((act) => act.type === filter);
+    return filtered.slice(0, 50);
   }, [filter, allActivities]);
 
   const filterOptions = [
@@ -26,12 +26,12 @@ export default function RecentActivityContainer({ allActivities }: { allActiviti
 
   return (
     <>
-      <section className="bg-white border border-neutral-300 rounded-md overflow-hidden shadow-sm">
+      <section className="bg-white dark:bg-zinc-950 border border-neutral-300 dark:border-neutral-900 rounded-md overflow-hidden shadow-sm">
         <div className="p-6 pb-0">
-          <h3 className="text-sm font-semibold text-neutral-900 mb-1">Atividade Recente</h3>
-          <p className="text-sm text-neutral-500 mb-2">Suas últimas ações no sistema.</p>
+          <h3 className="text-sm font-semibold text-neutral-900 dark:text-neutral-200 mb-1">Atividade Recente</h3>
+          <p className="text-sm text-neutral-500 dark:text-neutral-400 mb-2">Suas últimas ações no sistema.</p>
           
-          <ul className="divide-y divide-neutral-100">
+          <ul className="divide-y divide-neutral-100 dark:divide-neutral-900">
             {initialItems.length > 0 ? (
               initialItems.map((activity) => (
                 <ActivityItem 
@@ -47,10 +47,11 @@ export default function RecentActivityContainer({ allActivities }: { allActiviti
           </ul>
         </div>
 
-        <div className="bg-neutral-50 border-t border-neutral-300 px-6 py-3 flex justify-center">
+        <div className="bg-neutral-50 dark:bg-neutral-900 border-t border-neutral-300 dark:border-neutral-900 px-6 py-3 flex justify-center">
           <button 
             onClick={() => setIsModalOpen(true)}
-            className="hover:bg-neutral-200 text-[10px] font-bold uppercase tracking-wider text-neutral-700 px-3 py-2 rounded-md hover:text-neutral-800 cursor-pointer transition-colors"
+            className="hover:bg-neutral-200 dark:hover:bg-neutral-800 text-[10px] font-bold uppercase text-neutral-700 dark:text-neutral-200 px-3 py-2 
+              rounded-md hover:text-neutral-800 dark:hover:text-white cursor-pointer transition-colors"
           >
             Ver histórico completo
           </button>
@@ -74,31 +75,32 @@ export default function RecentActivityContainer({ allActivities }: { allActiviti
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ type: "spring", duration: 0.4, bounce: 0.3 }}
-              className="bg-white w-full max-w-2xl rounded-md shadow-2xl flex flex-col max-h-[85vh] overflow-hidden text-neutral-900 z-10"
+              className="bg-white dark:bg-neutral-950 w-full max-w-2xl rounded-md shadow-2xl flex flex-col max-h-[85vh] 
+                overflow-hidden text-neutral-900 dark:text-neutral-200 z-10"
             >
               
-              <header className="flex items-center justify-between p-4 bg-neutral-100 border-b border-neutral-200">
-                <h3 className="font-bold text-neutral-900">Histórico Completo</h3>
+              <header className="flex items-center justify-between p-4 bg-neutral-100 dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-800">
+                <h3 className="font-bold text-neutral-900 dark:text-neutral-200">Histórico Completo</h3>
                 <button 
                   onClick={() => setIsModalOpen(false)} 
-                  className="p-1 hover:bg-neutral-200 rounded-full text-neutral-400 hover:text-neutral-600 transition-colors cursor-pointer"
+                  className="p-1 rounded-full text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200 hover:bg-neutral-200 dark:hover:bg-neutral-800 cursor-pointer transition-colors"
                 >
                   <X size={20} />
                 </button>
               </header>
 
-              <div className="border-b border-neutral-200 bg-white flex items-center gap-2 overflow-x-auto no-scrollbar shrink-0 py-4">
+              <div className="border-b border-neutral-200 dark:border-neutral-800 bg-white dark:bg-zinc-950 flex items-center gap-2 overflow-x-auto no-scrollbar shrink-0 py-4">
                 {filterOptions.map((opt, index) => (
                   <button
                     key={opt.id}
                     onClick={() => setFilter(opt.id)}
                     className={`
-                      px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all border cursor-pointer whitespace-nowrap
+                      px-4 py-1.5 rounded-full text-[10px] font-bold uppercase transition-all border cursor-pointer whitespace-nowrap
                       ${index === 0 ? 'ml-6' : ''} 
                       ${index === filterOptions.length - 1 ? 'mr-6' : ''}
                       ${filter === opt.id 
-                        ? "bg-black text-white border-black shadow-md" 
-                        : "bg-neutral-50 text-neutral-500 border-neutral-200 hover:border-neutral-400"
+                        ? "bg-black dark:bg-neutral-800 text-white border-black dark:border-neutral-700 shadow-md" 
+                        : "bg-neutral-50 dark:bg-neutral-900 text-neutral-500 dark:text-neutral-400 border-neutral-200 dark:border-neutral-900 hover:border-neutral-400 dark:hover:border-neutral-700"
                       }
                     `}
                   >
@@ -108,7 +110,7 @@ export default function RecentActivityContainer({ allActivities }: { allActiviti
               </div>
 
               <div className="overflow-y-auto h-80 custom-scrollbar">
-                <ul className="divide-y divide-neutral-100 px-6">
+                <ul className="divide-y divide-neutral-100 dark:divide-neutral-900 px-6">
                   {filteredActivities.length > 0 ? (
                     filteredActivities.map((activity) => (
                       <ActivityItem 
@@ -126,10 +128,10 @@ export default function RecentActivityContainer({ allActivities }: { allActiviti
                 </ul>
               </div>
 
-              <footer className="p-4 bg-neutral-100 border-t border-neutral-200 flex justify-end">
+              <footer className="p-4 bg-neutral-100 dark:bg-neutral-900 border-t border-neutral-200 dark:border-neutral-800 flex justify-end">
                 <button 
                   onClick={() => setIsModalOpen(false)}
-                  className="px-6 py-2 bg-black text-white text-sm font-semibold rounded-sm hover:bg-zinc-800 cursor-pointer transition-all flex items-center gap-2 shadow-md active:scale-95"
+                  className="px-6 py-2 bg-black dark:bg-neutral-800 text-white text-sm font-bold rounded-sm disabled:bg-neutral-400 flex items-center hover:bg-zinc-800 dark:hover:bg-neutral-700 cursor-pointer transition-colors"
                 >
                   Fechar
                 </button>

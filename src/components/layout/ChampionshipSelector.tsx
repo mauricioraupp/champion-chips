@@ -39,7 +39,7 @@ export default function ChampionshipSelector({ currentLeague, leagues, isOwner }
       {isOwner ? (
         <button 
           onClick={() => setIsOpen(!isOpen)}
-          className="flex items-center justify-between w-56 rounded-md p-1 pr-2 hover:bg-neutral-100 cursor-pointer transition-colors"
+          className="flex items-center justify-between w-56 rounded-md p-1 pr-2 hover:bg-neutral-100 dark:hover:bg-neutral-900 cursor-pointer transition-colors"
         >
           <article className="flex items-center gap-2">
             {currentLeague?.logo && (
@@ -51,7 +51,7 @@ export default function ChampionshipSelector({ currentLeague, leagues, isOwner }
                 />
               </div>
             )}
-            <span className="font-semibold text-sm text-neutral-900">
+            <span className="font-semibold text-sm text-neutral-900 dark:text-neutral-200">
               {currentLeague?.name || "Selecionar"}
             </span>
           </article>
@@ -85,14 +85,15 @@ export default function ChampionshipSelector({ currentLeague, leagues, isOwner }
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: -10 }}
           transition={{ duration: 0.1, ease: "easeOut" }}
-          className="absolute top-full left-0 mt-1 w-56 bg-white border border-neutral-300 shadow-xl rounded-lg z-1 overflow-hidden divide-y-1 divide-neutral-300">
+          className="absolute top-full left-0 mt-1 w-56 bg-white dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-900 
+            shadow-xl rounded-lg z-1 overflow-hidden divide-y-1 divide-neutral-300 dark:divide-neutral-900">
             
-            <div className="p-2">
-              <p className="text-xs font-semibold text-neutral-500 p-2">
+            <div className="p-1">
+              <p className="text-xs font-semibold text-neutral-500 dark:text-neutral-400 p-2">
                 Torneios
               </p>
               
-              <div className="space-y-1 max-h-32 pr-2 overflow-y-auto">
+              <div className="space-y-1 max-h-32 overflow-y-auto">
                 {leagues?.map((league) => {
                   const isSelected = currentLeague?.id === league.id
                   
@@ -103,7 +104,7 @@ export default function ChampionshipSelector({ currentLeague, leagues, isOwner }
                       setIsOpen(false)
                       }}
                       className={`flex items-center justify-between w-full p-2 rounded-md text-sm transition-all ${
-                        isSelected ? "bg-neutral-100" : "hover:bg-neutral-50 text-neutral-700"}`
+                        isSelected ? "bg-neutral-100 dark:bg-neutral-900" : "hover:bg-neutral-50 dark:hover:bg-neutral-900 text-neutral-700 dark:text-neutral-200"}`
                       }
                     >
                       <div className="flex items-center gap-2">
@@ -112,7 +113,7 @@ export default function ChampionshipSelector({ currentLeague, leagues, isOwner }
                         </div>
                         <span className={`font-semibold truncate ${isSelected ? 'max-w-33' : 'max-w-40'}`}>{league.name}</span>
                       </div>
-                      {isSelected && <Check size={14} color="black" />}
+                      {isSelected && <Check size={14} />}
                     </button>
                   )
                 })}
@@ -122,10 +123,10 @@ export default function ChampionshipSelector({ currentLeague, leagues, isOwner }
             <Link 
               href="/create-championship"
               onClick={() => setIsOpen(false)}
-              className="flex items-center gap-2 px-3 py-2 m-2 rounded-md text-sm text-neutral-800 font-semibold 
-                hover:text-black hover:bg-neutral-100 transition-colors"
+              className="flex items-center gap-2 px-3 py-2 m-1 rounded-md text-sm text-neutral-800 dark:text-neutral-200 font-semibold 
+                hover:text-black dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-900 transition-colors"
             >
-              <Plus size={16} color="black" />
+              <Plus size={16} />
               Criar torneio
             </Link>
           </motion.div>

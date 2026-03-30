@@ -77,23 +77,24 @@ export default function EditProfileModal({ user, onClose }: EditProfileProps) {
         exit={{ opacity: 0, scale: 0.98, y: 10 }}
         transition={{ type: "spring", duration: 0.4, bounce: 0.3 }}
         onClick={(e) => e.stopPropagation()}
-        className="bg-white w-full max-w-md rounded-md shadow-2xl overflow-hidden flex flex-col"
+        className="bg-white dark:bg-neutral-950 w-full max-w-md rounded-md shadow-2xl overflow-hidden flex flex-col"
       >
 
-          <header className="flex items-center justify-between p-4 bg-neutral-100 border-b border-neutral-200">
-            <h3 className="font-bold text-neutral-900">Editar Perfil</h3>
+          <header className="flex items-center justify-between p-4 bg-neutral-100 dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-800">
+            <h3 className="font-bold text-neutral-900 dark:text-neutral-300">Editar Perfil</h3>
             <button 
               onClick={onClose} 
-              className="p-1 rounded-full text-neutral-400 hover:text-neutral-600 hover:bg-neutral-200 cursor-pointer transition-colors"
+              className="p-1 rounded-full text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200 
+                hover:bg-neutral-200 dark:hover:bg-neutral-800 cursor-pointer transition-colors"
             >
               <X size="20" />
             </button>
           </header>
 
-          <section className="p-8 flex flex-col gap-8 border-b border-neutral-200">
+          <section className="p-8 flex flex-col gap-8 border-b border-neutral-200 dark:border-neutral-800">
             <article className="flex flex-col items-center gap-2">
               <div className="relative group">
-                <figure className="w-28 h-28 shadow-inner border border-neutral-200 rounded-full overflow-hidden bg-neutral-100 relative">
+                <figure className="w-28 h-28 shadow-inner border border-neutral-200 dark:border-neutral-900 rounded-full overflow-hidden bg-neutral-100 relative">
                   <Image 
                       src={preview} 
                       alt="Preview" 
@@ -111,36 +112,36 @@ export default function EditProfileModal({ user, onClose }: EditProfileProps) {
                   />
                 </label>
               </div>
-              <span className="text-[10px] text-neutral-400 uppercase font-bold tracking-widest">
+              <span className="text-[10px] text-neutral-400 dark:text-neutral-300 uppercase font-bold">
                   Clique para alterar
               </span>
             </article>
 
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-bold text-neutral-500 uppercase tracking-wider">
+              <label className="text-xs font-bold text-neutral-400 dark:text-neutral-300 uppercase">
                   Nome de exibição
               </label>
               <input 
                 type="text" 
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full border border-neutral-300 rounded-sm p-2.5 text-sm outline-none focus:border-black transition-all font-medium"
-                placeholder="Seu nome"
+                className="w-full bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 rounded-sm p-2 text-sm 
+                  outline-none focus:border-black dark:focus:border-neutral-700"
               />
             </div>
           </section>
 
-          <footer className="p-4 bg-neutral-100 flex justify-end gap-3">
+          <footer className="p-4 bg-neutral-100 dark:bg-neutral-900 flex justify-end gap-3">
             <button 
               onClick={onClose} 
-              className="px-4 py-2 text-sm text-neutral-800 font-medium rounded-sm hover:bg-neutral-200 cursor-pointer transition-colors"
+              className="px-4 py-2 text-sm font-medium hover:bg-neutral-200 dark:hover:bg-neutral-800 rounded-sm cursor-pointer transition-colors"
             >
               Cancelar
             </button>
             <button 
               onClick={handleSave} 
               disabled={isUploading}
-              className="px-6 py-2 bg-black text-white text-sm font-semibold rounded-sm disabled:bg-neutral-400 hover:bg-zinc-800 cursor-pointer transition-all flex items-center gap-2 shadow-md active:scale-95"
+              className="px-6 py-2 bg-black dark:bg-neutral-800 text-white text-sm font-bold truncate rounded-sm hover:bg-neutral-800 dark:hover:bg-neutral-700 cursor-pointer transition-colors"
             >
               {isUploading ? "Salvando..." : "Salvar Alterações"}
             </button>

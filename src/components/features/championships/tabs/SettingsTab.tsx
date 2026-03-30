@@ -22,15 +22,13 @@ export default function SettingsTab({ leagueId }: { leagueId: string }) {
 
   if (loading) {
     return (
-      <div className="flex flex-col gap-8 animate-pulse">
-        {[1, 2, 3].map((i) => (
-          <div key={i} className="h-48 bg-neutral-100 rounded-md border border-neutral-200" />
-        ))}
+      <div className="p-8 text-center text-neutral-500 dark:text-neutral-400 italic text-sm animate-pulse">
+        Carregando configurações do campeonato...
       </div>
     )
   }
 
-  if (!data) return <div className="p-8 text-center text-neutral-500">Erro ao carregar dados.</div>
+  if (!data) return <div className="p-8 text-center text-neutral-500 dark:text-neutral-400">Erro ao carregar dados.</div>
 
   return (
     <div className="flex flex-col gap-8">

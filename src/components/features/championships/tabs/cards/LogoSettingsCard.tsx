@@ -69,13 +69,13 @@ export default function LogoSettingsCard({ leagueId, initialLogo }: LogoSettings
   }
 
   return (
-    <section className="bg-white border border-neutral-300 rounded-md overflow-hidden shadow-sm">
+    <section className="bg-white dark:bg-zinc-950 border border-neutral-300 dark:border-neutral-900 rounded-md overflow-hidden shadow-sm">
       <div className="p-6">
-        <h3 className="text-sm font-semibold text-neutral-900 mb-1">Logo do Campeonato</h3>
-        <p className="text-sm text-neutral-500 mb-4">Recomendamos uma imagem de escala 1:1</p>
+        <h3 className="text-sm font-semibold text-neutral-900 dark:text-neutral-200 mb-1">Logo do Campeonato</h3>
+        <p className="text-sm text-neutral-500 dark:text-neutral-400 mb-4">Recomendamos uma imagem de escala 1:1</p>
         
         <div className="flex items-center gap-6">
-          <figure className="relative w-24 h-24 rounded-md bg-neutral-100 border border-neutral-300 shrink-0 overflow-hidden flex items-center justify-center">
+          <figure className="relative w-24 h-24 rounded-md bg-neutral-100 border border-neutral-300 dark:border-neutral-900 shrink-0 overflow-hidden flex items-center justify-center">
             {logo ? (
               <Image src={logo} alt="Preview" fill className="object-cover" />
             ) : (
@@ -93,14 +93,15 @@ export default function LogoSettingsCard({ leagueId, initialLogo }: LogoSettings
             />
             <button 
               onClick={() => fileInputRef.current?.click()}
-              className="text-sm font-medium border border-dashed border-neutral-300 px-4 py-2 rounded-md hover:bg-neutral-50 transition-colors cursor-pointer"
+              className="bg-neutral-50 dark:bg-neutral-900 text-sm font-medium border border-dashed border-neutral-300 dark:border-neutral-700 
+                px-4 py-2 rounded-md hover:bg-neutral-100 dark:hover:bg-neutral-950 transition-colors cursor-pointer"
             >
               Alterar imagem
             </button>
             <button 
               onClick={handleRemove}
               disabled={logo === "/default-league-logo.png"}
-              className="text-sm font-medium text-red-600 hover:bg-red-50 px-4 py-2 rounded-md transition-colors flex items-center gap-2 cursor-pointer disabled:opacity-50"
+              className="text-sm font-medium text-red-600 hover:bg-red-50 dark:hover:bg-neutral-900 px-4 py-2 rounded-md transition-colors flex items-center gap-2 cursor-pointer disabled:opacity-50"
             >
               <Trash size={14} /> Remover logo
             </button>
@@ -108,12 +109,13 @@ export default function LogoSettingsCard({ leagueId, initialLogo }: LogoSettings
         </div>
       </div>
 
-      <div className="bg-neutral-50 border-t border-neutral-300 px-6 py-3 flex justify-between items-center gap-2">
-        <p className="text-xs text-neutral-500">Arquivos aceitos: .jpg, .png. Tamanho máx: 2MB</p>
+      <div className="bg-neutral-50 dark:bg-neutral-900 border-t border-neutral-300 dark:border-neutral-900 px-6 py-3 flex justify-between items-center gap-2">
+        <p className="text-xs text-neutral-500 dark:text-neutral-400">Arquivos aceitos: .jpg, .png. Tamanho máx: 2MB</p>
         <button 
           onClick={handleSave}
           disabled={saving || logo === savedLogo}
-          className="bg-black text-white text-sm font-medium px-4 py-2 rounded-md hover:bg-zinc-800 transition-colors disabled:opacity-50"
+          className="bg-black dark:bg-neutral-800 text-white text-sm font-medium px-4 py-2 rounded-md shrink-0 hover:bg-neutral-800 dark:hover:bg-neutral-700 
+            cursor-pointer transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-black dark:disabled:hover:bg-neutral-800"
         >
           {saving ? "Salvando..." : "Salvar Alterações"}
         </button>

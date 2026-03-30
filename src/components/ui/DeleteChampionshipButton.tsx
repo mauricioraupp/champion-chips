@@ -39,14 +39,14 @@ export default function DeleteChampionshipButton({ leagueId, name }: { leagueId:
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.98, y: 10 }}
               transition={{ type: "spring", duration: 0.4, bounce: 0.3 }} 
-              className="bg-white rounded-md w-full max-w-sm p-6 text-center shadow-2xl"
+              className="bg-white dark:bg-neutral-900 rounded-md w-full max-w-sm p-6 text-center shadow-2xl"
             >
-              <div className="bg-red-100 text-red-600 p-3 rounded-full w-fit mx-auto mb-4"><Trash size="30" /></div>
+              <div className="bg-red-100 dark:bg-neutral-800 text-red-600 p-3 rounded-full w-fit mx-auto mb-4"><Trash size="30" /></div>
               <h3 className="font-bold text-xl mb-2">Excluir {name}?</h3>
-              <p className="text-neutral-600 text-sm mb-6">Esta ação apagará todos os dados da liga permanentemente.</p>
+              <p className="text-neutral-600 dark:text-neutral-400 text-sm mb-6">Esta ação apagará todos os dados da liga permanentemente.</p>
               <div className="flex gap-3">
-                <button onClick={() => setActiveModal(null)} className="flex-1 py-2 text-sm font-semibold hover:bg-neutral-100 rounded-sm cursor-pointer transition-colors">Cancelar</button>
-                <button onClick={handleDelete} className="flex-1 py-2 text-sm bg-red-600 text-white hover:bg-red-800 rounded-sm font-medium cursor-pointer transition-colors">Excluir</button>
+                <button onClick={() => setActiveModal(null)} className="flex-1 py-2 text-sm font-semibold hover:bg-neutral-200 dark:hover:bg-neutral-800 rounded-sm cursor-pointer">Cancelar</button>
+                <button onClick={handleDelete} className="flex-1 py-2 text-sm bg-red-600 dark:bg-red-700 text-white hover:bg-red-800 rounded-sm font-medium cursor-pointer">Excluir</button>
               </div>
             </motion.div>
           </motion.div>

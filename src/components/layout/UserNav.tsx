@@ -33,7 +33,8 @@ export default function UserNav({ user }: UserNavProps) {
     <div className="relative inline-block" ref={menuRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="relative hidden sm:block w-8 h-8 rounded-full overflow-hidden border border-neutral-200 cursor-pointer active:scale-95 transition-transform focus:outline-none"
+        className="relative hidden sm:block w-8 h-8 rounded-full overflow-hidden border border-neutral-200 dark:border-neutral-900 
+          cursor-pointer active:scale-95 transition-transform focus:outline-none"
       >
         <Image
           src={user?.image || "/default-user-pic.png"}
@@ -51,34 +52,36 @@ export default function UserNav({ user }: UserNavProps) {
             exit={{ opacity: 0, scale: 0.95, y: -10 }}
             transition={{ duration: 0.1, ease: "easeOut" }}
             style={{ originX: 1, originY: 0 }}
-            className="absolute right-0 mt-2 w-56 bg-white border border-neutral-200 shadow-xl rounded-lg z-50 overflow-hidden"
+            className="absolute right-0 mt-2 w-56 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-900 shadow-xl rounded-lg z-50 overflow-hidden"
           >
             <div className="px-4 py-3 flex flex-col">
-              <span className="text-sm font-medium text-neutral-900 truncate">
+              <span className="text-sm font-semibold text-neutral-900 dark:text-neutral-200 truncate">
                 {user?.name || "Usuário"}
               </span>
-              <span className="text-xs text-neutral-500 truncate">
+              <span className="text-xs text-neutral-500 dark:text-neutral-400 truncate">
                 {user?.email}
               </span>
             </div>
 
-            <div className="border-t border-neutral-100 p-1">
+            <div className="border-t border-neutral-100 dark:border-neutral-900 p-1">
               <Link
                 href="/profile"
                 onClick={() => setIsOpen(false)}
-                className="flex items-center gap-3 w-full px-3 py-2 text-sm font-semibold text-neutral-600 hover:bg-neutral-50 rounded-md cursor-default transition-colors"
+                className="flex items-center gap-3 w-full px-3 py-2 text-sm font-semibold text-neutral-600 dark:text-neutral-200 
+                  hover:bg-neutral-50 dark:hover:bg-neutral-900 rounded-md cursor-default transition-colors"
               >
-                <User size={16} color="black"/>
+                <User size={16}/>
                 Conta
               </Link>
             </div>
 
-            <div className="border-t border-neutral-100 p-1">
+            <div className="border-t border-neutral-100 dark:border-neutral-900 p-1">
               <button
                 onClick={() => signOut()}
-                className="flex items-center gap-3 w-full px-3 py-2 text-sm font-semibold text-neutral-600 hover:bg-neutral-50 rounded-md transition-colors"
+                className="flex items-center gap-3 w-full px-3 py-2 text-sm font-semibold text-neutral-600 dark:text-neutral-200 
+                  hover:bg-neutral-50 dark:hover:bg-neutral-900 rounded-md transition-colors"
               >
-                <LogOut size={16} color="black"/>
+                <LogOut size={16}/>
                 Log out
               </button>
             </div>
