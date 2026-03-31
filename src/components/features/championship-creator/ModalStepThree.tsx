@@ -108,7 +108,7 @@ export default function ModalStepThree({ prevStep, teams, setTeams, data, onFini
 
           <div className="flex flex-col gap-2 max-h-64 overflow-y-auto pr-2 custom-scrollbar">
             {teams.length === 0 ? (
-              <div className="h-32 border border-dashed border-neutral-300 rounded-md flex items-center justify-center text-neutral-400 text-sm">
+              <div className="h-32 border border-dashed border-neutral-300 dark:border-neutral-800 rounded-md flex items-center justify-center text-neutral-400 text-sm">
                 Nenhum time adicionado
               </div>
             ) : (

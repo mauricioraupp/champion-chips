@@ -260,7 +260,7 @@ export function EditMatchModal({ match, onClose, onUpdate }: EditMatchModalProps
               className="px-6 py-2 bg-black dark:bg-neutral-800 text-white text-sm font-bold truncate rounded-sm hover:bg-neutral-800 dark:hover:bg-neutral-700 
                 disabled:bg-neutral-400 cursor-pointer transition-colors"
             >
-              {loading ? "Salvando..." : "Confirmar Resultado"}
+              {loading ? "Salvando..." : "Confirmar Alterações"}
             </button>
           </footer>
         </motion.div>

@@ -16,6 +16,7 @@ export default async function proxy(req: NextRequest) {
     pathname === "/profile" || 
     pathname.startsWith("/profile") ||
     pathname === "/create-championship" ||
+    pathname === "/saved-championships" ||
     pathname.startsWith("/championships")
 
   if (token && isAuthPage) {

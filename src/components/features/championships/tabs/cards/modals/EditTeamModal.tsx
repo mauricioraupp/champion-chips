@@ -152,6 +152,7 @@ export function EditTeamModal({ team, onClose, onUpdate }: EditModalProps) {
               </div>
               <span className="text-[10px] text-neutral-400 dark:text-neutral-300 uppercase font-bold">Clique para alterar</span>
             </article>
+            
             <article className="grid grid-cols-4 gap-4">
               <div className="col-span-3 flex flex-col gap-1">
                 <label className="text-xs font-bold text-neutral-400 dark:text-neutral-300 uppercase">Nome</label>

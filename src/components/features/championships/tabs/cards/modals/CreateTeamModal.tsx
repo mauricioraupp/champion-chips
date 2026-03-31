@@ -118,7 +118,7 @@ export function CreateTeamModal({ leagueId, onClose, onUpdate }: CreateModalProp
                   <input type="file" className="hidden" accept="image/*" onChange={handleFileChange} />
                 </label>
               </div>
-              <span className="text-[10px] text-neutral-400 dark:text-neutral-300 uppercase font-bold">Escudo do Time</span>
+              <span className="text-[10px] text-neutral-400 dark:text-neutral-300 uppercase font-bold">Clique para alterar</span>
             </article>
 
             <article className="grid grid-cols-4 gap-4">
