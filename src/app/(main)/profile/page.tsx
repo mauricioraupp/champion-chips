@@ -13,27 +13,26 @@ export default async function ProfilePage() {
   const user = await prisma.user.findUnique({
     where: { email: session?.user?.email! },
     select: {
+      id: true,
       email: true,
       name: true,
       image: true,
+      Activity: {
+        orderBy: { createdAt: "desc" },
+        take: 100,
+      },
       _count: {
         select: { 
           SoccerLeagues: true, 
           TeamsSoccerLeague: true, 
           Players: true,
-          FavoriteLeague: true
+          FavoriteLeague: true,
         }
       }
     }
   });
 
   if (!user) return <div className="p-8 text-center text-neutral-500 dark:text-neutral-400">Usuário não encontrado.</div>;
-
-  const allActivities = await prisma.activity.findMany({
-    where: { userId: session!.user.id },
-    orderBy: { createdAt: "desc" },
-    take: 100,
-  });
 
   return (
     <main className="flex-1 flex flex-col min-h-0 w-full">
@@ -64,7 +63,7 @@ export default async function ProfilePage() {
             <StatCard title="Torneios salvos" stat={user._count.FavoriteLeague} Icon={Bookmark} />
           </section>
 
-          <RecentActivityContainer allActivities={allActivities} />
+          <RecentActivityContainer allActivities={user.Activity} />
 
           <section className="bg-white dark:bg-zinc-950 border border-neutral-300 dark:border-neutral-900 rounded-md">
             <div className="p-6 flex justify-between items-center gap-2">

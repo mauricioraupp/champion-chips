@@ -42,7 +42,7 @@ export default function RecentActivityContainer({ allActivities }: { allActiviti
                 />
               ))
             ) : (
-              <div className="py-2 italic text-sm text-neutral-400">Nenhuma atividade registrada.</div>
+              <div className="py-2 pb-4 italic text-sm text-neutral-400">Nenhuma atividade registrada.</div>
             )}
           </ul>
         </div>

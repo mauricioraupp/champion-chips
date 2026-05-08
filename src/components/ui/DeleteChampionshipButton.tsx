@@ -5,16 +5,26 @@ import { deleteChampionship } from "@/app/actions/championships";
 import { Trash } from "@geist-ui/icons";
 import { toast } from "sonner";
 import { AnimatePresence, motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 export default function DeleteChampionshipButton({ leagueId, name }: { leagueId: string, name: string }) {
   const [activeModal, setActiveModal] = useState<"delete" | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const router = useRouter();
 
-   const handleDelete = async () => {
+  const handleDelete = async () => {
+    setIsDeleting(true);
+    
     const result = await deleteChampionship(leagueId);
+    
     if (result?.error) {
-        toast.error(result.error);
+      toast.error(result.error);
+      setIsDeleting(false);
     } else {
-        toast.success("Campeonato excluído.");
+      setActiveModal(null);
+      toast.success("Campeonato excluído.");
+      router.push("/championships");
+      router.refresh();
     }
   };
 
@@ -46,7 +56,13 @@ export default function DeleteChampionshipButton({ leagueId, name }: { leagueId:
               <p className="text-neutral-600 dark:text-neutral-400 text-sm mb-6">Esta ação apagará todos os dados da liga permanentemente.</p>
               <div className="flex gap-3">
                 <button onClick={() => setActiveModal(null)} className="flex-1 py-2 text-sm font-semibold hover:bg-neutral-200 dark:hover:bg-neutral-800 rounded-sm cursor-pointer">Cancelar</button>
-                <button onClick={handleDelete} className="flex-1 py-2 text-sm bg-red-600 dark:bg-red-700 text-white hover:bg-red-800 rounded-sm font-medium cursor-pointer">Excluir</button>
+                <button 
+                  onClick={handleDelete} 
+                  disabled={isDeleting}
+                  className="flex-1 py-2 text-sm bg-red-600 text-white hover:bg-red-800 rounded-sm font-medium cursor-pointer disabled:opacity-50"
+                >
+                  {isDeleting ? "Excluindo..." : "Excluir"}
+                </button>
               </div>
             </motion.div>
           </motion.div>
