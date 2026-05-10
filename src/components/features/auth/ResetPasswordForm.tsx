@@ -43,7 +43,7 @@ export default function ResetPasswordForm() {
 
       if (response.ok) {
         toast.success(`${data.message}`);
-        router.push("/login");
+        router.push("/auth/login");
       } else {
         toast.error(data.message || "Erro ao resetar senha.");
       }

@@ -9,7 +9,7 @@ export default function ForgotPasswordForm() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     setLoading(true);
 
@@ -28,9 +28,9 @@ export default function ForgotPasswordForm() {
       if (response.ok) {
         toast.success(data.message || "Link enviado para o seu e-mail!");
         if (data.isSocial === true) {
-          router.push("/login");
+          router.push("/auth/login");
         } else if (data.isSocial === false) {
-          router.push("/login?sent=true")
+          router.push("/auth/login?sent=true")
         }
       } else {
         toast.error(data.message || "Erro ao solicitar recuperação.");

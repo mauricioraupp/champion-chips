@@ -1,8 +1,14 @@
 import { prisma } from "@/lib/prisma";
-import { Resend } from "resend";
+import nodemailer from "nodemailer";
 import crypto from "crypto";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_APP_PASSWORD,
+  },
+});
 
 export async function POST(req: Request) {
   try {
@@ -14,21 +20,19 @@ export async function POST(req: Request) {
     }
 
     if (!user.password) {
-      await resend.emails.send({
-        from: "ChampionChips <onboarding@resend.dev>",
-        to: [email],
+      await transporter.sendMail({
+        from: `"ChampionChips" <${process.env.GMAIL_USER}>`,
+        to: email,
         subject: "Login via Google - ChampionChips",
         html: `
-          <h1>Olá, ${user.name}!</h1>
-          <p>Você utiliza o <strong>Login do Google</strong> para acessar nossa plataforma.</p>
-          <p>Não é necessário (nem possível) redefinir uma senha para este método de acesso.</p>
+          <div style="font-family: sans-serif;">
+            <h1>Olá, ${user.name}!</h1>
+            <p>Você utiliza o <strong>Login do Google</strong> para acessar nossa plataforma.</p>
+            <p>Não é necessário redefinir uma senha para este método.</p>
+          </div>
         `,
       });
-      return Response.json({ 
-        success: true, 
-        isSocial: true,
-        message: "Você faz login pelo Google. Verifique seu e-mail."
-      });
+      return Response.json({ success: true, isSocial: true, message: "Verifique seu e-mail." });
     }
 
     const token = crypto.randomBytes(32).toString("hex");
@@ -40,30 +44,32 @@ export async function POST(req: Request) {
       create: { email, token, expires },
     });
 
-    const resetLink = `${process.env.NEXTAUTH_URL}/reset-password?token=${token}`;
+    const resetLink = `${process.env.NEXTAUTH_URL}/auth/reset-password?token=${token}`;
 
-    await resend.emails.send({
-      from: "ChampionChips <onboarding@resend.dev>",
-      to: [email],
+    await transporter.sendMail({
+      from: `"ChampionChips" <${process.env.GMAIL_USER}>`,
+      to: email,
       subject: "Recuperação de Senha - ChampionChips",
       html: `
-        <h1>Olá, ${user.name}!</h1>
-        <p>Você solicitou a alteração de senha. Clique no botão abaixo para prosseguir:</p>
-        <a href="${resetLink}" style="background: #000000; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; display: inline-block; hover: backgound: #242424">
-          Alterar Senha
-        </a>
-        <p>Este link expira em 1 hora.</p>
+        <div style="font-family: sans-serif;">
+          <h1>Olá, ${user.name}!</h1>
+          <p>Você solicitou a alteração de senha. Clique no botão abaixo para prosseguir:</p>
+          <a href="${resetLink}" style="background: #000; color: #fff; padding: 12px 24px; border-radius: 5px; text-decoration: none; display: inline-block;">
+            Alterar Senha
+          </a>
+          <p style="margin-top: 20px; font-size: 12px; color: #666;">Este link expira em 1 hora.</p>
+        </div>
       `,
     });
 
     return Response.json({ 
       success: true, 
       isSocial: false,
-      message: "Você receberá um email com instruções para a redefinição de senha." 
+      message: "E-mail enviado com sucesso!" 
     });
 
   } catch (error) {
-    console.error(error);
-    return Response.json({ error: "Erro interno no servidor" }, { status: 500 });
+    console.error("Erro no Nodemailer:", error);
+    return Response.json({ error: "Erro ao enviar e-mail" }, { status: 500 });
   }
 }
