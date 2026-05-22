@@ -1,12 +1,33 @@
-"use client"
+'use client'
 
 import { useEffect, useState } from "react"
 import { getMatches } from "@/app/actions/matches"
 import MatchCard from "./cards/MatchCard"
+import { MatchFilters } from "@/components/ui/FilterButtons"
 
 export default function MatchesTab({ leagueId, isOwner }: { leagueId: string, isOwner: boolean }) {
   const [matches, setMatches] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
+
+  const [selectedClub, setSelectedClub] = useState<string | null>(null)
+  const [selectedRound, setSelectedRound] = useState<number | null>(null)
+  const [selectedStatus, setSelectedStatus] = useState<string | null>(null)
+
+  const filteredMatches = matches.filter((match) => {
+    const matchesClub = selectedClub 
+      ? match.home === selectedClub || match.away === selectedClub 
+      : true
+
+    const matchesRound = selectedRound 
+      ? match.round === selectedRound 
+      : true
+
+    const matchesStatus = selectedStatus 
+      ? match.status === selectedStatus 
+      : true
+
+    return matchesClub && matchesRound && matchesStatus
+  })
 
   const loadMatches = async () => {
     const data = await getMatches(leagueId)
@@ -28,14 +49,28 @@ export default function MatchesTab({ leagueId, isOwner }: { leagueId: string, is
 
   return (
     <div className="flex flex-col gap-4 pb-4 w-full mx-auto">
-      {matches.map((match) => (
-        <MatchCard
-          key={match.id} 
-          match={match} 
-          onUpdate={loadMatches}
-          isOwner={isOwner}
-        />
-      ))}
+      <MatchFilters 
+        selectedClub={selectedClub}
+        setSelectedClub={setSelectedClub}
+        selectedRound={selectedRound}
+        setSelectedRound={setSelectedRound}
+        selectedStatus={selectedStatus}
+        setSelectedStatus={setSelectedStatus}
+      />
+      {filteredMatches.length > 0 ? (
+        filteredMatches.map((match) => (
+          <MatchCard
+            key={match.id} 
+            match={match} 
+            onUpdate={loadMatches}
+            isOwner={isOwner}
+          />
+        ))
+      ) : (
+        <div className="p-10 text-center text-neutral-500">
+          Nenhuma partida encontrada para os filtros selecionados.
+        </div>
+      )}
     </div>
   )
 }
