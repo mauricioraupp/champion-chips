@@ -69,7 +69,7 @@ export default function UserNav({ user }: UserNavProps) {
                 href="/profile"
                 onClick={() => setIsOpen(false)}
                 className="flex items-center gap-3 w-full px-3 py-2 text-sm font-semibold text-neutral-600 dark:text-neutral-200 
-                  hover:bg-neutral-50 dark:hover:bg-neutral-900 rounded-md cursor-default transition-colors"
+                  hover:bg-neutral-100 dark:hover:bg-neutral-900 rounded-md cursor-default transition-colors"
               >
                 <User size={16}/>
                 Conta

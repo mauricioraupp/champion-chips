@@ -103,10 +103,10 @@ export default function ChampionshipSelector({ currentLeague, leagues, isOwner }
                     <button
                       key={league.id}
                       onClick={() => {router.push(`/championships/${league.id}`)
-                      setIsOpen(false)
+                        setIsOpen(false)
                       }}
                       className={`flex items-center justify-between w-full p-2 rounded-md text-sm transition-all ${
-                        isSelected ? "bg-neutral-100 dark:bg-neutral-900" : "hover:bg-neutral-50 dark:hover:bg-neutral-900 text-neutral-700 dark:text-neutral-200"}`
+                        isSelected ? "bg-neutral-100 dark:bg-neutral-900" : "hover:bg-neutral-100 dark:hover:bg-neutral-900 text-neutral-700 dark:text-neutral-200"}`
                       }
                     >
                       <div className="flex items-center gap-2">

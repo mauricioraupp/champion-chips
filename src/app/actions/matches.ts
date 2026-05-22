@@ -176,6 +176,7 @@ export async function getFilterOptions(leagueId: string) {
       select: {
         id: true,
         name: true,
+        logo: true
       },
       orderBy: { name: 'asc' },
     })
@@ -189,6 +190,7 @@ export async function getFilterOptions(leagueId: string) {
     const clubOptions = teams.map((team) => ({
       label: team.name,
       value: String(team.id),
+      logo: team.logo
     }))
 
     const roundOptions = matchesGroupByRound.map((group) => ({
