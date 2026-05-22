@@ -1,7 +1,7 @@
-'use client'
+"use client"
 
 import { useEffect, useState } from "react"
-import { getMatches } from "@/app/actions/matches"
+import { getMatches, getFilterOptions } from "@/app/actions/matches"
 import MatchCard from "./cards/MatchCard"
 import { MatchFilters } from "@/components/ui/FilterButtons"
 
@@ -9,22 +9,15 @@ export default function MatchesTab({ leagueId, isOwner }: { leagueId: string, is
   const [matches, setMatches] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
 
+  const [filterData, setFilterData] = useState<{ clubs: any[], rounds: any[] }>({ clubs: [], rounds: [] })
   const [selectedClub, setSelectedClub] = useState<string | null>(null)
   const [selectedRound, setSelectedRound] = useState<number | null>(null)
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null)
 
   const filteredMatches = matches.filter((match) => {
-    const matchesClub = selectedClub 
-      ? match.home === selectedClub || match.away === selectedClub 
-      : true
-
-    const matchesRound = selectedRound 
-      ? match.round === selectedRound 
-      : true
-
-    const matchesStatus = selectedStatus 
-      ? match.status === selectedStatus 
-      : true
+    const matchesClub = selectedClub ? String(match.homeTeamId) === selectedClub || String(match.awayTeamId) === selectedClub : true
+    const matchesRound = selectedRound ? match.round === selectedRound : true
+    const matchesStatus = selectedStatus ? match.status === selectedStatus : true
 
     return matchesClub && matchesRound && matchesStatus
   })
@@ -35,7 +28,15 @@ export default function MatchesTab({ leagueId, isOwner }: { leagueId: string, is
     setLoading(false)
   }
 
-  useEffect(() => { loadMatches() }, [leagueId])
+  const loadFilterOptions = async () => {
+    const data = await getFilterOptions(leagueId)
+    setFilterData(data)
+  }
+
+  useEffect(() => { 
+    loadMatches() 
+    loadFilterOptions()
+  }, [leagueId])
 
   if (loading) return <div className="p-8 text-center text-neutral-500 italic">Carregando partidas...</div>
 
@@ -56,6 +57,8 @@ export default function MatchesTab({ leagueId, isOwner }: { leagueId: string, is
         setSelectedRound={setSelectedRound}
         selectedStatus={selectedStatus}
         setSelectedStatus={setSelectedStatus}
+        clubs={filterData.clubs}
+        rounds={filterData.rounds}
       />
       {filteredMatches.length > 0 ? (
         filteredMatches.map((match) => (

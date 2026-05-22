@@ -168,3 +168,40 @@ async function updateLeagueTable(leagueId: string) {
     });
   }
 }
+
+export async function getFilterOptions(leagueId: string) {
+  try {
+    const teams = await prisma.teamsSoccerLeague.findMany({
+      where: { soccerLeagueId: leagueId },
+      select: {
+        id: true,
+        name: true,
+      },
+      orderBy: { name: 'asc' },
+    })
+
+    const matchesGroupByRound = await prisma.match.groupBy({
+      by: ['round'],
+      where: { soccerLeagueId: leagueId },
+      orderBy: { round: 'asc' },
+    })
+
+    const clubOptions = teams.map((team) => ({
+      label: team.name,
+      value: String(team.id),
+    }))
+
+    const roundOptions = matchesGroupByRound.map((group) => ({
+      label: `Rodada ${group.round}`,
+      value: group.round,
+    }))
+
+    return {
+      clubs: clubOptions,
+      rounds: roundOptions,
+    }
+  } catch (error) {
+    console.error("Erro ao carregar opções de filtro:", error)
+    return { clubs: [], rounds: [] }
+  }
+}
