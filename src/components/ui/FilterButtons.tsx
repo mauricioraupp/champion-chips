@@ -52,8 +52,8 @@ export function FilterButton({ label, title, icon, isActive, options, selectedVa
           }`}
       >
         {icon}
-        <span className="pl-2 pr-1">{label}</span>
-        <ChevronDown size={16} className={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}/>
+        <span className="hidden md:block pl-2 pr-1">{label}</span>
+        <ChevronDown size={16} className={`ml-1 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}/>
       </button>
 
       <AnimatePresence>
@@ -63,7 +63,7 @@ export function FilterButton({ label, title, icon, isActive, options, selectedVa
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: -10 }}
           transition={{ duration: 0.1, ease: "easeOut" }}
-          className="absolute top-full left-0 mt-1 w-56 bg-white dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-900 
+          className="absolute top-full left-0 mt-1 min-w-fit w-full bg-white dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-900 
             shadow-xl rounded-lg z-1 overflow-hidden divide-y-1 divide-neutral-300 dark:divide-neutral-900">
 
             <div className="p-1">
@@ -112,7 +112,7 @@ export function FilterButton({ label, title, icon, isActive, options, selectedVa
                   setIsOpen(false)
                 }}
                 className="flex items-center gap-2 px-3 py-2 m-1 rounded-md text-sm text-neutral-800 dark:text-neutral-200 font-semibold 
-                  hover:text-black dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-900 cursor-pointer transition-colors"
+                  hover:text-black dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-900 cursor-pointer transition-colors whitespace-nowrap"
               >
                 <Delete size={16} /> Remover filtro
               </div>
