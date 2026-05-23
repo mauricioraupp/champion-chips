@@ -56,7 +56,7 @@ export default function ChampionshipSelector({ currentLeague, leagues, isOwner }
               {currentLeague?.name || "Selecionar"}
             </span>
           </article>
-          <ChevronDown size={18}/>
+          <ChevronDown size={17} className={`ml-1 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}/>
         </button>
       ) : (
         <button 
